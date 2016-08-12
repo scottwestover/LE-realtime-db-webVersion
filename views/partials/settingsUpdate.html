@@ -1,0 +1,240 @@
+<div class="right_col" role="main">
+    <form class="form-horizontal" role="form" onsubmit="storeValues()">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step1">
+                    <div class="x_title">
+                        <h2>API Keys</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <div id="time"></div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="accountNum">Account Number:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="accountNum" id="accountNum" placeholder="Enter account number" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="consumerKey">App Key:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="consumerKey" id="consumerKey" placeholder="Enter consumer key" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="consumerSecret">Secret:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="consumerSecret" id="consumerSecret" placeholder="Enter consumer secret" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="accessToken">Access Token:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="accessToken" id="accessToken" placeholder="Enter access token" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="accessTokenSecret">Access Token Secret:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="accessTokenSecret" id="accessTokenSecret" placeholder="Enter access token secret" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step2">
+                    <div class="x_title">
+                        <h2>Agent Activity API Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <label for="agentActivityRange">Time Fame (enter a value from 1 to 1440):</label>
+                            <input type="text" class="form-control" id="agentActivityRange" name="agentActivityRange" value="1">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="skillSelectAA">Select Skill Option:  <i class="fa fa-info-circle" data-toggle="tooltip" title="The selected skills will only be used for the main dashboard. They will not be applied to the Agent Activity Dashboard." data-placement="bottom"></i></label>
+                                    <select class="form-control" id="skillSelectAA" name="skillSelectAA">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Skills</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="skillIDListAA">Select Skills Below (Hold down Ctrl to select multiple):</label>
+                                <select id="skillIDListAA" name="skillIDListAA" class="form-control" multiple disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step3">
+                    <div class="x_title">
+                        <h2>Queue Health API Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <label for="queueHealthRange">Time Fame (enter a value from 1 to 1440):</label>
+                            <input type="text" class="form-control" id="queueHealthRange" name="queueHealthRange" value="1">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="skillSelect">Select Skill Option:</label>
+                                    <select class="form-control" id="skillSelect" name="skillSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Skills</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="skillIDList">Select Skills Below (Hold down Ctrl to select multiple):</label>
+                                <select id="skillIDList" name="skillIDList" class="form-control" multiple disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step4">
+                    <div class="x_title">
+                        <h2>Engagement Activity API Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <div id="time"></div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row" id="step6">
+                            <label for="engagementActivityRange">Time Fame (enter a value from 1 to 1440):</label>
+                            <input type="text" class="form-control" id="engagementActivityRange" name="engagementActivityRange" value="1">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group" id="step7">
+                                    <label for="easkillSelect">Select Skill Option:</label>
+                                    <select class="form-control" id="easkillSelect" name="easkillSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Skills</option>
+                                        <option value="3">None</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group" id="step9">
+                                    <label for="eaAgentSelect">Select Agent Option:</label>
+                                    <select class="form-control" id="eaAgentSelect" name="eaAgentSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Agents</option>
+                                        <option value="3">None</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12" id="step8">
+                                <label for="easkillIDList">Select Skills Below (Hold down Ctrl to select multiple):</label>
+                                <select id="easkillIDList" name="easkillIDList" class="form-control" multiple disabled></select>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12" id="step10">
+                                <label for="eaagentIDList">Select Agents Below (Hold down Ctrl to select multiple):</label>
+                                <select id="eaagentIDList" name="eaagentIDList" class="form-control" multiple disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Current Queue State API Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="CQskillSelect">Select Skill Option:</label>
+                                    <select class="form-control" id="CQskillSelect" name="CQskillSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Skills</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="CQskillIDList">Select Skills Below (Hold down Ctrl to select multiple):</label>
+                                <select id="CQskillIDList" name="CQskillIDList" class="form-control" multiple disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step5">
+                    <div class="x_title">
+                        <h2>Additional Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <label for="sla">SLA for AVG time to answer:</label>
+                            <input type="text" class="form-control" id="sla" name="sla" value="15">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-7" id="step11">
+                    <a href="/graphsDashboard" class="btn btn-default">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src='/js/dashboard/settingsScript.js'></script>
+<script src="/js/custom.js"></script>

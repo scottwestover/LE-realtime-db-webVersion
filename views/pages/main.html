@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="dashboardApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Real Time Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/js/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Custom styling plus plugins -->
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/icheck/flat/green.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link href="/css/main.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- load angular and angular route via CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <!-- Angular App JS -->
+    <script src="/js/angularScript.js"></script>
+    <!-- Add IntroJs styles -->
+    <link href="/css/introjs.css" rel="stylesheet">
+    <!-- Data Tables Buttons -->
+    <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="mainController" class="nav-sm">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu-new" class="main_menu_side hidden-print main_menu">
+
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="/graphsDashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
+                                </li>
+                                <li><a href="/recognitionDashboard"><i class="fa fa-certificate"></i>Agent Recognition</a>
+                                </li>
+                                <li><a href="/agentActivityDashboard"><i class="fa fa-table"></i> Agent Activity</a>
+                                </li>
+                                <li><a href="/queueHealthDashboard"><i class="fa fa-table"></i> Queue Health</a>
+                                </li>
+                                <li><a href="/engagementActivityDashboard"><i class="fa fa-table"></i>Engagement Activity</a>
+                                </li>
+                                <li><a href="/currentQueue"><i class="fa fa-table"></i>Current Queue State</a>
+                                </li>
+                                <li><a href="/settings"><i class="fa fa-gear"></i> Settings</a>
+                                </li>
+                                <li><a href="/glossary"><i class="fa fa-book"></i> Glossary</a>
+                                </li>
+                                <li><a href="javascript:void(0);" onclick="startIntro();"><i class="fa fa-question"></i>Help</a></li>
+                                <li><a href="/startups"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+
+                </div>
+            </div>
+            <!-- page content -->
+            <!-- MAIN CONTENT AND INJECTED VIEWS -->
+            <div id="main">
+
+                <!-- angular templating -->
+                <!-- this is where content will be injected -->
+                <div ng-view></div>
+
+            </div>
+            <!-- /page content -->
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- bootstrap progress js -->
+    <script src="/js/progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="/js/nicescroll/jquery.nicescroll.min.js"></script>
+    <!-- icheck -->
+    <script src="/js/icheck/icheck.min.js"></script>
+    <!-- pace -->
+    <script src="/js/pace/pace.min.js"></script>
+    <!-- datatables -->
+    <script src="/js/datatables/js/jquery.dataTables.js"></script>
+    <!-- chartjs -->
+    <script src="/Chart.min.js"></script>
+    <!-- introjs -->
+    <script type="text/javascript" src="/js/intro.min.js"></script>
+    <script type="text/javascript" src="/js/introcode.js"></script>
+    <!-- Datatables buttons -->
+    <script type="text/javascript" src="/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+</body>
+</html>

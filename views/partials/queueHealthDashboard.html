@@ -1,0 +1,53 @@
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Queue Health</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <div id="time"></div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities cell-border">
+                        <thead>
+                            <tr class="headings" id="headings">
+                                <th title="The id of the skill.">Skill ID</th>
+                                <th title="The average time that a visitor spent in the queue before being connected to an agent (hh:mm:ss).">Avg. Time To Ans.</th>
+                                <th title="Indicates wheter the average time to answer is under the SLA time." id="slaheader">SLA</th>
+                                <th title="The total time that the visitors spent in the queue before being connected to an agent (hh:mm:ss).">Total Time To Ans.</th>
+                                <th title="The average time visitors spend in queue before abandon (hh:mm:ss).">Avg. Time To Abandon</th>
+                                <th title="Total time visitors spend in queue before abandon (hh:mm:ss).">Total Time To Abandon</th>
+                                <th title="The number of visitors that abandoned the queue out of the total visitors that started an engagement.">Abandon Rate</th>
+                                <th title="The number of visitors that entered the queue.">Entered Queue</th>
+                                <th title="The number of visitors that abandoned the queue before being connected to an agent.">Abandoned Chats</th>
+                                <th title="The number of visitors that were connected to an agent.">Connected</th>
+                                <th title="The maximum queue size within the given time frame.">Max Queue Size</th>
+                                <th title="The minimum queue size within the given time frame.">Min Queue Size</th>
+                                <th title="The average queue size within the given time frame (rounded).">Avg. Queue Size</th>
+                                <th title="The current queue size.">Current Queue Size</th>
+                                <th title="Sum of all queue sizes received.">Queue Size Sum</th>
+                                <th title="Total number of queue size measures made.">Queue Size Count</th>
+                                <th title="The current available slots.">Current Avail. Slots</th>
+                                <th title="The maximum available slots within the given time frame.">Max Avail. Slots</th>
+                                <th title="The minimum available slots within the given time frame.">Min Avail. Slots</th>
+                                <th title="The average available slots within the given time frame (rounded).">Avg. Avail. Slots</th>
+                                <th title="Sum of all available slots received.">Avail. Sum</th>
+                                <th title="Total number of available slots measures made.">Avail. Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/dashboard/queueHealthScript.js"></script>
+<script src="/js/custom.js"></script>

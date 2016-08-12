@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Real Time Dashboard</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/css/animate.min.css" rel="stylesheet">  
+  <!-- Custom styling plus plugins -->
+  <link href="/css/custom.css" rel="stylesheet">
+  <link href="/css/icheck/flat/green.css" rel="stylesheet">
+  <!-- Main CSS -->
+  <link href="/css/main.css" rel="stylesheet">
+  <!-- JQuery -->
+  <script src="/js/jquery.min.js"></script>
+</head>
+
+<body ng-controller="mainController" class="nav-sm">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <!-- sidebar menu -->
+          <div id="sidebar-menu-new" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                  <h3>General</h3>
+                  <ul class="nav side-menu">
+                      <li><a href="/graphsDashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
+                      </li>
+                      <li><a href="/recognitionDashboard"><i class="fa fa-certificate"></i>Agent Recognition</a>
+                      </li>
+                      <li><a href="/agentActivityDashboard"><i class="fa fa-table"></i> Agent Activity</a>
+                      </li>
+                      <li><a href="/queueHealthDashboard"><i class="fa fa-table"></i> Queue Health</a>
+                      </li>
+                      <li><a href="/engagementActivityDashboard"><i class="fa fa-table"></i>Engagement Activity</a>
+                      </li>
+                      <li><a href="/currentQueue"><i class="fa fa-table"></i>Current Queue State</a>
+                      </li>
+                      <li><a href="/settings"><i class="fa fa-gear"></i> Settings</a>
+                      </li>
+                      <li><a href="/glossary"><i class="fa fa-book"></i> Glossary</a>
+                      </li>
+                      <li><a href="javascript:void(0);" onclick="startIntro();"><i class="fa fa-question"></i>Help</a></li>
+                      <li><a href="/startups"><i class="fa fa-refresh"></i> Refresh</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <!-- /sidebar menu -->
+
+        </div>
+      </div>
+      <!-- page content -->
+      <!-- MAIN CONTENT AND INJECTED VIEWS -->
+      <div id="main">
+        <div class="right_col" role="main">
+          <div class="col-md-12">
+            <div class="col-middle">
+              <div class="text-center text-center">
+                <h1 class="error-number">Error</h1>
+                <h2>There appears to be an issue with the API calls.</h2>
+                <p>Please check your API keys and account number on the <a href="http://localhost:5000/settings">Settings Page</a>
+                </p>
+                <p>If this is your first time running the dashboard, please go to the <a href="http://localhost:5000/settings">Settings Page</a> to fill out your API information.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page content -->
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.min.js"></script>
+  <!-- bootstrap progress js -->
+  <script src="/js/progressbar/bootstrap-progressbar.min.js"></script>
+  <script src="/js/nicescroll/jquery.nicescroll.min.js"></script>
+  <!-- pace -->
+  <script src="/js/pace/pace.min.js"></script>
+  <!-- customjs -->
+  <script type="text/javascript" src="/js/custom.js"></script>
+</body>
+</html>

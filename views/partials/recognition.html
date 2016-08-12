@@ -1,0 +1,68 @@
+
+    <div class="right_col" role="main">
+        <div class="row" id="hiddenTablePanel1">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Engagement Activity - Agent Level</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <div id="time"></div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table id="example2" class="table table-striped responsive-utilities cell-border">
+                            <thead>
+                                <tr class="headings">
+                                    <th title="The id of the agent.">Agent ID</th>
+                                    <th title="The number of interactive chats that took place in the current interval/time frame.">Total Interactive Chats</th>
+                                    <th title="The number of non-interactive chats that took place in the current interval/time frame.">Total Non Interactive Chats</th>
+                                    <th title="The total time in seconds that was spent handing the interactive chats in the current interval/time frame.">Total Handling Time</th>
+                                    <th title="The total time in seconds that was spent handing the noninteractive chats in the current interval/time frame.">Total Non Interactive Handling Time</th>
+                                    <th title="The number of chats connected to an agent in the current interval/time frame.">Connected Engagements</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="well profile_view">
+                    <div class="col-sm-12">
+                        <h1><i>Most Interactive Chats</i></h1>
+                        <div class="left col-xs-7">
+                            <h1 style="text-align: center;" id="mostchatsname"></h1>
+                            <h1>Total Interactive Chats Taken: <span id="mostchatstotal"></span></h1>
+                        </div>
+                        <div class="right col-xs-5 text-center">
+                            <img id="interactivePic" src="images/user.png" alt="" class="img-circle img-responsive" onError="this.onerror=null;this.src='images/user.png';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="well profile_view">
+                    <div class="col-sm-12">
+                        <h1><i>Lowest Average Handling Time</i></h1>
+                        <div class="left col-xs-7">
+                            <h1 style="text-align: center;" id="mostchatsname2"></h1>
+                            <h1>Average Handling Time (mm:ss): <span id="mostchatstotal2"></span></h1>
+                        </div>
+                        <div class="right col-xs-5 text-center">
+                            <img id="lowestPic" src="images/user.png" alt="" class="img-circle img-responsive" onError="this.onerror=null;this.src='images/user.png';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/dashboard/recognition.js"></script>
+    <script src="/js/custom.js"></script>

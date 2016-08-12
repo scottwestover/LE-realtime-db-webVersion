@@ -1,0 +1,77 @@
+  table {
+      table-layout: fixed;
+      width: 100%;
+  }
+  .online,
+  .away {
+      background-color: #e0e0e0;
+  }
+  .sorting,
+  .sorting_desc,
+  .sorting_asc {
+      background-color: #3F5367;
+  }
+  .graph2 {
+      color: #03586A;
+  }
+  .chart-legend li span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+  }
+  .line-legend,
+  .pie-legend,
+  .bar-legend,
+.opStatus{
+      list-style-type: none;
+  }
+.row-eq-height{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+#equalheight {
+    overflow: hidden; 
+}
+#equalheight2 {
+    overflow: hidden; 
+}
+.row-eq-height2{
+    margin-top: 5px;
+    padding-top: 5px;
+}
+.breakAll {
+    word-break: break-all;
+}
+
+.skillStatus {
+  border-style: solid;
+    border-color: #449d44;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #449d44; 
+}
+.skillStatus2 {
+  border-style: solid;
+    border-color: #d9534f;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #fff;
+        background-color: #d9534f;
+}
+.skillStatus3 {
+  border-style: solid;
+    border-color: #ec971f;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #fff;
+        background-color: #ec971f;
+}
+#skillStatusTable {
+  font-size: 10px;
+}
+.tooltip {
+   position: fixed;
+}
