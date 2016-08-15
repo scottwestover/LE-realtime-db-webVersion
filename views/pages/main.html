@@ -81,7 +81,29 @@
             <!-- /page content -->
         </div>
     </div>
-
+    <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" href="" data-dismiss="modal" onclick="javascript:window.location='/settings'">&times;</a>
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>There appears to be an issue with the API calls.</p>
+        <p>Please check your API keys and account number on the Settings Page. <br>If this is your first time running the dashboard, please go to the Settings Page to fill out your API information.</p>
+        <p>Error Details: <br><span id="errorDetails"></span></p>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-default" href="" data-dismiss="modal" onclick="javascript:window.location='/settings'">Close</a>
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal -->
+    <script>
+        //$('#myModal').modal({ show: false});
+    </script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- bootstrap progress js -->
     <script src="/js/progressbar/bootstrap-progressbar.min.js"></script>

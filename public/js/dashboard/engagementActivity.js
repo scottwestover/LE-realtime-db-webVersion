@@ -189,7 +189,8 @@
                     }
                 }
                  else {
-                    console.log(data);
+                    $('#myModal').modal('show');
+                    $('#errorDetails').html(JSON.stringify(data.Error));
                     //window.location.href = "/error";
                 }
             }

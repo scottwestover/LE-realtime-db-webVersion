@@ -77,7 +77,9 @@ function getData() {
                 }
             }
             else {
-                window.location.href = "/error";
+                //window.location.href = "/error";
+                $('#myModal').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
             }
         }
     });
