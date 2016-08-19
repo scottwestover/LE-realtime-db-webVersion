@@ -7,6 +7,7 @@ $(function() {
     var accessTokenSecret = 0;
     getLocalStorageVariablesKeys();
 
+    // Gets the current status of the dashboard starting up and updates the html on the page with the status
     var refreshIntervalId = setInterval(function() {
         $.ajax({
             type: 'GET',
@@ -17,6 +18,7 @@ $(function() {
         });
     }, 3000);
 
+    // calls the LiveEngage APIs with the api keys from the browser storage and redirects to the main dashboard if it is successful
     $.ajax({
         type: 'GET',
         url: '/startup?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret,
@@ -27,7 +29,7 @@ $(function() {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 setTimeout(function() {
                     var sel = 'div[role="main"]';
-                    angular.element(sel).scope().add(data.users,data.skills,data.groups);
+                    angular.element(sel).scope().add(data.users, data.skills, data.groups);
                     angular.element(sel).scope().changeURL();
                 }, 100);
             } else {
@@ -38,6 +40,10 @@ $(function() {
         }
     });
 
+    /**
+     * @desc gets the api settings from the browser local storage
+     * @return undefined
+     */
     function getLocalStorageVariablesKeys() {
         // Check browser support
         if (typeof(Storage) !== "undefined") {

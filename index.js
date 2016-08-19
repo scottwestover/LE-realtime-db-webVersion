@@ -36,11 +36,6 @@ app.get('/error', routes.error);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 
-/*
-app.use('/*', function(req, res){
-  res.sendFile(__dirname + '/views/pages/main.html');
-});*/
-
 /**************
  * Start Server
  **************/
