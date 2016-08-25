@@ -1,7 +1,7 @@
 {
-  "name": "Node.js Getting Started",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
+  "name": "Node.js LiveEngage Real Time Dashboard",
+  "description": "A Node.js application that is a real time dashboard. The dashboard uses the LiveEngage Real Time APIs to display critical data.",
+  "repository": "https://github.com/scottwestover/LE-realtime-db-webVersion",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static"],
   "image": "heroku/nodejs"
