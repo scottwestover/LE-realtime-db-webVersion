@@ -1,5 +1,5 @@
 {
-  "name": "Node.js LiveEngage Real Time Dashboard",
+  "name": "LiveEngage Real Time Manager",
   "description": "A Node.js application that is a real time dashboard. The dashboard uses the LiveEngage Real Time APIs to display critical data.",
   "repository": "https://github.com/scottwestover/LE-realtime-db-webVersion",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
