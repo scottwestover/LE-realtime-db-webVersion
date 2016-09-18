@@ -26,8 +26,8 @@ Your app should be running on localhost:5000.
 
 * V0.9.3 BETA - 10 August 2016
  * Fixed
-  * Current Queue Status - Abandonment Rate Bug
-  * Current Queue Status - Incorrect Tool Tips
+   * Current Queue Status - Abandonment Rate Bug
+   * Current Queue Status - Incorrect Tool Tips
 * V0.9.2 BETA - 28 July 2016
  * Fixed
    * Spelling Mistakes
@@ -35,11 +35,11 @@ Your app should be running on localhost:5000.
  * New
    * Skill Names and Agent Names will automatically populate in the settings page. You no longer need to manually enter in the skill id or the agent id for the API.
  * Fixed
-  * Average Agent Utilization Bug
+   * Average Agent Utilization Bug
 * V0.9 BETA - 15 July 2016
  * View real time data on an account using the Real Time Operational, Skills, Users, and Agent Groups APIs.
  * Features:
-  * Pull data using a custom time frame (past minute up to the past 24 hours).
-  * Export raw data to CSV.
-  * View agents states.
-  * View current queue information.
+   * Pull data using a custom time frame (past minute up to the past 24 hours).
+   * Export raw data to CSV.
+   * View agents states.
+   * View current queue information.
