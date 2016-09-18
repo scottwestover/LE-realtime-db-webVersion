@@ -22,6 +22,8 @@
                      </li>
                      <li role="presentation" id="cq-tab" class=""><a>Current Queue State</a>
                      </li>
+                     <li role="presentation" id="sla-tab" class=""><a>SLA</a>
+                     </li>
                   </ul>
                </div>
                <div id="AAglossary">
@@ -212,6 +214,34 @@
                         <tr>
                            <td>Current Queue Size</td>
                            <td>The current queue size.</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div id="SLAglossary">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th>Name</th>
+                           <th>Description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>Seconds</td>
+                           <td>The start of the SLA bucket in seconds.</td>
+                        </tr>
+                        <tr>
+                           <td>Accumulated </td>
+                           <td>The percentage of chats that fall in this bucket or in earlier buckets (buckets for shorter queue wait periods).</td>
+                        </tr>
+                        <tr>
+                           <td>Percentage From Total</td>
+                           <td>The percentage of chats that fall in this bucket.</td>
+                        </tr>
+                        <tr>
+                           <td>Chats</td>
+                           <td>The number of chats with wait time that falls in this bucket.</td>
                         </tr>
                      </tbody>
                   </table>

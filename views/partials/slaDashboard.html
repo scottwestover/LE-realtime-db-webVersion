@@ -1,0 +1,35 @@
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>SLA</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <div id="time"></div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities cell-border">
+                        <thead>
+                            <tr class="headings" id="headings">
+                                <th title="The start of the bucket in seconds.">Seconds</th>
+                                <th title="The number of chats with wait time that falls in this bucket.">Chats</th>
+                                <th title=" The percentage of chats that fall in this bucket.">Percentage From Total</th>
+                                <th title="The percentage of chats that fall in this bucket or in earlier buckets (buckets for shorter queue wait periods).">Accumulated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/dashboard/slaScript.js"></script>
+<script src="/js/custom.js"></script>

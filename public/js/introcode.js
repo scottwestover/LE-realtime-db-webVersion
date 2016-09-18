@@ -158,6 +158,25 @@ function startIntro() {
                         }]
                     });
                 }
+                else if (currentURL == "http://localhost:5000/slaDashboard") {
+                    intro.setOptions({
+                         steps: [
+                        {
+                            intro: "The sla page shows the distribution of visitor's wait time in the queue before an agent replies to their chat."
+                        },  {
+                            intro: "The SLA API Settings will affect which data is displayed on this page."
+                        }, {
+                            element: document.querySelector('#headings'),
+                            intro: "You can hover over the different table headers to get more information on that metric."
+                        }, {
+                            element: document.querySelector('#example_filter'),
+                            intro: "You can use the search bar to filter the table."
+                        }, {
+                            element: document.querySelector('#example_length'),
+                            intro: "You can select how many records you would like displayed in the table from the dropdown here."
+                        }]
+                    });
+                }
                 else {
                     intro.setOptions({
                         steps: [

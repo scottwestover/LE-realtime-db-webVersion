@@ -33,6 +33,10 @@ app.get('/startupStatus', routes.startupStatus);
 app.get('/startupPage', routes.startupPage);
 app.get('/mainPage', routes.index);
 app.get('/error', routes.error);
+app.get('/sla', routes.sla);
+// serve messaging views
+app.get('/messagingConversation', routes.messagingConversation);
+app.get('/messagingCSAT', routes.messagingCSAT);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 

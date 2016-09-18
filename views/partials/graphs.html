@@ -217,6 +217,39 @@
                </table>
             </div>
          </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="x_panel">
+             <div class="x_title">
+                 <h2>Service Level</h2>
+                 <ul class="nav navbar-right panel_toolbox">
+                  <li>
+                     <h2><i class="fa fa-info-circle" data-toggle="tooltip" title="This table will show the SLA data for the timeframe you selected in the SLA API." data-placement="bottom"></i></h2>
+                  </li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+               </ul>
+                 <div class="clearfix"></div>
+             </div>
+             <div class="x_content">
+                 <table id="slaTable" class="table table-striped responsive-utilities cell-border">
+                     <thead>
+                         <tr class="headings" id="headings">
+                             <th title="The start of the bucket in seconds.">Seconds</th>
+                             <th title="The number of chats with wait time that falls in this bucket.">Chats</th>
+                             <th title=" The percentage of chats that fall in this bucket.">Percentage From Total</th>
+                             <th title="The percentage of chats that fall in this bucket or in earlier buckets (buckets for shorter queue wait periods).">Accumulated</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
          <div class="x_panel">
             <div class="x_title">
                <h2 class="graph2">Agent Status</h2>
@@ -354,6 +387,8 @@
    var engagementActivityRange = 1;
    var agentActivityRange = null;
    var skillIDListAA = null;
+   var slaskillIDList = null;
+   var slaRange = null;
    getLocalStorageVariables();
    //variable for the total number of chats an agent took each hour
    var agentsChats24hr = {};
@@ -433,6 +468,18 @@
                [10, 25, 50, 100, "All"]
            ]
        });
+       $('#slaTable').DataTable({
+           "initComplete": function(settings) {
+               /* Apply the tooltips */
+               $('#slaTable thead th[title]').tooltip({
+                   "container": 'body'
+               });
+           },
+           aLengthMenu: [
+               [10, 25, 50, 100, -1],
+               [10, 25, 50, 100, "All"]
+           ]
+       });
        //setup the agent status table
        $('#agentStatusTable').DataTable({
            "initComplete": function(settings) {
@@ -494,6 +541,7 @@
        var oTable2 = $('#example2').DataTable();
        var operatorTable = $('#operator').DataTable();
        var queTable = $('#queHealthTable').DataTable();
+       var slaTable = $('#slaTable').DataTable();
        //get the current queue health
        $.ajax({
            type: 'GET',
@@ -988,6 +1036,21 @@
                }
            }
        });
+      //get the sla data
+      $.ajax({
+        type: 'GET',
+        url: '/sla?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + slaskillIDList  + '&range=' + slaRange,
+        success: function(data) {
+            if (data.Fail != "undefined" && data.Fail != "404") {
+                updateSLAData(data);
+            } else {
+                //window.location.href = "/error";
+                $('#myModal').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
+            }
+        }
+      });
+
    }
    
    function updateLineGraph() {
@@ -1071,10 +1134,37 @@
             engagementActivityRange = localStorage.getItem("engagementActivityRange");
             agentActivityRange = localStorage.getItem("agentActivityRange");
             skillIDListAA = localStorage.getItem("skillIDListAA");
+            slaskillIDList = localStorage.getItem("slaskillIDList");
+            slaRange = localStorage.getItem("slaRange");
         } else {
             console.log("Sorry, your browser does not support Web Storage...");
         }
         return;
     }
+
+/**
+* @desc updates the data table and the sla dashboard with the data from the sla api
+* @param data - JSON Object that is returned from the sla API
+* @return undefined
+*/
+function updateSLAData(data) {
+   var slaTable = $('#slaTable').DataTable();
+   slaTable
+   .clear()
+   .draw();
+   var secondsBucket = 0;
+   var accumulated = 0;
+   var chats = 0;
+   var percentageFromTotal = 0;
+   if (data.hasOwnProperty("slaDataRange")) {
+      for (var bucket in data.slaDataRange) {
+         secondsBucket = bucket;
+         accumulated = (data.slaDataRange[bucket].accumulated * 100).toFixed(0) + "%";
+         chats = data.slaDataRange[bucket].chats;
+         percentageFromTotal = (data.slaDataRange[bucket].percentageFromTotal* 100).toFixed(0) + "%";
+         slaTable.row.add([secondsBucket, chats, percentageFromTotal, accumulated]).draw();
+      }
+   }
+}
 </script>
 <script src="/js/custom.js"></script>

@@ -127,9 +127,6 @@
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
-                            <li>
-                                <div id="time"></div>
-                            </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -207,6 +204,61 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step4">
+                    <div class="x_title">
+                        <h2>SLA API Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row" id="step60">
+                            <label for="slaRange">Time Fame (enter a value from 1 to 1440):</label>
+                            <input type="text" class="form-control" id="slaRange" name="slaRange" value="1">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group" id="step61">
+                                    <label for="slaskillSelect">Select Skill Option:</label>
+                                    <select class="form-control" id="slaskillSelect" name="slaskillSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Skills</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group" id="step62">
+                                    <label for="slaGroupSelect">Select Agent Option:</label>
+                                    <select class="form-control" id="eslaGroupSelect" name="slaGroupSelect">
+                                        <option value="1">All</option>
+                                        <option value="2">Specific Agents</option>
+                                        <option value="3">None</option>
+                                    </select>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12" id="step63">
+                                <label for="slaskillIDList">Select Skills Below (Hold down Ctrl to select multiple):</label>
+                                <select id="slaskillIDList" name="slaskillIDList" class="form-control" multiple disabled></select>
+                            </div>
+                            <!--
+                            <div class="col-md-6 col-sm-6 col-xs-12" id="step64">
+                                <label for="slaGroupIDListt">Select Agent Groups Below (Hold down Ctrl to select multiple):</label>
+                                <select id="slaGroupIDList" name="slaGroupIDList" class="form-control" multiple disabled></select>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel" id="step5">
                     <div class="x_title">
                         <h2>Additional Settings</h2>
@@ -228,7 +280,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-7" id="step11">
-                    <a href="/graphsDashboard" class="btn btn-default">Cancel</a>
+                    <a id="cancelButton" href="/graphsDashboard" class="btn btn-default">Cancel</a>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>

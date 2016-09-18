@@ -33,7 +33,7 @@ exports.partials = function (req, res) {
 
 exports.startupPage = function (req, res) {
     res.redirect('/startups');
-}
+};
 
 // pulls the agent activity data
 exports.agentActivity = function (req, res) {
@@ -295,7 +295,7 @@ exports.startup = function (req, res) {
                 });
             }
         });    
-}
+};
 
 //exports the status of the dashboard pulling in the different apis.
 exports.startupStatus = function (req, res) {
@@ -306,7 +306,134 @@ exports.startupStatus = function (req, res) {
     } else {
         res.json(statusUpdate);
     }
-}
+};
+
+// pulls the sla data using the sla api endpoint
+exports.sla = function (req, res) {
+        var oauth = {
+            consumer_key: req.query.cKey,
+            consumer_secret: req.query.cSec,
+            token: req.query.tok,
+            token_secret: req.query.tSec
+        };
+
+        var skillList = req.query.skill;
+        if (skillList === 'null') {
+            skillList = "all";
+        }
+
+        // url for queue health
+        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/sla?timeframe=' + req.query.range + '&v=1&skillIds=' + skillList;
+        request.get({
+            url: url,
+            oauth: oauth,
+            json: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }, function (e, r, b) {
+            if (!e && r.statusCode == 200) {
+                res.json(b);
+            } else {
+                res.json({
+                    "Error": b,
+                    "Fail": "404"
+                });
+            }
+        });
+};
+
+// pulls the messaging conversation api
+exports.messagingConversation = function (req, res) {
+        var oauth = {
+            consumer_key: req.query.cKey,
+            consumer_secret: req.query.cSec,
+            token: req.query.tok,
+            token_secret: req.query.tSec
+        };
+        var skillList = req.query.skill;
+        if (skillList === 'null') {
+            skillList = "all";
+        }
+        var agentList = req.query.agent;
+        if (agentList === 'null') {
+            agentList = "all";
+        }
+        var params = "";
+        //if none dont add to url
+        if (req.query.skS !== "3") {
+            params += "&skillIds=" + skillList;
+        }
+        if (req.query.agS !== "3") {
+            params += "&agentIds=" + agentList;
+        }
+
+        // url for queue health
+        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/msgconversation?timeframe=' + req.query.range + '&v=1'+ params;
+        request.get({
+            url: url,
+            oauth: oauth,
+            json: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }, function (e, r, b) {
+            if (!e && r.statusCode == 200) {
+                res.json(b);
+            } else {
+                res.json({
+                    "Error": b,
+                    "Fail": "404"
+                });
+            }
+        });
+};
+
+// pulls the messaging csat api
+exports.messagingCSAT = function (req, res) {
+        var oauth = {
+            consumer_key: req.query.cKey,
+            consumer_secret: req.query.cSec,
+            token: req.query.tok,
+            token_secret: req.query.tSec
+        };
+        var skillList = req.query.skill;
+        if (skillList === 'null') {
+            skillList = "all";
+        }
+        var agentList = req.query.agent;
+        if (agentList === 'null') {
+            agentList = "all";
+        }
+        var params = "";
+        //if none dont add to url
+        if (req.query.skS !== "3") {
+            params += "&skillIds=" + skillList;
+        }
+        if (req.query.agS !== "3") {
+            params += "&agentIds=" + agentList;
+        }
+
+        // url for messaging csat distribution
+        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/msgcsatdistribution?timeframe=' + req.query.range + '&v=1'+ params;
+        request.get({
+            url: url,
+            oauth: oauth,
+            json: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }, function (e, r, b) {
+            if (!e && r.statusCode == 200) {
+                res.json(b);
+            } else {
+                res.json({
+                    "Error": b,
+                    "Fail": "404"
+                });
+            }
+        });
+};
 
 //function to get the agent information by using the apis
 function getAgentInfo(oauth, res, temp) {

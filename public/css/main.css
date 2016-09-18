@@ -75,3 +75,46 @@
 .tooltip {
    position: fixed;
 }
+
+.dropbtnM {
+    border: none;
+    cursor: pointer;
+    background-color: #2A3F54;
+    color: #E7E7E7 !important;
+}
+
+.dropdownM {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-contentM {
+    display: none;
+    background-color: #2A3F54;
+    max-width: 70px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-contentM a {
+    color: #E7E7E7 !important;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.showM {display:block;}
+
+body.nav-sm .nav.side-menu li button i {
+    font-size: 25px !important;
+    text-align: center;
+    width: 100% !important;
+    margin-bottom: 5px;
+}
+
+.headings2 {
+  background-color: #2a3f54;
+}
+.headings2 th{
+  border: 1px solid black;
+}

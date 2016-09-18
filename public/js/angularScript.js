@@ -6,6 +6,10 @@ var eaInterval = null;
 var graphInterval = null;
 var recInterval = null;
 var curQueInterval = null;
+var slaInterval = null;
+var msgcsatInterval = null;
+var msgInterval = null;
+var msgDBInterval = null;
 
 dashboardApp.factory('users', function() {
     var users = {};
@@ -79,9 +83,35 @@ dashboardApp.config(['$routeProvider', '$locationProvider', function ($routeProv
             templateUrl: 'partials/currentQueue.html',
             controller: 'curQueController'
         })
+        // route for the sla dashboard page
+        .when('/slaDashboard', {
+            templateUrl: 'partials/slaDashboard.html',
+            controller: 'slaController'
+        })
+        // route for the startups page
         .when('/startups',{
             templateUrl: 'partials/startup.html',
             controller: 'startupController'
+        })
+        // route for the messaging csat page
+        .when('/msgcsatDashboard',{
+            templateUrl: 'partials/messagingCSATDashboard.html',
+            controller: 'msgcsatController'
+        })
+        // route for the messaging conversation page
+        .when('/msgconDashboard',{
+            templateUrl: 'partials/messagingConversationDashboard.html',
+            controller: 'msgconController'
+        })
+        // route for the messaging settings page
+        .when('/msgSettings',{
+            templateUrl: 'partials/messagingSettings.html',
+            controller: 'msgMainController'
+        })
+        // route for the messaging dashboard page
+        .when('/msgDashboard',{
+            templateUrl: 'partials/msgDashboard.html',
+            controller: 'msgDBController'
         })
         //route to main page
         .otherwise({
@@ -106,6 +136,12 @@ dashboardApp.controller('mainController', function ($scope, users) {
     $scope.listSkills = users.listSkills;
 });
 
+// controller for the settings dashboard for messaging
+dashboardApp.controller('msgMainController', function ($scope, users) {
+    $scope.listUsers = users.listUsers;
+    $scope.listSkills = users.listSkills;
+});
+
 // controller for agent activity dashboard
 dashboardApp.controller('activityController', function ($scope, $interval, users) {
     $scope.listUsers = users.listUsers;
@@ -118,6 +154,7 @@ dashboardApp.controller('activityController', function ($scope, $interval, users
         $interval.cancel(activityInterval);
     });
 }]);
+
 // controller for queue health dashboard
 dashboardApp.controller('queuehealthController', function ($scope, $interval,users) {
     $scope.listSkills = users.listSkills;
@@ -130,6 +167,7 @@ dashboardApp.controller('queuehealthController', function ($scope, $interval,use
         $interval.cancel(queueInterval);
     });
 }]);
+
 // controller for engagement activity dashboard
 dashboardApp.controller('engagementActivityController', function ($scope, $interval, users) {
     $scope.listUsers = users.listUsers;
@@ -143,8 +181,10 @@ dashboardApp.controller('engagementActivityController', function ($scope, $inter
         $interval.cancel(eaInterval);
     });
 }]);
+
 // controller for the glossary dashboard
 dashboardApp.controller('glossaryController', function ($scope) {});
+
 // controller for the graphs dashboard
 dashboardApp.controller('graphsController', function ($scope, $interval, users) {
     $scope.listUsers = users.listUsers;
@@ -159,6 +199,22 @@ dashboardApp.controller('graphsController', function ($scope, $interval, users) 
         $interval.cancel(graphInterval);
     });
 }]);
+
+// controller for the msg graphs dashboard
+dashboardApp.controller('msgDBController', function ($scope, $interval, users) {
+    $scope.listUsers = users.listUsers;
+    $scope.listSkills = users.listSkills;
+    $scope.listGroups = users.listGroups;
+    msgDBInterval = $interval(function () {
+        console.log("Graphs is running...");
+        getData();
+    }, 10000);
+}).run(['$rootScope', '$interval', function ($rootScope, $interval) {
+    $rootScope.$on('$routeChangeStart', function () {
+        $interval.cancel(msgDBInterval);
+    });
+}]);
+
 // controller for the recognition dashboard
 dashboardApp.controller('recController', function ($scope, $interval, users) {
    recInterval = $interval(function () {
@@ -171,6 +227,7 @@ dashboardApp.controller('recController', function ($scope, $interval, users) {
         $interval.cancel(recInterval);
     });
 }]);
+
 // controller for the current queue dashboard
 dashboardApp.controller('curQueController', function ($scope, $interval,users) {
     $scope.listSkills = users.listSkills;
@@ -183,6 +240,48 @@ dashboardApp.controller('curQueController', function ($scope, $interval,users) {
         $interval.cancel(curQueInterval);
     });
 }]);
+
+// controller for the sla dashboard
+dashboardApp.controller('slaController', function ($scope, $interval,users) {
+    $scope.listSkills = users.listSkills;
+   slaInterval = $interval(function () {
+        console.log("sla is running...");
+        getData();
+    }, 10000);
+}).run(['$rootScope', '$interval', function ($rootScope, $interval) {
+    $rootScope.$on('$routeChangeStart', function () {
+        $interval.cancel(slaInterval);
+    });
+}]);
+
+// controller for the message csat dashboard
+dashboardApp.controller('msgcsatController', function ($scope, $interval,users) {
+    $scope.listUsers = users.listUsers;
+    $scope.listSkills = users.listSkills;
+    msgcsatInterval = $interval(function () {
+        console.log("msg csat is running...");
+        getData();
+    }, 10000);
+}).run(['$rootScope', '$interval', function ($rootScope, $interval) {
+    $rootScope.$on('$routeChangeStart', function () {
+        $interval.cancel(msgcsatInterval);
+    });
+}]);
+
+// controller for the message conversation dashboard
+dashboardApp.controller('msgconController', function ($scope, $interval,users) {
+    $scope.listUsers = users.listUsers;
+    $scope.listSkills = users.listSkills;
+    msgcsatInterval = $interval(function () {
+        console.log("msg con is running...");
+        getData();
+    }, 10000);
+}).run(['$rootScope', '$interval', function ($rootScope, $interval) {
+    $rootScope.$on('$routeChangeStart', function () {
+        $interval.cancel(msgInterval);
+    });
+}]);
+
 // timer for dasboards
 var myVar = setInterval(myTimer, 1000);
 

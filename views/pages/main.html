@@ -39,21 +39,21 @@
                 <div class="left_col scroll-view">
                     <!-- sidebar menu -->
                     <div id="sidebar-menu-new" class="main_menu_side hidden-print main_menu">
-
                         <div class="menu_section">
                             <h3>General</h3>
-                            <ul class="nav side-menu">
+                            <ul id="chatSideMenu" class="nav side-menu">
                                 <li><a href="/graphsDashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
                                 </li>
-                                <li><a href="/recognitionDashboard"><i class="fa fa-certificate"></i>Agent Recognition</a>
-                                </li>
-                                <li><a href="/agentActivityDashboard"><i class="fa fa-table"></i> Agent Activity</a>
-                                </li>
-                                <li><a href="/queueHealthDashboard"><i class="fa fa-table"></i> Queue Health</a>
-                                </li>
-                                <li><a href="/engagementActivityDashboard"><i class="fa fa-table"></i>Engagement Activity</a>
-                                </li>
-                                <li><a href="/currentQueue"><i class="fa fa-table"></i>Current Queue State</a>
+                                <li>
+                                <div class="dropdownM">
+                                    <button onclick="dropdownFunction()" class="dropbtnM"><i class="fa fa-bars dropbtnM"></i>Menu</button>
+                                    <div id="myDropdown" class="dropdown-contentM">
+                                        <a href="/agentActivityDashboard"><i class="fa fa-table"></i>Agent Activity</a>
+                                        <a href="/queueHealthDashboard"><i class="fa fa-table"></i>Queue Health</a>
+                                        <a href="/engagementActivityDashboard"><i class="fa fa-table"></i>Engagement Activity</a>
+                                        <a href="/currentQueue"><i class="fa fa-table"></i>Current Queue State</a>
+                                        <a href="/slaDashboard"><i class="fa fa-table"></i>SLA</a>
+                                    </div></div>
                                 </li>
                                 <li><a href="/settings"><i class="fa fa-gear"></i> Settings</a>
                                 </li>
@@ -61,6 +61,29 @@
                                 </li>
                                 <li><a href="javascript:void(0);" onclick="startIntro();"><i class="fa fa-question"></i>Help</a></li>
                                 <li><a href="/startups"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                                <li><hr></li>
+                                <li><a href="/msgDashboard" onclick="showMessagingMenu();"><i class="fa fa-mobile"></i> Go To Messaging Dashboard</a>
+                                </li>
+                            </ul>
+                            <ul id="messagingSideMenu" class="nav side-menu" style="display: none;">
+                                <li><a href="/msgDashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
+                                </li>
+                                <li><a href="/msgconDashboard"><i class="fa fa-table"></i>Messaging Conversation</a>
+                                </li>
+                                <li><a href="/msgcsatDashboard"><i class="fa fa-table"></i>Messaging CSAT Distribution</a>
+                                </li>
+                                <li><a href="/msgSettings"><i class="fa fa-gear"></i> Settings</a>
+                                </li>
+                                <!--
+                                <li><a href="/glossary"><i class="fa fa-book"></i> Glossary</a>
+                                </li>
+                                <li><a href="javascript:void(0);" onclick="startIntro();"><i class="fa fa-question"></i>Help</a></li>
+                                -->
+                                <li><a href="/startups"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                                <li><hr></li>
+                                <li><a href="/graphsDashboard" onclick="showChatMenu();"><i class="fa fa-desktop"></i> Go To Chat Dashboard</a>
                                 </li>
                             </ul>
                         </div>
@@ -123,5 +146,6 @@
     <script type="text/javascript" src="/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="/js/dashboard/mainScript.js"></script>
 </body>
 </html>

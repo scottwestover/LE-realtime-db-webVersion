@@ -7,6 +7,8 @@ $(document).ready(function() {
         var sel = 'div[role="main"]';
         skillList = angular.element(sel).scope().listSkills();
         agentList = angular.element(sel).scope().listUsers();
+        //console.log(skillList);
+        //console.log(agentList);
 
         populateMutilpleSelectBoxes();
         updateFormAgentValues();
@@ -24,6 +26,8 @@ $(document).ready(function() {
 function storeValues() {
     // Check browser support
     if (typeof(Storage) !== "undefined") {
+        // Check if keys or account number has changed
+        var restart = checkForChangedKeys();
         // Store
         localStorage.setItem("consumerKey", document.getElementById("consumerKey").value);
         localStorage.setItem("consumerSecret", document.getElementById("consumerSecret").value);
@@ -44,10 +48,18 @@ function storeValues() {
         localStorage.setItem("agentActivityRange", document.getElementById("agentActivityRange").value);
         localStorage.setItem("queueHealthRange", document.getElementById("queueHealthRange").value);
         localStorage.setItem("engagementActivityRange", document.getElementById("engagementActivityRange").value);
+        localStorage.setItem("slaRange", document.getElementById("slaRange").value);
+        localStorage.setItem("slaskillSelect", document.getElementById("slaskillSelect").value);
+        localStorage.setItem("slaskillIDList", $('#slaskillIDList').val());
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
-    window.location.href = "/";
+    if (restart) {
+        window.location.href = "/";
+    }
+    else {
+        $('#cancelButton').click();
+    }
     return;
 }
 
@@ -84,6 +96,9 @@ function getStorageVales() {
         }
         if (localStorage.getItem("engagementActivityRange") != null) {
             $("#engagementActivityRange").val(localStorage.getItem("engagementActivityRange"));
+        }
+        if (localStorage.getItem("slaRange") != null) {
+            $("#slaRange").val(localStorage.getItem("slaRange"));
         }
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
@@ -149,6 +164,17 @@ function updateFormValues() {
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#skillIDListAA").prop("disabled", false);
+        }
+    });
+    // check to see if the skill id select menu item has changed for sla
+    $("#slaskillSelect").change(function() {
+        if ($("#slaskillSelect").val() == 1) {
+            // if they select all skills, disable the text area to input specific ids
+            $("#slaskillIDList").prop("disabled", true);
+            $("#slaskillIDList option:selected").prop("selected", false);
+        } else {
+            // if they select individual agents, enable the text area to input specific ids
+            $("#slaskillIDList").prop("disabled", false);
         }
     });
     return;
@@ -222,6 +248,16 @@ function updateFormSkillValues() {
                 $("#easkillIDList option[value='" + easkillIDListArray[i] + "']").attr('selected', true);
             }
         }
+        if (localStorage.getItem("slaskillSelect") != null) {
+            $("#slaskillSelect").val(localStorage.getItem("slaskillSelect"));
+        }
+        if (localStorage.getItem("slaskillSelect") == 2) {
+            $("#slaskillIDList").prop("disabled", false);
+            var slaskillIDListArray = localStorage.getItem("slaskillIDList").split(",");
+            for (var i = 0; i < slaskillIDListArray.length; i++) {
+                $("#slaskillIDList option[value='" + slaskillIDListArray[i] + "']").attr('selected', true);
+            }
+        }
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
@@ -238,6 +274,7 @@ function populateMutilpleSelectBoxes() {
     var selectQueueHealth = document.getElementById("skillIDList");
     var selectEngagementActivity = document.getElementById("easkillIDList");
     var selectCurrentQueueState = document.getElementById("CQskillIDList");
+    var selectSLA = document.getElementById("slaskillIDList");
     // loop through all of the select boxes and add in all of the available skills that can be selected
     for (var skill in skillList) {
         var optTxt = skillList[skill];
@@ -271,6 +308,14 @@ function populateMutilpleSelectBoxes() {
         el.value = opt;
         selectCurrentQueueState.appendChild(el);
     }
+    for (var skill in skillList) {
+        var optTxt = skillList[skill];
+        var opt = skill;
+        var el = document.createElement("option");
+        el.textContent = optTxt;
+        el.value = opt;
+        selectSLA.appendChild(el);
+    }
     var selectAgents = document.getElementById("eaagentIDList");
     // loop through all of the select boxes and add in all of the available agents that can be selected
     for (var agent in agentList) {
@@ -282,4 +327,33 @@ function populateMutilpleSelectBoxes() {
         selectAgents.appendChild(el);
     }
     return;
+}
+
+/**
+ * @desc checks to see if the api keys have changed that way we know if we need to restart the app
+ * @return bool
+ */
+function checkForChangedKeys() {
+    var restart = false;
+    // Check browser support
+    if (typeof(Storage) !== "undefined") {
+        if (localStorage.getItem("consumerKey") != document.getElementById("consumerKey").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("accountNum") != document.getElementById("accountNum").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("consumerSecret") != document.getElementById("consumerSecret").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("accessToken") != document.getElementById("accessToken").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("accessTokenSecret") != document.getElementById("accessTokenSecret").value) {
+            restart = true;
+        }
+    } else {
+        console.log("Sorry, your browser does not support Web Storage...");
+    }
+    return restart;
 }
