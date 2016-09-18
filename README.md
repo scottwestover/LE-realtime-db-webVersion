@@ -32,7 +32,7 @@ Your app should be running on localhost:5000.
  * New
    * View Real Time Metrics for messaging.
     * Added new SLA api information to the main dashboard. You can also view the SLA information on the new SLA dashboard.
-   * Moved all of the dashboard buttons on the navbar to a new menu drop down menu.
+    * Moved all of the dashboard buttons on the navbar to a new menu drop down menu.
 * V0.9.3 BETA - 10 August 2016
  * Fixed
    * Current Queue Status - Abandonment Rate Bug
