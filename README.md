@@ -40,6 +40,6 @@ Your app should be running on localhost:5000.
  * View real time data on an account using the Real Time Operational, Skills, Users, and Agent Groups APIs.
  * Features:
    * Pull data using a custom time frame (past minute up to the past 24 hours).
-   * Export raw data to CSV.
-   * View agents states.
-   * View current queue information.
+    * Export raw data to CSV.
+    * View agents states.
+    * View current queue information.
