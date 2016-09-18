@@ -6,6 +6,8 @@ This is a sample Real Time Dashboard that can be built using the Real Time Opera
 
 In order to properly use the app, you will need to enable the Real Time Operational, Skills, Users, and Agent Groups APIs on your account. If the Users, SKills, and Agent Groups APIs are not enabled, then the tool will not pull data correctly.
 
+You can navigate to the messaging dashboard by clicking on the icon on the navbar.
+
 You can add/edit your api keys in LiveEngage by going to the campaigns tab, click on data sources at the bottom, and then click on the api tab.
 
 ## Deploy On Heroku
@@ -24,6 +26,13 @@ Your app should be running on localhost:5000.
 
 ## Updates
 
+* V1.0.0 - 17 September 2016
+ * Fixed
+   * Bug where the previously selected agents and skills would not populate on the settings page.
+ * New
+   * View Real Time Metrics for messaging.
+   * Added new SLA api information to the main dashboard. You can also view the SLA information on the new SLA dashboard.
+   * Moved all of the dashboard buttons on the navbar to a new menu drop down menu.
 * V0.9.3 BETA - 10 August 2016
  * Fixed
    * Current Queue Status - Abandonment Rate Bug
