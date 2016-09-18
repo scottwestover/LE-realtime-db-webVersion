@@ -30,10 +30,10 @@ Your app should be running on localhost:5000.
   * Current Queue Status - Incorrect Tool Tips
 * V0.9.2 BETA - 28 July 2016
  * Fixed
-  * Spelling Mistakes
+   * Spelling Mistakes
 * V0.9.1 BETA - 22 July 2016
  * New
-  * Skill Names and Agent Names will automatically populate in the settings page. You no longer need to manually enter in the skill id or the agent id for the API.
+   * Skill Names and Agent Names will automatically populate in the settings page. You no longer need to manually enter in the skill id or the agent id for the API.
  * Fixed
   * Average Agent Utilization Bug
 * V0.9 BETA - 15 July 2016
