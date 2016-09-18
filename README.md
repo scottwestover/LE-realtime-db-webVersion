@@ -36,7 +36,7 @@ Your app should be running on localhost:5000.
 * V0.9.3 BETA - 10 August 2016
  * Fixed
    * Current Queue Status - Abandonment Rate Bug
-   * Current Queue Status - Incorrect Tool Tips
+    * Current Queue Status - Incorrect Tool Tips
 * V0.9.2 BETA - 28 July 2016
  * Fixed
    * Spelling Mistakes
