@@ -176,6 +176,16 @@ function updateMessagingConData(data) {
         totalHandlingTime_resolvedConversations_byConsumer = data.metricsTotals.totalHandlingTime_resolvedConversations_byConsumer;
         totalHandlingTime_resolvedConversations_bySystem = data.metricsTotals.totalHandlingTime_resolvedConversations_bySystem;
         totalResolvedConversations = data.metricsTotals.totalResolvedConversations;
+
+        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+        avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+        avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+        avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+        totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+        totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+        totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+        totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
         oTable3.row.add([totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();
     }
     if (data.hasOwnProperty("agentsMetrics")) {
@@ -200,6 +210,16 @@ function updateMessagingConData(data) {
                 totalHandlingTime_resolvedConversations_byConsumer = data.agentsMetrics.metricsPerAgent[agent].totalHandlingTime_resolvedConversations_byConsumer;
                 totalHandlingTime_resolvedConversations_bySystem = data.agentsMetrics.metricsPerAgent[agent].totalHandlingTime_resolvedConversations_bySystem;
                 totalResolvedConversations = data.agentsMetrics.metricsPerAgent[agent].totalResolvedConversations;
+
+                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+                avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+                avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+                avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+                totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+                totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+                totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+                totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
                 oTable2.row.add([agentId, totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();
             }
         }
@@ -217,6 +237,16 @@ function updateMessagingConData(data) {
             totalHandlingTime_resolvedConversations_byConsumer = data.agentsMetrics.metricsTotals.totalHandlingTime_resolvedConversations_byConsumer;
             totalHandlingTime_resolvedConversations_bySystem = data.agentsMetrics.metricsTotals.totalHandlingTime_resolvedConversations_bySystem;
             totalResolvedConversations = data.agentsMetrics.metricsTotals.totalResolvedConversations;
+
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+            avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+            avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+            avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+            totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+            totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+            totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+            totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
             oTable2.row.add([agentId, totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();
         }
     }
@@ -252,6 +282,16 @@ function updateMessagingConData(data) {
                         totalHandlingTime_resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalHandlingTime_resolvedConversations_byConsumer;
                         totalHandlingTime_resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalHandlingTime_resolvedConversations_bySystem;
                         totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalResolvedConversations;
+
+                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+                        avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+                        avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+                        avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+                        totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+                        totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+                        totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+                        totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
                         oTable.row.add([skillId, agentId, totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();
                     }
                 }
@@ -269,6 +309,16 @@ function updateMessagingConData(data) {
                     totalHandlingTime_resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalHandlingTime_resolvedConversations_byConsumer;
                     totalHandlingTime_resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalHandlingTime_resolvedConversations_bySystem;
                     totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalResolvedConversations;
+                    
+                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+                    avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+                    avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+                    avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+                    totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+                    totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+                    totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+                    totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
                     oTable.row.add([skillId, agentId, totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();
                 }
             }
@@ -288,6 +338,16 @@ function updateMessagingConData(data) {
             totalHandlingTime_resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsTotals.totalHandlingTime_resolvedConversations_byConsumer;
             totalHandlingTime_resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsTotals.totalHandlingTime_resolvedConversations_bySystem;
             totalResolvedConversations = data.skillsMetricsPerAgent.metricsTotals.totalResolvedConversations;
+            
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+            avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
+            avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
+            avgTime_resolvedConversations_bySystem = secondsToHms(avgTime_resolvedConversations_bySystem/1000);
+            totalHandlingTime_resolvedConversations = secondsToHms(totalHandlingTime_resolvedConversations/1000);
+            totalHandlingTime_resolvedConversations_byCCP = secondsToHms(totalHandlingTime_resolvedConversations_byCCP/1000);
+            totalHandlingTime_resolvedConversations_byConsumer = secondsToHms(totalHandlingTime_resolvedConversations_byConsumer/1000);
+            totalHandlingTime_resolvedConversations_bySystem = secondsToHms(totalHandlingTime_resolvedConversations_bySystem/1000);
+
             oTable.row.add([skillId, agentId, totalResolvedConversations, resolvedConversations_byCCP, resolvedConversations_byConsumer, resolvedConversations_bySystem, avgTime_resolvedConversations, avgTime_resolvedConversations_byCCP, avgTime_resolvedConversations_byConsumer, avgTime_resolvedConversations_bySystem,totalHandlingTime_resolvedConversations, totalHandlingTime_resolvedConversations_byCCP, totalHandlingTime_resolvedConversations_byConsumer, totalHandlingTime_resolvedConversations_bySystem]).draw();         
         }
     }

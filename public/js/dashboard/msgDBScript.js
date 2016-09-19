@@ -161,6 +161,8 @@ function updateMessagingConData(data) {
         resolvedConversations_byConsumer = data.metricsTotals.resolvedConversations_byConsumer;
         totalResolvedConversations = data.metricsTotals.totalResolvedConversations;
         resolvedConversations_bySystem = data.metricsTotals.resolvedConversations_bySystem;
+
+        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
     }
     if (data.hasOwnProperty("agentsMetrics")) {
         if (data.agentsMetrics.hasOwnProperty("metricsPerAgent")) {
@@ -176,6 +178,8 @@ function updateMessagingConData(data) {
                 resolvedConversations_byConsumer = data.agentsMetrics.metricsPerAgent[agent].resolvedConversations_byConsumer;
                 totalResolvedConversations = data.agentsMetrics.metricsPerAgent[agent].totalResolvedConversations;
                 resolvedConversations_bySystem = data.agentsMetrics.metricsPerAgent[agent].resolvedConversations_bySystem;
+
+                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
             }
         }
         if (data.agentsMetrics.hasOwnProperty("metricsTotals")) {
@@ -184,6 +188,8 @@ function updateMessagingConData(data) {
             resolvedConversations_byConsumer = data.agentsMetrics.metricsTotals.resolvedConversations_byConsumer;;
             totalResolvedConversations = data.agentsMetrics.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.agentsMetrics.metricsTotals.resolvedConversations_bySystem;
+
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
         }
     }
     if (data.hasOwnProperty("skillsMetricsPerAgent")) {
@@ -210,6 +216,8 @@ function updateMessagingConData(data) {
                         resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_byConsumer;
                         totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalResolvedConversations;
                         resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_bySystem;
+                    
+                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
                     }
                 }
                 if (data.skillsMetricsPerAgent.metricsPerSkill[skill].hasOwnProperty("metricsTotals")) {
@@ -219,6 +227,8 @@ function updateMessagingConData(data) {
                     resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_byConsumer;
                     totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalResolvedConversations;
                     resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_bySystem;
+                
+                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
                 }
             }
         }
@@ -230,6 +240,8 @@ function updateMessagingConData(data) {
             resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_byConsumer;
             totalResolvedConversations = data.skillsMetricsPerAgent.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_bySystem;
+        
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
         }
     }
     $('#conRes').html(totalResolvedConversations);
