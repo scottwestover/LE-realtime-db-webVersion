@@ -64,19 +64,19 @@ function getStorageVales() {
     // Check browser support
     if (typeof(Storage) !== "undefined") {
         if (localStorage.getItem("consumerKeyM") != null) {
-            $('#consumerKey').val(localStorage.getItem("consumerKey"));
+            $('#consumerKey').val(localStorage.getItem("consumerKeyM"));
         }
         if (localStorage.getItem("accountNumM") != null) {
-            $('#accountNum').val(localStorage.getItem("accountNum"));
+            $('#accountNum').val(localStorage.getItem("accountNumM"));
         }
         if (localStorage.getItem("consumerSecretM") != null) {
-            $('#consumerSecret').val(localStorage.getItem("consumerSecret"));
+            $('#consumerSecret').val(localStorage.getItem("consumerSecretM"));
         }
         if (localStorage.getItem("accessTokenM") != null) {
-            $('#accessToken').val(localStorage.getItem("accessToken"));
+            $('#accessToken').val(localStorage.getItem("accessTokenM"));
         }
         if (localStorage.getItem("accessTokenSecretM") != null) {
-            $('#accessTokenSecret').val(localStorage.getItem("accessTokenSecret"));
+            $('#accessTokenSecret').val(localStorage.getItem("accessTokenSecretM"));
         }
         if (localStorage.getItem("msgConRange") != null) {
             $("#msgConRange").val(localStorage.getItem("msgConRange"));
