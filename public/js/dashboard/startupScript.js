@@ -27,7 +27,7 @@ $(function() {
             completed = true;
             clearInterval(refreshIntervalId);
             if (data.Fail != "undefined" && data.Fail != "404") {
-                console.log(data);
+                //console.log(data);
                 setTimeout(function() {
                     var sel = 'div[role="main"]';
                     angular.element(sel).scope().add(data.users, data.skills, data.groups);
