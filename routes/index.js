@@ -244,6 +244,9 @@ exports.engagementActivity2 = function (req, res) {
 
 //route used to query the apis to pull in the data. If the app is not able to connect to the apis, then it routes to the settings page.
 exports.startup = function (req, res) {
+        skillData = {};
+        agentData = {};
+        agentGroupData = {};
         var oauth = {
             consumer_key: req.query.cKey,
             consumer_secret: req.query.cSec,
