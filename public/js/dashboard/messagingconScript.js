@@ -40,7 +40,7 @@ function getData() {
                 updateMessagingConData(data);
             } else {
                 //window.location.href = "/error";
-                $('#myModal').modal('show');
+                $('#myModal2').modal('show');
                 $('#errorDetails').html(JSON.stringify(data.Error));
             }
         }
