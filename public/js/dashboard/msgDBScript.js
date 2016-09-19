@@ -121,11 +121,11 @@ function getData() {
 function getLocalStorageVariables() {
     // Check browser support
     if (typeof(Storage) !== "undefined") {
-        consumerKey = localStorage.getItem("consumerKey");
-        accountNum = localStorage.getItem("accountNum");
-        consumerSecret = localStorage.getItem("consumerSecret");
-        accessToken = localStorage.getItem("accessToken");
-        accessTokenSecret = localStorage.getItem("accessTokenSecret");
+        consumerKey = localStorage.getItem("consumerKeyM");
+        accountNum = localStorage.getItem("accountNumM");
+        consumerSecret = localStorage.getItem("consumerSecretM");
+        accessToken = localStorage.getItem("accessTokenM");
+        accessTokenSecret = localStorage.getItem("accessTokenSecretM");
         msgConskillSelect = localStorage.getItem("msgConskillSelect");
         msgConskillIDList = localStorage.getItem("msgConskillIDList");
         msgConagentIDList = localStorage.getItem("msgConagentIDList");

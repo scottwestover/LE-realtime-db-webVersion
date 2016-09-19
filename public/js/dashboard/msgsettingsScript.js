@@ -29,11 +29,11 @@ function storeValues() {
         // Check if keys or account number has changed
         var restart = checkForChangedKeys();
         // Store
-        localStorage.setItem("consumerKey", document.getElementById("consumerKey").value);
-        localStorage.setItem("consumerSecret", document.getElementById("consumerSecret").value);
-        localStorage.setItem("accessToken", document.getElementById("accessToken").value);
-        localStorage.setItem("accessTokenSecret", document.getElementById("accessTokenSecret").value);
-        localStorage.setItem("accountNum", document.getElementById("accountNum").value);
+        localStorage.setItem("consumerKeyM", document.getElementById("consumerKey").value);
+        localStorage.setItem("consumerSecretM", document.getElementById("consumerSecret").value);
+        localStorage.setItem("accessTokenM", document.getElementById("accessToken").value);
+        localStorage.setItem("accessTokenSecretM", document.getElementById("accessTokenSecret").value);
+        localStorage.setItem("accountNumM", document.getElementById("accountNum").value);
         localStorage.setItem("msgConskillSelect", document.getElementById("msgConskillSelect").value);
         localStorage.setItem("msgConAgentSelect", document.getElementById("msgConAgentSelect").value);
         localStorage.setItem("msgConskillIDList", $('#msgConskillIDList').val());
@@ -63,19 +63,19 @@ function storeValues() {
 function getStorageVales() {
     // Check browser support
     if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKey") != null) {
+        if (localStorage.getItem("consumerKeyM") != null) {
             $('#consumerKey').val(localStorage.getItem("consumerKey"));
         }
-        if (localStorage.getItem("accountNum") != null) {
+        if (localStorage.getItem("accountNumM") != null) {
             $('#accountNum').val(localStorage.getItem("accountNum"));
         }
-        if (localStorage.getItem("consumerSecret") != null) {
+        if (localStorage.getItem("consumerSecretM") != null) {
             $('#consumerSecret').val(localStorage.getItem("consumerSecret"));
         }
-        if (localStorage.getItem("accessToken") != null) {
+        if (localStorage.getItem("accessTokenM") != null) {
             $('#accessToken').val(localStorage.getItem("accessToken"));
         }
-        if (localStorage.getItem("accessTokenSecret") != null) {
+        if (localStorage.getItem("accessTokenSecretM") != null) {
             $('#accessTokenSecret').val(localStorage.getItem("accessTokenSecret"));
         }
         if (localStorage.getItem("msgConRange") != null) {
@@ -259,19 +259,19 @@ function checkForChangedKeys() {
     var restart = false;
     // Check browser support
     if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKey") != document.getElementById("consumerKey").value) {
+        if (localStorage.getItem("consumerKeyM") != document.getElementById("consumerKey").value) {
             restart = true;
         }
-        if (localStorage.getItem("accountNum") != document.getElementById("accountNum").value) {
+        if (localStorage.getItem("accountNumM") != document.getElementById("accountNum").value) {
             restart = true;
         }
-        if (localStorage.getItem("consumerSecret") != document.getElementById("consumerSecret").value) {
+        if (localStorage.getItem("consumerSecretM") != document.getElementById("consumerSecret").value) {
             restart = true;
         }
-        if (localStorage.getItem("accessToken") != document.getElementById("accessToken").value) {
+        if (localStorage.getItem("accessTokenM") != document.getElementById("accessToken").value) {
             restart = true;
         }
-        if (localStorage.getItem("accessTokenSecret") != document.getElementById("accessTokenSecret").value) {
+        if (localStorage.getItem("accessTokenSecretM") != document.getElementById("accessTokenSecret").value) {
             restart = true;
         }
     } else {

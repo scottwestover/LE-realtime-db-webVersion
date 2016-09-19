@@ -8,7 +8,7 @@ In order to properly use the app, you will need to enable the Real Time Operatio
 
 You can navigate to the messaging dashboard by clicking on the icon on the navbar.
 
-You can add/edit your api keys in LiveEngage by going to the campaigns tab, click on data sources at the bottom, and then click on the api tab.
+You can add/edit your api keys in LiveEngage by going to the campaigns tab, click on data sources at the bottom, and then click on the api tab. 
 
 ## Deploy On Heroku
 
