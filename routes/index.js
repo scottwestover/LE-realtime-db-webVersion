@@ -346,6 +346,47 @@ exports.sla = function (req, res) {
         });
 };
 
+// pulls the conversations API
+exports.conversations = function (req, res) {
+        var oauth = {
+            consumer_key: req.query.cKey,
+            consumer_secret: req.query.cSec,
+            token: req.query.tok,
+            token_secret: req.query.tSec
+        };
+        var offset = req.query.offset;
+        if (offset === 'null') {
+            offset = "1";
+        }
+        var limit = req.query.limit;
+        if (limit === 'null') {
+            limit = "50";
+        }
+
+        var to_ms = (new Date).getTime();
+        var from_ms = to_ms - (offset * 60 * 1000);
+        var bodyStr = "{\"start\": {\"from\":" + from_ms + ", \"to\":" + to_ms + "}}";
+        var url = 'https://va.msghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + offset + '&limit=' + limit;
+        request.post({
+            url: url,
+            oauth: oauth,
+            //json: bodyStr,
+            body: bodyStr,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }, function (e, r, b) {
+            if (!e && r.statusCode == 200) {
+                res.json(b);
+            } else {
+                res.json({
+                    "Error": b,
+                    "Fail": "404"
+                });
+            }
+        });
+}; 
+
 // pulls the messaging conversation api
 exports.messagingConversation = function (req, res) {
         var oauth = {
