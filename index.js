@@ -37,6 +37,8 @@ app.get('/sla', routes.sla);
 // serve messaging views
 app.get('/messagingConversation', routes.messagingConversation);
 app.get('/messagingCSAT', routes.messagingCSAT);
+app.get('/conversations', routes.conversations);
+
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 

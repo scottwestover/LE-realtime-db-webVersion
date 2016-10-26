@@ -16,6 +16,13 @@ var msgcsatRange = 1;
 getLocalStorageVariables();
 var showData = false;
 var showData2 = false;
+
+var limit = 50;
+var agentActivityRange = 1;
+var skillIDListAA = "all";
+// variable for the list of agents
+var agentList = null;
+
 var ctx = document.getElementById("lineChart").getContext("2d");
 var ctx2 = document.getElementById("lineChart24hr").getContext("2d");
 var data = {
@@ -105,6 +112,32 @@ function getData() {
     });
     $.ajax({
         type: 'GET',
+        url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + msgConRange + '&limit=' + limit,
+        success: function(data) {
+            if (data.Fail != "undefined" && data.Fail != "404") {
+                updateConversationsData(data);
+            } else {
+                //window.location.href = "/error";
+                $('#myModal2').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
+            }
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA,
+        success: function(data) {
+            if (data.Fail != "undefined" && data.Fail != "404") {
+                updateAgentActivityData(data);
+            } else {
+                //window.location.href = "/error";
+                $('#myModal2').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
+            }
+        }
+    });
+    $.ajax({
+        type: 'GET',
         url: '/messagingCSAT?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgcsatskillIDList + '&skS=' + msgcsatskillSelect + '&agent=' + msgcsatagentIDList + '&agS' + msgcsatAgentSelect + '&range=' + msgcsatRange,
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
@@ -116,6 +149,7 @@ function getData() {
             }
         }
     });
+    
 }
 
 function getLocalStorageVariables() {
@@ -140,6 +174,79 @@ function getLocalStorageVariables() {
         console.log("Sorry, your browser does not support Web Storage...");
     }
     return;
+}
+
+function updateAgentActivityData(data) {
+    var agentsOnline = 0;
+    var agentsAway = 0;
+    var agentsBackSoon = 0;
+    var agentsLoggedIn = 0;
+    for (var agent in data.agentsMetrics.metricsPerAgent) {
+        // data available for each agent in the 
+        var agentID = null;
+        if (agentList.hasOwnProperty(agent)) {
+            agentID = agentList[agent].nickname;
+        } else {
+            agentID = agent;
+        }
+        if (data.agentsMetrics.metricsPerAgent[agent][0].value.total !== 0) agentsOnline += 1;
+        if (data.agentsMetrics.metricsPerAgent[agent][2].value.total !== 0) agentsAway += 1;
+        if (data.agentsMetrics.metricsPerAgent[agent][1].value.total !== 0) agentsBackSoon += 1;
+        if (data.agentsMetrics.metricsPerAgent[agent][3].value.total !== 0) agentsLoggedIn += 1;
+    }
+    $('#onlineAgents').html(agentsOnline);
+    $('#awayAgents').html(agentsAway);
+    $('#backAgents').html(agentsBackSoon);
+    $('#loggedInAgents').html(agentsLoggedIn);
+
+    return;
+}
+
+
+function updateConversationsData(data) {
+    var conTotal = 0;
+    var conActive = 0;
+    var conInQueue = 0;
+    var conInbound = 0;
+    var conOutbound = 0;
+
+    var obj = JSON.parse(data);
+
+    if (obj.hasOwnProperty("conversationHistoryRecords")) {
+        for (var conversations in obj.conversationHistoryRecords) {
+            if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
+                if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
+                    if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
+                        conTotal += 1;
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
+                            conActive += 1;
+                        }
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
+                            conInQueue += 1;
+                        }
+                    }
+                }
+            }
+            if (obj.conversationHistoryRecords[conversations].hasOwnProperty("messageRecords")) {
+                for (var message in obj.conversationHistoryRecords[conversations].messageRecords) {
+                    if (obj.conversationHistoryRecords[conversations].messageRecords[message].hasOwnProperty("sentBy")) {
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Consumer\"") {
+                            conInbound += 1;
+                        }
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Agent\"") {
+                            conOutbound += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }  
+
+    $('#conTotal').html(conTotal);
+    $('#conActive').html(conActive);
+    $('#conInQueue').html(conInQueue);
+    $('#conOutbound').html(conOutbound);
+    $('#conInbound').html(conInbound);
 }
 
 /**
@@ -244,6 +351,7 @@ function updateMessagingConData(data) {
             avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
         }
     }
+    
     $('#conRes').html(totalResolvedConversations);
     $('#conCCP').html(resolvedConversations_byCCP);
     $('#conCon').html(resolvedConversations_byConsumer);

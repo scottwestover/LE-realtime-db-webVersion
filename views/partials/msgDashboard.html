@@ -1,67 +1,172 @@
 <div class="right_col" role="main">
 <div id="time" style="display: none;"></div>
-   <!-- top tiles 2-->
+   <!-- top tiles 2--> 
    <div class="row" id="tiles">
+      <!-- ROW 1 -->
       <div class="row tile_count">
-      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The total number of conversations that were marked as resolved in the current interval/timeframe." data-placement="bottom">
+      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The total number of conversations that are open." data-placement="bottom">
         	<div class="left"></div>
             	<div class="right">
-               		<span class="count_top">Conversations Resolved</span>
-               	<div class="count" id="conRes"></div>
+               		<span class="count_top">Total Conversations</span>
+               	<div class="count" id="conTotal"></div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of conversations that were marked as resolved by the CCP in the current interval/time frame." data-placement="bottom">
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of Agents currently logged in." data-placement="bottom">
         	<div class="left"></div>
             	<div class="right">
-               		<span class="count_top">Resolved By CCP</span>
-               	<div class="count" id="conCCP"></div>
+               		<span class="count_top">Total Logged In</span>
+               	<div class="count" id="loggedInAgents"></div>
             </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of conversations that were marked as resolved by the consumer in the current interval/time frame." data-placement="bottom">
         	<div class="left"></div>
             	<div class="right">
-               		<span class="count_top">Resolved By Consumer</span>
-               	<div class="count" id="conCon"></div>
+               		<span class="count_top">Average Time to First Response</span>
+               	<div class="count" id="firstResponse"></div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The average handling time of conversations that were marked as resolved in the current interval/time frame (hh:mm:ss)." data-placement="bottom">
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of closed conversations." data-placement="bottom">
         	<div class="left"></div>
             	<div class="right">
-               		<span class="count_top">Average Handling Time</span>
-               	<div class="count" id="avgTime"></div>
+               		<span class="count_top">Total Closed Conversations</span>
+               	<div class="count" id="conRes"></div>
             </div>
         </div>
       </div>
+
+      <!-- ROW 2 -->
       <div class="row tile_count"></div>
       <!-- /top tiles 2-->
-      <!-- top tiles -->
       <div class="row tile_count">
-      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="" data-placement="bottom">
+      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The average number of conversations resolved per agent." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Average Resolved per Agent</span>
+               	<div class="count" id="conRes"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of agents currently set to Available." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Available Agents</span>
+               	<div class="count" id="onlineAgents"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of conversations that are currently active." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Active Conversations</span>
+               	<div class="count" id="conActive"></div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The average handling time of conversations that were marked as resolved in the current interval/time frame (hh:mm:ss)." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Ave Active Conversations</span>
+               	<div class="count" id="aveOnlineAgents"></div>
+            </div>
+        </div>
+      </div>
+
+      <!-- ROW 3 -->
+      <div class="row tile_count"></div>
+      <div class="row tile_count">
+      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The total number of conversations that were marked as resolved by the CSR in the current interval/timeframe." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Resolved by CSR</span>
+               	<div class="count" id="conCCP"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of agents currently set to Away" data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Agents Away</span>
+               	<div class="count" id="awayAgents"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of messages sent by consumers." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Inbound Messages</span>
+               	<div class="count" id="conInbound"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of conversations that have not been assigned." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Unassigned Conversations</span>
+               	<div class="count" id="conInQueue"></div>
+            </div>
+        </div>
+        
+      </div>
+
+      <!-- ROW 4 -->
+      <div class="row tile_count"></div>
+      <div class="row tile_count">
+      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The average handling time of conversations that were marked as resolved in the current interval/time frame (hh:mm:ss)." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Average Handling Time</span>
+               	<div class="count" id="avgHandlingTime"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of agents set to Back Soon" data-placement="bottom">
             <div class="left"></div>
             <div class="right">
-               <span class="count_top" style="display: none;">Agents Online</span>
-               <div class="count" id="onlineAgents"></div>
+               <span class="count_top">Agents Back Soon</span>
+               <div class="count" id="backAgents"></div>
             </div>
          </div>
-         <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The percentage of the total answers which were positive (scores 4 and 5) which were submitted in the current time frame." data-placement="bottom">
+        
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of messages sent by Agents." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Outbound Messages</span>
+               	<div class="count" id="conOutbound"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The percentage of the total answers which were positive (scores 4 and 5) which were submitted in the current time frame." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">CSAT Score</span>
+               	<div class="count" id="csatScore"></div>
+            </div>
+        </div>
+      </div>
+
+      <!-- ROW 5 -->
+      <div class="row tile_count"></div>
+      <!-- top tiles -->
+      <div class="row tile_count">
+      	<div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The number of conversations that were marked as resolved by the customer in the current interval/time frame." data-placement="bottom">
+        	<div class="left"></div>
+            	<div class="right">
+               		<span class="count_top">Resolved By Customer</span>
+               	<div class="count" id="conCon"></div>
+            </div>
+        </div>
+         <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="" data-placement="bottom">
             <div class="left"></div>
             <div class="right">
-               <span class="count_top">CSAT</span>
+               <span class="count_top" style="display: none;">CSAT</span>
                <div class="count" id="csatScore"></div>
             </div>
          </div>
          <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The total number of answers which were submitted in the current time frame." data-placement="bottom">
             <div class="left"></div>
             <div class="right">
-               <span class="count_top">Total Answers</span>
-               <div class="count" id="totalAns"></div>
+               <span class="count_top">Average Resolution Time</span>
+               <div class="count" id="avgTime"></div>
             </div>
          </div>
-         <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The total number of CSAT 4 and 5 answers which were submitted in the current time frame." data-placement="bottom">
+         <div class="col-md-3 col-sm-3 col-xs-3 tile_stats_count" data-toggle="tooltip" title="The average number of messages per conversation." data-placement="bottom">
             <div class="left"></div>
             <div class="right">
-               <span class="count_top">Positive Answers</span>
-               <div class="count" id="posAns"></div>
+               <span class="count_top">Messages per Conversation</span>
+               <div class="count" id="numMessages"></div>
             </div>
          </div>
       </div>
