@@ -360,7 +360,11 @@ exports.conversations = function (req, res) {
         }
         var limit = req.query.limit;
         if (limit === 'null') {
-            limit = "50";
+            limit = "100";
+        }
+        var skillList = req.query.skill;
+        if (skillList === 'null') {
+            skillList = "";
         }
 
         var to_ms = (new Date).getTime();

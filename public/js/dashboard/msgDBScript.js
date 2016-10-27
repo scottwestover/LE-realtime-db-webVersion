@@ -17,8 +17,9 @@ getLocalStorageVariables();
 var showData = false;
 var showData2 = false;
 
-var limit = 50;
+var limit = 100;
 var agentActivityRange = 1;
+var conFrom = 10;
 var skillIDListAA = "all";
 // variable for the list of agents
 var agentList = null;
@@ -112,7 +113,7 @@ function getData() {
     });
     $.ajax({
         type: 'GET',
-        url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + msgConRange + '&limit=' + limit,
+        url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + conFrom + '&limit=' + limit,
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateConversationsData(data);
