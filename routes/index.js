@@ -370,6 +370,7 @@ exports.conversations = function (req, res) {
         var to_ms = (new Date).getTime();
         var from_ms = to_ms - (offset * 60 * 1000);
         var bodyStr = "{\"start\": {\"from\":" + from_ms + ", \"to\":" + to_ms + "}}";
+        //console.log(bodyStr);
         var url = 'https://va.msghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + offset + '&limit=' + limit;
         request.post({
             url: url,
