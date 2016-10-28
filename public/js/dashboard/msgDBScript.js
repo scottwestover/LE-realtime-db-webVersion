@@ -211,9 +211,9 @@ function updateConversationsData(data) {
     var conInbound = 0;
     var conOutbound = 0;
     var countInfo = 0;
-    var countClosed = 0;
     var avgResByAgent = 0;
-    var countAgents = [];
+    var countAgentsClosed = [];
+    var countAgentsOpen = [];
 
     var obj = JSON.parse(data);
 
@@ -226,15 +226,14 @@ function updateConversationsData(data) {
                         conTotal += 1;
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
                             conActive += 1;
+                            countAgentsOpen.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
                         }
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
                             conInQueue += 1;
                         }
                     }
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"CLOSE\"") {
-                        countClosed += 1;
-                        countAgents.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
-                        //countAgents.push(countInfo);
+                        countAgentsClosed.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
                     }
                 }
             }
@@ -253,8 +252,9 @@ function updateConversationsData(data) {
         }
     }  
 
+    // Average the number of closed conversations per rep
     var count = {};
-    countAgents.forEach(function(x) {count[x] = (count[x] || 0) +1;});
+    countAgentsClosed.forEach(function(x) {count[x] = (count[x] || 0) +1;});
     var agentCount = 0;
     var closedCount = 0;
     Object.keys(count).forEach(function (key) {
@@ -266,12 +266,28 @@ function updateConversationsData(data) {
         avgResByAgent = (closedCount / agentCount).toFixed(2);
     }
 
+    // Average the number of Active conversations per rep
+    var count1 = {};
+    countAgentsOpen.forEach(function(x) {count1[x] = (count1[x] || 0) +1;});
+    agentCount = 0;
+    var openCount = 0;
+    Object.keys(count1).forEach(function (key) {
+        agentCount++;
+        openCount += count1[key];
+    });
+
+    if (agentCount != 0) {
+        avgActiveByAgent = (openCount / agentCount).toFixed(2);
+    }
+
+
     $('#conTotal').html(conTotal);
     $('#conActive').html(conActive);
     $('#conInQueue').html(conInQueue);
     $('#conOutbound').html(conOutbound);
     $('#conInbound').html(conInbound);
     $('#avgConResByAgent').html(avgResByAgent);
+    $('#aveActiveConAgent').html(avgActiveByAgent);
 }
 
 /**
