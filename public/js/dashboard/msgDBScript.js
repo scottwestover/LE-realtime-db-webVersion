@@ -210,12 +210,17 @@ function updateConversationsData(data) {
     var conInQueue = 0;
     var conInbound = 0;
     var conOutbound = 0;
+    var countInfo = 0;
+    var countClosed = 0;
+    var avgResByAgent = 0;
+    var countAgents = [];
 
     var obj = JSON.parse(data);
 
     if (obj.hasOwnProperty("conversationHistoryRecords")) {
         for (var conversations in obj.conversationHistoryRecords) {
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
+                countInfo += 1;
                 if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
                         conTotal += 1;
@@ -225,6 +230,11 @@ function updateConversationsData(data) {
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
                             conInQueue += 1;
                         }
+                    }
+                    if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"CLOSE\"") {
+                        countClosed += 1;
+                        countAgents.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
+                        //countAgents.push(countInfo);
                     }
                 }
             }
@@ -243,11 +253,25 @@ function updateConversationsData(data) {
         }
     }  
 
+    var count = {};
+    countAgents.forEach(function(x) {count[x] = (count[x] || 0) +1;});
+    var agentCount = 0;
+    var closedCount = 0;
+    Object.keys(count).forEach(function (key) {
+        agentCount++;
+        closedCount += count[key];
+    });
+
+    if (agentCount != 0) {
+        avgResByAgent = (closedCount / agentCount).toFixed(2);
+    }
+
     $('#conTotal').html(conTotal);
     $('#conActive').html(conActive);
     $('#conInQueue').html(conInQueue);
     $('#conOutbound').html(conOutbound);
     $('#conInbound').html(conInbound);
+    $('#avgConResByAgent').html(avgResByAgent);
 }
 
 /**
