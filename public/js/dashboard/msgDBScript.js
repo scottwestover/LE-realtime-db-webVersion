@@ -211,8 +211,10 @@ function updateConversationsData(data) {
     var conInbound = 0;
     var conOutbound = 0;
     var countInfo = 0;
+    var countMessages = 0;
     var avgResByAgent = 0;
     var avgActiveByAgent = 0;
+    var avgMessagePerConversation = 0;
     var countAgentsClosed = [];
     var countAgentsOpen = [];
 
@@ -239,6 +241,7 @@ function updateConversationsData(data) {
             }
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("messageRecords")) {
                 for (var message in obj.conversationHistoryRecords[conversations].messageRecords) {
+                    countMessages += 1;
                     if (obj.conversationHistoryRecords[conversations].messageRecords[message].hasOwnProperty("sentBy")) {
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Consumer\"") {
                             conInbound += 1;
@@ -280,6 +283,9 @@ function updateConversationsData(data) {
         avgActiveByAgent = (openCount / agentCount).toFixed(2);
     }
 
+    if (countInfo != 0) {
+        avgMessagePerConversation = (countMessages / countInfo).toFixed(2);
+    }
 
     $('#conTotal').html(conTotal);
     $('#conActive').html(conActive);
@@ -288,6 +294,7 @@ function updateConversationsData(data) {
     $('#conInbound').html(conInbound);
     $('#avgConResByAgent').html(avgResByAgent);
     $('#aveActiveConAgent').html(avgActiveByAgent);
+    $('#numMessages').html(avgMessagePerConversation);
 }
 
 /**
