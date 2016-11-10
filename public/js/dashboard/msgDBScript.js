@@ -19,7 +19,7 @@ var showData2 = false;
 
 var limit = 100;
 var agentActivityRange = 1;
-var conFrom = 10;
+var conFrom = 30; //# mins
 var skillIDListAA = "all";
 // variable for the list of agents
 var agentList = null;
@@ -57,12 +57,12 @@ var myPieChart = new Chart(ctx2).Bar(data2, {
     animation: false
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#lineChart').hide();
     $('#lineChart24hr').hide();
     //setup the agent status table
     $('#agentStatusTable').DataTable({
-        "initComplete": function(settings) {
+        "initComplete": function (settings) {
             /* Apply the tooltips */
             $('#agentStatusTable thead th[title]').tooltip({
                 "container": 'body'
@@ -75,7 +75,7 @@ $(document).ready(function() {
     });
     //setup the skill status table
     $('#skillStatusTable').DataTable({
-        "initComplete": function(settings) {
+        "initComplete": function (settings) {
             /* Apply the tooltips */
             $('#skillStatusTable thead th[title]').tooltip({
                 "container": 'body'
@@ -86,7 +86,7 @@ $(document).ready(function() {
             [10, 25, 50, 100, "All"]
         ]
     });
-    setTimeout(function() {
+    setTimeout(function () {
         var sel = 'div[role="main"]';
         agentList = angular.element(sel).scope().listUsers();
         skillList = angular.element(sel).scope().listSkills();
@@ -101,7 +101,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/messagingConversation?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgConskillIDList + '&skS=' + msgConskillSelect + '&agent=' + msgConagentIDList + '&agS=' + msgConAgentSelect + '&range=' + msgConRange,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingConData(data);
             } else {
@@ -114,7 +114,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + conFrom + '&limit=' + limit,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateConversationsData(data);
             } else {
@@ -127,7 +127,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateAgentActivityData(data);
             } else {
@@ -140,7 +140,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/messagingCSAT?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgcsatskillIDList + '&skS=' + msgcsatskillSelect + '&agent=' + msgcsatagentIDList + '&agS' + msgcsatAgentSelect + '&range=' + msgcsatRange,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingCSATData(data);
             } else {
@@ -150,12 +150,12 @@ function getData() {
             }
         }
     });
-    
+
 }
 
 function getLocalStorageVariables() {
     // Check browser support
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         consumerKey = localStorage.getItem("consumerKeyM");
         accountNum = localStorage.getItem("accountNumM");
         consumerSecret = localStorage.getItem("consumerSecretM");
@@ -212,11 +212,11 @@ function updateConversationsData(data) {
     var conOutbound = 0;
     var countInfo = 0;
     var avgResByAgent = 0;
+    var avgActiveByAgent = 0;
     var countAgentsClosed = [];
     var countAgentsOpen = [];
 
     var obj = JSON.parse(data);
-
     if (obj.hasOwnProperty("conversationHistoryRecords")) {
         for (var conversations in obj.conversationHistoryRecords) {
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
@@ -250,11 +250,11 @@ function updateConversationsData(data) {
                 }
             }
         }
-    }  
+    }
 
     // Average the number of closed conversations per rep
     var count = {};
-    countAgentsClosed.forEach(function(x) {count[x] = (count[x] || 0) +1;});
+    countAgentsClosed.forEach(function (x) { count[x] = (count[x] || 0) + 1; });
     var agentCount = 0;
     var closedCount = 0;
     Object.keys(count).forEach(function (key) {
@@ -268,7 +268,7 @@ function updateConversationsData(data) {
 
     // Average the number of Active conversations per rep
     var count1 = {};
-    countAgentsOpen.forEach(function(x) {count1[x] = (count1[x] || 0) +1;});
+    countAgentsOpen.forEach(function (x) { count1[x] = (count1[x] || 0) + 1; });
     agentCount = 0;
     var openCount = 0;
     Object.keys(count1).forEach(function (key) {
@@ -310,7 +310,7 @@ function updateMessagingConData(data) {
         totalResolvedConversations = data.metricsTotals.totalResolvedConversations;
         resolvedConversations_bySystem = data.metricsTotals.resolvedConversations_bySystem;
 
-        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
     }
     if (data.hasOwnProperty("agentsMetrics")) {
         if (data.agentsMetrics.hasOwnProperty("metricsPerAgent")) {
@@ -327,7 +327,7 @@ function updateMessagingConData(data) {
                 totalResolvedConversations = data.agentsMetrics.metricsPerAgent[agent].totalResolvedConversations;
                 resolvedConversations_bySystem = data.agentsMetrics.metricsPerAgent[agent].resolvedConversations_bySystem;
 
-                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
             }
         }
         if (data.agentsMetrics.hasOwnProperty("metricsTotals")) {
@@ -337,7 +337,7 @@ function updateMessagingConData(data) {
             totalResolvedConversations = data.agentsMetrics.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.agentsMetrics.metricsTotals.resolvedConversations_bySystem;
 
-            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
         }
     }
     if (data.hasOwnProperty("skillsMetricsPerAgent")) {
@@ -364,8 +364,8 @@ function updateMessagingConData(data) {
                         resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_byConsumer;
                         totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalResolvedConversations;
                         resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_bySystem;
-                    
-                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
                     }
                 }
                 if (data.skillsMetricsPerAgent.metricsPerSkill[skill].hasOwnProperty("metricsTotals")) {
@@ -375,8 +375,8 @@ function updateMessagingConData(data) {
                     resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_byConsumer;
                     totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalResolvedConversations;
                     resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_bySystem;
-                
-                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
                 }
             }
         }
@@ -388,11 +388,11 @@ function updateMessagingConData(data) {
             resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_byConsumer;
             totalResolvedConversations = data.skillsMetricsPerAgent.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_bySystem;
-        
-            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
         }
     }
-    
+
     $('#conRes').html(totalResolvedConversations);
     $('#conCCP').html(resolvedConversations_byCCP);
     $('#conCon').html(resolvedConversations_byConsumer);
