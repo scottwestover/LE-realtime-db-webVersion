@@ -388,11 +388,11 @@ exports.conversations = function (req, res) {
     if (params !== "") {
         //           bodyStr += params;
     }
+//    bodyStr += ",\"status\":[\"OPEN\"]}";
     bodyStr += "}";
+//    console.log(bodyStr);
 
     var completeConv = "{\"conversationHistoryRecords\": [";
-
-    //        console.log(bodyStr);
 
     async.whilst(
         // test condition, true or false...

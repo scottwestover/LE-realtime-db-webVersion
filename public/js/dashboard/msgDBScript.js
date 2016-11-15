@@ -214,6 +214,14 @@ function updateConversationsData(data) {
     var countMessages = 0;
     var avgResByAgent = 0;
     var avgActiveByAgent = 0;
+    var minTimeAgent = 2000000000000;
+    var minTimeCons = 2000000000000;
+    var prevMessageId = "";
+    var currMessageId = "";
+    var minTimeUpdated = false;
+    var countRespondedMessages = 0;
+    var totalResponseTime = 0;
+    var avgResponseTime = 0;
     var avgMessagePerConversation = 0;
     var countAgentsClosed = [];
     var countAgentsOpen = [];
@@ -241,14 +249,42 @@ function updateConversationsData(data) {
             }
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("messageRecords")) {
                 for (var message in obj.conversationHistoryRecords[conversations].messageRecords) {
+//                    console.log("--------------------------");
                     countMessages += 1;
+                    currMessageId = (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].messageId).split("::"))[1];
+//                    console.log("prevMessageId: " + prevMessageId + "currMessageId: " + currMessageId);
+                    if (currMessageId != prevMessageId) {
+                        prevMessageId = currMessageId;
+                        // Reset min time...
+                        minTimeCons = 2000000000000;
+                        minTimeAgent = 2000000000000;
+                    } else {
+  //                      console.log("same conversation...");
+                        
+                    }
+                    minTimeUpdated = false;   
                     if (obj.conversationHistoryRecords[conversations].messageRecords[message].hasOwnProperty("sentBy")) {
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Consumer\"") {
                             conInbound += 1;
+                            if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeCons) {
+                                minTimeCons = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+ //                               console.log("minTimeCons: " + minTimeCons);
+                                minTimeUpdated = true;
+                            }
                         }
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Agent\"") {
                             conOutbound += 1;
+                            if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeAgent) {
+                                minTimeAgent = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+ //                               console.log("minTimeAgent: " + minTimeAgent);
+                                minTimeUpdated = true;
+                            }
                         }
+                    }
+                    if ((minTimeCons != 2000000000000) && (minTimeAgent != 2000000000000) && minTimeUpdated) {
+                        totalResponseTime += minTimeAgent - minTimeCons;
+                        countRespondedMessages += 1;
+//                        console.log("totalResponseTime: " + totalResponseTime + " countRespondedMessages: " + countRespondedMessages);
                     }
                 }
             }
@@ -287,6 +323,11 @@ function updateConversationsData(data) {
         avgMessagePerConversation = (countMessages / countInfo).toFixed(2);
     }
 
+    if (countRespondedMessages != 0) {
+        avgResponseTime = secondsToHms((totalResponseTime / countRespondedMessages) / 1000);
+//        console.log("countRespondedMessages: " + countRespondedMessages);
+    }
+
     $('#conTotal').html(conTotal);
     $('#conActive').html(conActive);
     $('#conInQueue').html(conInQueue);
@@ -295,6 +336,7 @@ function updateConversationsData(data) {
     $('#avgConResByAgent').html(avgResByAgent);
     $('#aveActiveConAgent').html(avgActiveByAgent);
     $('#numMessages').html(avgMessagePerConversation);
+    $('#firstResponseTime').html(avgResponseTime);
 }
 
 /**

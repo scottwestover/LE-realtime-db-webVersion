@@ -9,7 +9,7 @@ app.engine('html', require('ejs').renderFile);
 /***************
  * Configuration
  ***************/
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 8080));
 app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
