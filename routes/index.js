@@ -362,6 +362,8 @@ exports.conversations = function (req, res) {
     if (offset === 'null') {
         offset = "1";
     }
+    var messStatus = req.query.messStatus;
+
     var limit = req.query.limit;
     if (limit === 'null') {
         limit = "100";
@@ -388,8 +390,15 @@ exports.conversations = function (req, res) {
     if (params !== "") {
         //           bodyStr += params;
     }
-//    bodyStr += ",\"status\":[\"OPEN\"]}";
-    bodyStr += "}";
+    if (messStatus === "OPEN") {
+        bodyStr += ",\"status\":[\"OPEN\"]}";    
+    } else if (messStatus === "CLOSE") {
+        bodyStr += ",\"status\":[\"CLOSE\"]}";
+    } else {
+        bodyStr += "}";    
+    }
+//    bodyStr += ",\"status\":[\"CLOSE\"]}";
+//    bodyStr += "}";
 //    console.log(bodyStr);
 
     var completeConv = "{\"conversationHistoryRecords\": [";

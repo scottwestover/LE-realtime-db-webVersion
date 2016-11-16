@@ -20,6 +20,7 @@ var showData2 = false;
 var limit = 100;
 var agentActivityRange = 1;
 var conFrom = 30; //# mins
+var conFromLong = 10080; //# mins
 var skillIDListAA = "all";
 // variable for the list of agents
 var agentList = null;
@@ -150,6 +151,20 @@ function getData() {
             }
         }
     });
+    $.ajax({
+        type: 'GET',
+        url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + conFromLong + '&limit=' + limit + '&messStatus=OPEN',
+        success: function (data) {
+            if (data.Fail != "undefined" && data.Fail != "404") {
+                updateConversationsOpenData(data);
+            } else {
+                //window.location.href = "/error";
+                $('#myModal2').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
+            }
+        }
+    });
+
 
 }
 
@@ -205,9 +220,6 @@ function updateAgentActivityData(data) {
 
 
 function updateConversationsData(data) {
-    var conTotal = 0;
-    var conActive = 0;
-    var conInQueue = 0;
     var conInbound = 0;
     var conOutbound = 0;
     var countInfo = 0;
@@ -225,6 +237,13 @@ function updateConversationsData(data) {
     var avgMessagePerConversation = 0;
     var countAgentsClosed = [];
     var countAgentsOpen = [];
+    var checkForAgent = false;
+    var messageRecTime = 2000000000000;
+    var messageResTime = 0;
+    var totalMessageResponseTime = 0;
+    var avgMessageResponseTime = 0;
+    var countAgentRespondedMessages = 0;
+    var prevSender = "";
 
     var obj = JSON.parse(data);
     if (obj.hasOwnProperty("conversationHistoryRecords")) {
@@ -233,13 +252,8 @@ function updateConversationsData(data) {
                 countInfo += 1;
                 if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
-                        conTotal += 1;
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
-                            conActive += 1;
                             countAgentsOpen.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
-                        }
-                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
-                            conInQueue += 1;
                         }
                     }
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"CLOSE\"") {
@@ -249,42 +263,55 @@ function updateConversationsData(data) {
             }
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("messageRecords")) {
                 for (var message in obj.conversationHistoryRecords[conversations].messageRecords) {
-//                    console.log("--------------------------");
                     countMessages += 1;
                     currMessageId = (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].messageId).split("::"))[1];
-//                    console.log("prevMessageId: " + prevMessageId + "currMessageId: " + currMessageId);
                     if (currMessageId != prevMessageId) {
                         prevMessageId = currMessageId;
                         // Reset min time...
                         minTimeCons = 2000000000000;
                         minTimeAgent = 2000000000000;
-                    } else {
-  //                      console.log("same conversation...");
-                        
+                        messageRecTime = 2000000000000;
+                        checkForAgent = false;
+                        prevSender = "";
                     }
-                    minTimeUpdated = false;   
+                    minTimeUpdated = false;
                     if (obj.conversationHistoryRecords[conversations].messageRecords[message].hasOwnProperty("sentBy")) {
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Consumer\"") {
                             conInbound += 1;
                             if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeCons) {
                                 minTimeCons = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
- //                               console.log("minTimeCons: " + minTimeCons);
                                 minTimeUpdated = true;
+                            }
+                            if (prevSender !== "Consumer") {
+                                if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < messageRecTime) {
+                                    messageRecTime = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                }
+                                checkForAgent = true;
+                                prevSender = "Consumer";
                             }
                         }
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Agent\"") {
                             conOutbound += 1;
                             if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeAgent) {
                                 minTimeAgent = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
- //                               console.log("minTimeAgent: " + minTimeAgent);
                                 minTimeUpdated = true;
+                            }
+                            if (prevSender !== "Agent") {
+                                if (checkForAgent) {
+                                    messageResTime = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                    if (messageRecTime < messageResTime) {
+                                        totalMessageResponseTime += messageResTime - messageRecTime;
+                                        countAgentRespondedMessages += 1;
+                                    }
+                                }
+                                prevSender = "Agent";
+                                checkForAgent = false;
                             }
                         }
                     }
                     if ((minTimeCons != 2000000000000) && (minTimeAgent != 2000000000000) && minTimeUpdated) {
                         totalResponseTime += minTimeAgent - minTimeCons;
                         countRespondedMessages += 1;
-//                        console.log("totalResponseTime: " + totalResponseTime + " countRespondedMessages: " + countRespondedMessages);
                     }
                 }
             }
@@ -325,19 +352,50 @@ function updateConversationsData(data) {
 
     if (countRespondedMessages != 0) {
         avgResponseTime = secondsToHms((totalResponseTime / countRespondedMessages) / 1000);
-//        console.log("countRespondedMessages: " + countRespondedMessages);
     }
 
-    $('#conTotal').html(conTotal);
-    $('#conActive').html(conActive);
-    $('#conInQueue').html(conInQueue);
+    if (countAgentRespondedMessages != 0) {
+        avgMessageResponseTime = secondsToHms((totalMessageResponseTime / countAgentRespondedMessages) / 1000);
+    }
+
     $('#conOutbound').html(conOutbound);
     $('#conInbound').html(conInbound);
     $('#avgConResByAgent').html(avgResByAgent);
     $('#aveActiveConAgent').html(avgActiveByAgent);
     $('#numMessages').html(avgMessagePerConversation);
     $('#firstResponseTime').html(avgResponseTime);
+    $('#avgHandlingTime').html(avgMessageResponseTime);
 }
+
+function updateConversationsOpenData(data) {
+    var conTotal = 0;
+    var conActive = 0;
+    var conInQueue = 0;
+
+    var obj = JSON.parse(data);
+    if (obj.hasOwnProperty("conversationHistoryRecords")) {
+        for (var conversations in obj.conversationHistoryRecords) {
+            if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
+                if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
+                    if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
+                        conTotal += 1;
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
+                            conActive += 1;
+                        }
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
+                            conInQueue += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    $('#conTotal').html(conTotal);
+    $('#conActive').html(conActive);
+    $('#conInQueue').html(conInQueue);
+}
+
 
 /**
  * @desc updates the data table and the current queue dashboard with the data from the messaging csat api
