@@ -19,7 +19,8 @@ var showData2 = false;
 
 var limit = 100;
 var agentActivityRange = 1;
-var conFrom = 10;
+var conFrom = 30; //# mins
+var conFromLong = 10080; //# mins
 var skillIDListAA = "all";
 // variable for the list of agents
 var agentList = null;
@@ -57,12 +58,12 @@ var myPieChart = new Chart(ctx2).Bar(data2, {
     animation: false
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#lineChart').hide();
     $('#lineChart24hr').hide();
     //setup the agent status table
     $('#agentStatusTable').DataTable({
-        "initComplete": function(settings) {
+        "initComplete": function (settings) {
             /* Apply the tooltips */
             $('#agentStatusTable thead th[title]').tooltip({
                 "container": 'body'
@@ -75,7 +76,7 @@ $(document).ready(function() {
     });
     //setup the skill status table
     $('#skillStatusTable').DataTable({
-        "initComplete": function(settings) {
+        "initComplete": function (settings) {
             /* Apply the tooltips */
             $('#skillStatusTable thead th[title]').tooltip({
                 "container": 'body'
@@ -86,7 +87,7 @@ $(document).ready(function() {
             [10, 25, 50, 100, "All"]
         ]
     });
-    setTimeout(function() {
+    setTimeout(function () {
         var sel = 'div[role="main"]';
         agentList = angular.element(sel).scope().listUsers();
         skillList = angular.element(sel).scope().listSkills();
@@ -101,7 +102,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/messagingConversation?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgConskillIDList + '&skS=' + msgConskillSelect + '&agent=' + msgConagentIDList + '&agS=' + msgConAgentSelect + '&range=' + msgConRange,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingConData(data);
             } else {
@@ -114,7 +115,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + conFrom + '&limit=' + limit,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateConversationsData(data);
             } else {
@@ -127,7 +128,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateAgentActivityData(data);
             } else {
@@ -140,7 +141,7 @@ function getData() {
     $.ajax({
         type: 'GET',
         url: '/messagingCSAT?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgcsatskillIDList + '&skS=' + msgcsatskillSelect + '&agent=' + msgcsatagentIDList + '&agS' + msgcsatAgentSelect + '&range=' + msgcsatRange,
-        success: function(data) {
+        success: function (data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingCSATData(data);
             } else {
@@ -150,12 +151,26 @@ function getData() {
             }
         }
     });
-    
+    $.ajax({
+        type: 'GET',
+        url: '/conversations?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&offset=' + conFromLong + '&limit=' + limit + '&messStatus=OPEN',
+        success: function (data) {
+            if (data.Fail != "undefined" && data.Fail != "404") {
+                updateConversationsOpenData(data);
+            } else {
+                //window.location.href = "/error";
+                $('#myModal2').modal('show');
+                $('#errorDetails').html(JSON.stringify(data.Error));
+            }
+        }
+    });
+
+
 }
 
 function getLocalStorageVariables() {
     // Check browser support
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         consumerKey = localStorage.getItem("consumerKeyM");
         accountNum = localStorage.getItem("accountNumM");
         consumerSecret = localStorage.getItem("consumerSecretM");
@@ -205,56 +220,107 @@ function updateAgentActivityData(data) {
 
 
 function updateConversationsData(data) {
-    var conTotal = 0;
-    var conActive = 0;
-    var conInQueue = 0;
     var conInbound = 0;
     var conOutbound = 0;
     var countInfo = 0;
-    var countClosed = 0;
+    var countMessages = 0;
     var avgResByAgent = 0;
-    var countAgents = [];
+    var avgActiveByAgent = 0;
+    var minTimeAgent = 2000000000000;
+    var minTimeCons = 2000000000000;
+    var prevMessageId = "";
+    var currMessageId = "";
+    var minTimeUpdated = false;
+    var countRespondedMessages = 0;
+    var totalResponseTime = 0;
+    var avgResponseTime = 0;
+    var avgMessagePerConversation = 0;
+    var countAgentsClosed = [];
+    var countAgentsOpen = [];
+    var checkForAgent = false;
+    var messageRecTime = 2000000000000;
+    var messageResTime = 0;
+    var totalMessageResponseTime = 0;
+    var avgMessageResponseTime = 0;
+    var countAgentRespondedMessages = 0;
+    var prevSender = "";
 
     var obj = JSON.parse(data);
-
     if (obj.hasOwnProperty("conversationHistoryRecords")) {
         for (var conversations in obj.conversationHistoryRecords) {
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
                 countInfo += 1;
                 if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
-                        conTotal += 1;
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
-                            conActive += 1;
-                        }
-                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
-                            conInQueue += 1;
+                            countAgentsOpen.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
                         }
                     }
                     if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"CLOSE\"") {
-                        countClosed += 1;
-                        countAgents.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
-                        //countAgents.push(countInfo);
+                        countAgentsClosed.push(obj.conversationHistoryRecords[conversations].info.latestAgentId);
                     }
                 }
             }
             if (obj.conversationHistoryRecords[conversations].hasOwnProperty("messageRecords")) {
                 for (var message in obj.conversationHistoryRecords[conversations].messageRecords) {
+                    countMessages += 1;
+                    currMessageId = (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].messageId).split("::"))[1];
+                    if (currMessageId != prevMessageId) {
+                        prevMessageId = currMessageId;
+                        // Reset min time...
+                        minTimeCons = 2000000000000;
+                        minTimeAgent = 2000000000000;
+                        messageRecTime = 2000000000000;
+                        checkForAgent = false;
+                        prevSender = "";
+                    }
+                    minTimeUpdated = false;
                     if (obj.conversationHistoryRecords[conversations].messageRecords[message].hasOwnProperty("sentBy")) {
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Consumer\"") {
                             conInbound += 1;
+                            if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeCons) {
+                                minTimeCons = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                minTimeUpdated = true;
+                            }
+                            if (prevSender !== "Consumer") {
+                                if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < messageRecTime) {
+                                    messageRecTime = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                }
+                                checkForAgent = true;
+                                prevSender = "Consumer";
+                            }
                         }
                         if (JSON.stringify(obj.conversationHistoryRecords[conversations].messageRecords[message].sentBy) == "\"Agent\"") {
                             conOutbound += 1;
+                            if (obj.conversationHistoryRecords[conversations].messageRecords[message].timeL < minTimeAgent) {
+                                minTimeAgent = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                minTimeUpdated = true;
+                            }
+                            if (prevSender !== "Agent") {
+                                if (checkForAgent) {
+                                    messageResTime = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                    if (messageRecTime < messageResTime) {
+                                        totalMessageResponseTime += messageResTime - messageRecTime;
+                                        countAgentRespondedMessages += 1;
+                                    }
+                                }
+                                prevSender = "Agent";
+                                checkForAgent = false;
+                            }
                         }
+                    }
+                    if ((minTimeCons != 2000000000000) && (minTimeAgent != 2000000000000) && minTimeUpdated) {
+                        totalResponseTime += minTimeAgent - minTimeCons;
+                        countRespondedMessages += 1;
                     }
                 }
             }
         }
-    }  
+    }
 
+    // Average the number of closed conversations per rep
     var count = {};
-    countAgents.forEach(function(x) {count[x] = (count[x] || 0) +1;});
+    countAgentsClosed.forEach(function (x) { count[x] = (count[x] || 0) + 1; });
     var agentCount = 0;
     var closedCount = 0;
     Object.keys(count).forEach(function (key) {
@@ -266,13 +332,70 @@ function updateConversationsData(data) {
         avgResByAgent = (closedCount / agentCount).toFixed(2);
     }
 
-    $('#conTotal').html(conTotal);
-    $('#conActive').html(conActive);
-    $('#conInQueue').html(conInQueue);
+    // Average the number of Active conversations per rep
+    var count1 = {};
+    countAgentsOpen.forEach(function (x) { count1[x] = (count1[x] || 0) + 1; });
+    agentCount = 0;
+    var openCount = 0;
+    Object.keys(count1).forEach(function (key) {
+        agentCount++;
+        openCount += count1[key];
+    });
+
+    if (agentCount != 0) {
+        avgActiveByAgent = (openCount / agentCount).toFixed(2);
+    }
+
+    if (countInfo != 0) {
+        avgMessagePerConversation = (countMessages / countInfo).toFixed(2);
+    }
+
+    if (countRespondedMessages != 0) {
+        avgResponseTime = secondsToHms((totalResponseTime / countRespondedMessages) / 1000);
+    }
+
+    if (countAgentRespondedMessages != 0) {
+        avgMessageResponseTime = secondsToHms((totalMessageResponseTime / countAgentRespondedMessages) / 1000);
+    }
+
     $('#conOutbound').html(conOutbound);
     $('#conInbound').html(conInbound);
     $('#avgConResByAgent').html(avgResByAgent);
+    $('#aveActiveConAgent').html(avgActiveByAgent);
+    $('#numMessages').html(avgMessagePerConversation);
+    $('#firstResponseTime').html(avgResponseTime);
+    $('#avgHandlingTime').html(avgMessageResponseTime);
 }
+
+function updateConversationsOpenData(data) {
+    var conTotal = 0;
+    var conActive = 0;
+    var conInQueue = 0;
+
+    var obj = JSON.parse(data);
+    if (obj.hasOwnProperty("conversationHistoryRecords")) {
+        for (var conversations in obj.conversationHistoryRecords) {
+            if (obj.conversationHistoryRecords[conversations].hasOwnProperty("info")) {
+                if (obj.conversationHistoryRecords[conversations].info.hasOwnProperty("status")) {
+                    if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.status) == "\"OPEN\"") {
+                        conTotal += 1;
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"ACTIVE\"") {
+                            conActive += 1;
+                        }
+                        if (JSON.stringify(obj.conversationHistoryRecords[conversations].info.latestQueueState) == "\"IN_QUEUE\"") {
+                            conInQueue += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    $('#conTotal').html(conTotal);
+    $('#conActive').html(conActive);
+    $('#conInQueue').html(conInQueue);
+}
+
 
 /**
  * @desc updates the data table and the current queue dashboard with the data from the messaging csat api
@@ -294,7 +417,7 @@ function updateMessagingConData(data) {
         totalResolvedConversations = data.metricsTotals.totalResolvedConversations;
         resolvedConversations_bySystem = data.metricsTotals.resolvedConversations_bySystem;
 
-        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
     }
     if (data.hasOwnProperty("agentsMetrics")) {
         if (data.agentsMetrics.hasOwnProperty("metricsPerAgent")) {
@@ -311,7 +434,7 @@ function updateMessagingConData(data) {
                 totalResolvedConversations = data.agentsMetrics.metricsPerAgent[agent].totalResolvedConversations;
                 resolvedConversations_bySystem = data.agentsMetrics.metricsPerAgent[agent].resolvedConversations_bySystem;
 
-                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+                avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
             }
         }
         if (data.agentsMetrics.hasOwnProperty("metricsTotals")) {
@@ -321,7 +444,7 @@ function updateMessagingConData(data) {
             totalResolvedConversations = data.agentsMetrics.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.agentsMetrics.metricsTotals.resolvedConversations_bySystem;
 
-            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
         }
     }
     if (data.hasOwnProperty("skillsMetricsPerAgent")) {
@@ -348,8 +471,8 @@ function updateMessagingConData(data) {
                         resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_byConsumer;
                         totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalResolvedConversations;
                         resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].resolvedConversations_bySystem;
-                    
-                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+                        avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
                     }
                 }
                 if (data.skillsMetricsPerAgent.metricsPerSkill[skill].hasOwnProperty("metricsTotals")) {
@@ -359,8 +482,8 @@ function updateMessagingConData(data) {
                     resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_byConsumer;
                     totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.totalResolvedConversations;
                     resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsTotals.resolvedConversations_bySystem;
-                
-                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+                    avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
                 }
             }
         }
@@ -372,11 +495,11 @@ function updateMessagingConData(data) {
             resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_byConsumer;
             totalResolvedConversations = data.skillsMetricsPerAgent.metricsTotals.totalResolvedConversations;
             resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsTotals.resolvedConversations_bySystem;
-        
-            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
+
+            avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations / 1000);
         }
     }
-    
+
     $('#conRes').html(totalResolvedConversations);
     $('#conCCP').html(resolvedConversations_byCCP);
     $('#conCon').html(resolvedConversations_byConsumer);

@@ -22,7 +22,7 @@ You can see an example of the dashboard here: https://le-realtime-manager.heroku
 
 In order to run the app locally, you will need to have Node.js installed. Once this is complete, just run npm install, and npm start to run the app.
 
-Your app should be running on localhost:5000.
+Your app should be running on localhost:8080.
 
 ## Updates
 
