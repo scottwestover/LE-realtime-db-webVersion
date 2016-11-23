@@ -19,7 +19,7 @@ var showData2 = false;
 
 var limit = 100;
 var agentActivityRange = 1;
-var conFrom = 30; //# mins
+var conFrom = 60; //# mins
 var conFromLong = 10080; //# mins
 var skillIDListAA = "all";
 // variable for the list of agents
@@ -353,8 +353,11 @@ function updateConversationsData(data) {
         avgActiveByAgent = (openCount / agentCount).toFixed(2);
     }
 
+    // CRT - average time to agent response to consumer message 
     if (countInfo != 0) {
         avgMessagePerConversation = (countMessages / countInfo).toFixed(2);
+        avgMessageResponseTime = secondsToHms((totalMessageResponseTime / countInfo) / 1000);
+        if (avgMessageResponseTime < 0) avgMessageResponseTime = 0;
     }
 
     // ASA - time to first agent response
@@ -363,11 +366,11 @@ function updateConversationsData(data) {
         if (avgResponseTime < 0) avgResponseTime = 0;
     }
 
-    // CRT - average time to agent response to consumer message 
+    /*// CRT - average time to agent response to consumer message 
     if (countAgentRespondedMessages != 0) {
         avgMessageResponseTime = secondsToHms((totalMessageResponseTime / countAgentRespondedMessages) / 1000);
         if (avgMessageResponseTime < 0) avgMessageResponseTime = 0;
-    }
+    }*/
 
     $('#conOutbound').html(conOutbound);
     $('#conInbound').html(conInbound);
