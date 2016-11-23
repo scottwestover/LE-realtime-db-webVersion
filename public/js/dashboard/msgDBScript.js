@@ -239,7 +239,8 @@ function updateConversationsData(data) {
     var countAgentsOpen = [];
     var checkForAgent = false;
     var messageRecTime = 2000000000000;
-    var messageResTime = 0;
+    var messageResTime = 2000000000000;
+    var messageResTime2 = 2000000000000;
     var totalMessageResponseTime = 0;
     var avgMessageResponseTime = 0;
     var countAgentRespondedMessages = 0;
@@ -306,6 +307,12 @@ function updateConversationsData(data) {
                                 }
                                 prevSender = "Agent";
                                 checkForAgent = false;
+                            } else if (prevSender === "Agent") {
+                                messageResTime2 = obj.conversationHistoryRecords[conversations].messageRecords[message].timeL;
+                                if (messageResTime < messageResTime2) {
+                                    totalMessageResponseTime += messageResTime2 - messageResTime;
+                                    countAgentRespondedMessages += 1;
+                                }
                             }
                         }
                     }
@@ -350,12 +357,16 @@ function updateConversationsData(data) {
         avgMessagePerConversation = (countMessages / countInfo).toFixed(2);
     }
 
+    // ASA - time to first agent response
     if (countRespondedMessages != 0) {
         avgResponseTime = secondsToHms((totalResponseTime / countRespondedMessages) / 1000);
+        if (avgResponseTime < 0) avgResponseTime = 0;
     }
 
+    // CRT - average time to agent response to consumer message 
     if (countAgentRespondedMessages != 0) {
         avgMessageResponseTime = secondsToHms((totalMessageResponseTime / countAgentRespondedMessages) / 1000);
+        if (avgMessageResponseTime < 0) avgMessageResponseTime = 0;
     }
 
     $('#conOutbound').html(conOutbound);
