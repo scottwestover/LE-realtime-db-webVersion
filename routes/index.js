@@ -411,7 +411,8 @@ exports.conversations = function (req, res) {
 
         // Do the work here...  
         function (callback) {
-            var url = 'https://va.msghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + convOffset + '&limit=' + limit;
+            /* Need to update domain to pull the correct domain */
+            var url = 'https://lo.enghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + convOffset + '&limit=' + limit;
             request.post({
                 url: url,
                 oauth: oauth,
