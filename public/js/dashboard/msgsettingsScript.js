@@ -29,11 +29,11 @@ function storeValues() {
         // Check if keys or account number has changed
         var restart = checkForChangedKeys();
         // Store
-        localStorage.setItem("consumerKeyM", document.getElementById("consumerKey").value);
-        localStorage.setItem("consumerSecretM", document.getElementById("consumerSecret").value);
-        localStorage.setItem("accessTokenM", document.getElementById("accessToken").value);
-        localStorage.setItem("accessTokenSecretM", document.getElementById("accessTokenSecret").value);
-        localStorage.setItem("accountNumM", document.getElementById("accountNum").value);
+        localStorage.setItem("consumerKeyM", document.getElementById("consumerKey").value.replace(/\s+/g, ''));
+        localStorage.setItem("consumerSecretM", document.getElementById("consumerSecret").value.replace(/\s+/g, ''));
+        localStorage.setItem("accessTokenM", document.getElementById("accessToken").value.replace(/\s+/g, ''));
+        localStorage.setItem("accessTokenSecretM", document.getElementById("accessTokenSecret").value.replace(/\s+/g, ''));
+        localStorage.setItem("accountNumM", document.getElementById("accountNum").value.replace(/\s+/g, ''));
         localStorage.setItem("msgConskillSelect", document.getElementById("msgConskillSelect").value);
         localStorage.setItem("msgConAgentSelect", document.getElementById("msgConAgentSelect").value);
         localStorage.setItem("msgConskillIDList", $('#msgConskillIDList').val());
@@ -42,8 +42,8 @@ function storeValues() {
         localStorage.setItem("msgcsatAgentSelect", document.getElementById("msgcsatAgentSelect").value);
         localStorage.setItem("msgcsatskillIDList", $('#msgcsatskillIDList').val());
         localStorage.setItem("msgcsatagentIDList", $('#msgcsatagentIDList').val());
-        localStorage.setItem("msgConRange", document.getElementById("msgConRange").value);
-        localStorage.setItem("msgcsatRange", document.getElementById("msgcsatRange").value);
+        localStorage.setItem("msgConRange", document.getElementById("msgConRange").value.replace(/\s+/g, ''));
+        localStorage.setItem("msgcsatRange", document.getElementById("msgcsatRange").value.replace(/\s+/g, ''));
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
