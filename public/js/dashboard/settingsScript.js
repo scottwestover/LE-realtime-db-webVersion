@@ -29,11 +29,11 @@ function storeValues() {
         // Check if keys or account number has changed
         var restart = checkForChangedKeys();
         // Store
-        localStorage.setItem("consumerKey", document.getElementById("consumerKey").value);
-        localStorage.setItem("consumerSecret", document.getElementById("consumerSecret").value);
-        localStorage.setItem("accessToken", document.getElementById("accessToken").value);
-        localStorage.setItem("accessTokenSecret", document.getElementById("accessTokenSecret").value);
-        localStorage.setItem("accountNum", document.getElementById("accountNum").value);
+        localStorage.setItem("consumerKey", document.getElementById("consumerKey").value.replace(/\s+/g, ''));
+        localStorage.setItem("consumerSecret", document.getElementById("consumerSecret").value.replace(/\s+/g, ''));
+        localStorage.setItem("accessToken", document.getElementById("accessToken").value.replace(/\s+/g, ''));
+        localStorage.setItem("accessTokenSecret", document.getElementById("accessTokenSecret").value.replace(/\s+/g, ''));
+        localStorage.setItem("accountNum", document.getElementById("accountNum").value.replace(/\s+/g, ''));
         localStorage.setItem("skillSelect", document.getElementById("skillSelect").value);
         localStorage.setItem("skillIDList", $('#skillIDList').val());
         localStorage.setItem("easkillSelect", document.getElementById("easkillSelect").value);
@@ -45,9 +45,9 @@ function storeValues() {
         localStorage.setItem("skillIDListAA", $('#skillIDListAA').val());
         localStorage.setItem("CQskillSelect", document.getElementById("CQskillSelect").value);
         localStorage.setItem("CQskillIDList", $('#CQskillIDList').val());
-        localStorage.setItem("agentActivityRange", document.getElementById("agentActivityRange").value);
-        localStorage.setItem("queueHealthRange", document.getElementById("queueHealthRange").value);
-        localStorage.setItem("engagementActivityRange", document.getElementById("engagementActivityRange").value);
+        localStorage.setItem("agentActivityRange", document.getElementById("agentActivityRange").value.replace(/\s+/g, ''));
+        localStorage.setItem("queueHealthRange", document.getElementById("queueHealthRange").value.replace(/\s+/g, ''));
+        localStorage.setItem("engagementActivityRange", document.getElementById("engagementActivityRange").value.replace(/\s+/g, ''));
         localStorage.setItem("slaRange", document.getElementById("slaRange").value);
         localStorage.setItem("slaskillSelect", document.getElementById("slaskillSelect").value);
         localStorage.setItem("slaskillIDList", $('#slaskillIDList').val());
