@@ -70,7 +70,6 @@ function updateAgentActivityData(data) {
     oTable
         .clear()
         .draw();
-    var agentsOnline = 0;
     for (var agent in data.agentsMetrics.metricsPerAgent) {
         // data available for each agent in the 
         var agentID = null;
@@ -79,7 +78,6 @@ function updateAgentActivityData(data) {
         } else {
             agentID = agent;
         }
-        if (data.agentsMetrics.metricsPerAgent[agent][0].value.total !== 0) agentsOnline += 1;
         var onlineTotal = secondsToHms(data.agentsMetrics.metricsPerAgent[agent][0].value.total);
         var onlineChatting = secondsToHms(data.agentsMetrics.metricsPerAgent[agent][0].value.chatting);
         var onlineNotChatting = secondsToHms(data.agentsMetrics.metricsPerAgent[agent][0].value.notChatting);
@@ -98,7 +96,6 @@ function updateAgentActivityData(data) {
         var loggedInMaxConcurrency = secondsToHms(data.agentsMetrics.metricsPerAgent[agent][2].value.chattingInMaxConcurrency);
         oTable.row.add([agentID, onlineTotal, onlineChatting, onlineNotChatting, onlineMaxConcurrency, backSoonTotal, backSoonChatting, backSoonNotChatting, backSoonMaxConcurrency, awayTotal, awayChatting, awayNotChatting, awayMaxConcurrency, loggedInTotal, loggedInChatting, loggedInNotChatting, loggedInMaxConcurrency]).draw();
     }
-    $('#agentsOnline').html(agentsOnline);
     return;
 }
 

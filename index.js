@@ -9,7 +9,7 @@ app.engine('html', require('ejs').renderFile);
 /***************
  * Configuration
  ***************/
-app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
@@ -37,8 +37,6 @@ app.get('/sla', routes.sla);
 // serve messaging views
 app.get('/messagingConversation', routes.messagingConversation);
 app.get('/messagingCSAT', routes.messagingCSAT);
-app.get('/conversations', routes.conversations);
-
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 

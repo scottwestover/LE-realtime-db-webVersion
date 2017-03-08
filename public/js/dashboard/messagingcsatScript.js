@@ -38,7 +38,6 @@ function getData() {
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingCSATData(data);
-                console.log("/messagingCSAT (messagingCSATscript)");
             } else {
                 //window.location.href = "/error";
                 $('#myModal2').modal('show');
