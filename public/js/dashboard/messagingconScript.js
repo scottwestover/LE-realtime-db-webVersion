@@ -38,6 +38,7 @@ function getData() {
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingConData(data);
+                console.log("/messagingConversation");
             } else {
                 //window.location.href = "/error";
                 $('#myModal2').modal('show');
