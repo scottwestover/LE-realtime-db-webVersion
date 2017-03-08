@@ -402,63 +402,68 @@ exports.conversations = function (req, res) {
 //    console.log(bodyStr);
 
     var completeConv = "{\"conversationHistoryRecords\": [";
+    if(req.query.accNum == null || req.query.accNum == 0 || req.query.accNum == "null"){
+        completeConv += "]}";
+        console.log("error with account number in the EH API");
+        res.json(completeConv);
+    }else{
+        async.whilst(
+            // test condition, true or false...
+            function () {
+                return (convOffset <= convCount);
+            },
 
-    async.whilst(
-        // test condition, true or false...
-        function () {
-            return (convOffset <= convCount);
-        },
-
-        // Do the work here...  
-        function (callback) {
-            /* Need to update domain to pull the correct domain */
-            var url = 'https://lo.enghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + convOffset + '&limit=' + limit;
-            request.post({
-                url: url,
-                oauth: oauth,
-                body: bodyStr,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }, function (e, r, b) {
-                if (!e && r.statusCode == 200) {
-                    var jsonb = JSON.parse(b);
-                    if (jsonb.hasOwnProperty("_metadata")) {
-                        if (jsonb._metadata.hasOwnProperty("count")) {
-                            convCount = jsonb._metadata.count;
-                            convOffset += 100;
+            // Do the work here...  
+            function (callback) {
+                /* Need to update domain to pull the correct domain */
+                var url = 'https://lo.enghist.liveperson.net/messaging_history/api/account/' + req.query.accNum + '/conversations/search?offset=' + convOffset + '&limit=' + limit;
+                request.post({
+                    url: url,
+                    oauth: oauth,
+                    body: bodyStr,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }, function (e, r, b) {
+                    if (!e && r.statusCode == 200) {
+                        var jsonb = JSON.parse(b);
+                        if (jsonb.hasOwnProperty("_metadata")) {
+                            if (jsonb._metadata.hasOwnProperty("count")) {
+                                convCount = jsonb._metadata.count;
+                                convOffset += 100;
+                            }
                         }
-                    }
-                    if (jsonb.hasOwnProperty("conversationHistoryRecords")) {
-                        completeConv += ((JSON.stringify(jsonb.conversationHistoryRecords)).slice(1, JSON.stringify(jsonb.conversationHistoryRecords).length).slice(0, -1));
-                    }
-                    if (convOffset < convCount) {
-                        completeConv += ",";
-                    }
+                        if (jsonb.hasOwnProperty("conversationHistoryRecords")) {
+                            completeConv += ((JSON.stringify(jsonb.conversationHistoryRecords)).slice(1, JSON.stringify(jsonb.conversationHistoryRecords).length).slice(0, -1));
+                        }
+                        if (convOffset < convCount) {
+                            completeConv += ",";
+                        }
 
-                    callback();
-                } else {
-                    //completeConv += b;
-                    callback(e);
-                }
-            });
-        },
-
-        // Error and/or complete...
-        function callback(err) {
-            if (err) {
-                console.log(err);
-                res.json({
-                    "Error": completeConv,
-                    "Fail": "404"
+                        callback();
+                    } else {
+                        //completeConv += b;
+                        callback(e);
+                    }
                 });
+            },
+
+            // Error and/or complete...
+            function callback(err) {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        "Error": completeConv,
+                        "Fail": "404"
+                    });
+                }
+                //                console.log("Finished getting conversations...");
+                completeConv += "]}";
+                //                console.log("conversations: " + (completeConv));
+                res.json(completeConv);
             }
-            //                console.log("Finished getting conversations...");
-            completeConv += "]}";
-            //                console.log("conversations: " + (completeConv));
-            res.json(completeConv);
-        }
-    );
+        );
+    }
 };
 
 // pulls the messaging conversation api
