@@ -19,8 +19,8 @@ var showData2 = false;
 
 var limit = 100;
 var agentActivityRange = 1;
-var conFrom = 60; //# mins
-var conFromLong = 10080; //# mins
+var conFrom = 5; //# mins
+var conFromLong = 5; //# mins
 var skillIDListAA = "all";
 // variable for the list of agents
 var agentList = null;
