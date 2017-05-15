@@ -1,100 +1,13 @@
-// variables for the agent and skill lists
+// variables for the oauth settings from the saved settings
+var consumerKey;
+var consumerSecret;
+var token;
+var tokenSecret;
+var accountNum;
 var skillList = null;
 var agentList = null;
 
 $(document).ready(function() {
-    setTimeout(function() {
-        var sel = 'div[role="main"]';
-        skillList = angular.element(sel).scope().listSkills();
-        agentList = angular.element(sel).scope().listUsers();
-        //console.log(skillList);
-        //console.log(agentList);
-
-        populateMutilpleSelectBoxes();
-        updateFormAgentValues();
-        updateFormSkillValues();
-    }, 100);
-
-    updateFormValues();
-    getStorageVales();
-});
-
-/**
- * @desc saves the api settings to the browser local storage
- * @return undefined
- */
-function storeValues() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        // Check if keys or account number has changed
-        var restart = checkForChangedKeys();
-        // Store
-        localStorage.setItem("consumerKeyM", document.getElementById("consumerKey").value.replace(/\s+/g, ''));
-        localStorage.setItem("consumerSecretM", document.getElementById("consumerSecret").value.replace(/\s+/g, ''));
-        localStorage.setItem("accessTokenM", document.getElementById("accessToken").value.replace(/\s+/g, ''));
-        localStorage.setItem("accessTokenSecretM", document.getElementById("accessTokenSecret").value.replace(/\s+/g, ''));
-        localStorage.setItem("accountNumM", document.getElementById("accountNum").value.replace(/\s+/g, ''));
-        localStorage.setItem("msgConskillSelect", document.getElementById("msgConskillSelect").value);
-        localStorage.setItem("msgConAgentSelect", document.getElementById("msgConAgentSelect").value);
-        localStorage.setItem("msgConskillIDList", $('#msgConskillIDList').val());
-        localStorage.setItem("msgConagentIDList", $('#msgConagentIDList').val());
-        localStorage.setItem("msgcsatskillSelect", document.getElementById("msgcsatskillSelect").value);
-        localStorage.setItem("msgcsatAgentSelect", document.getElementById("msgcsatAgentSelect").value);
-        localStorage.setItem("msgcsatskillIDList", $('#msgcsatskillIDList').val());
-        localStorage.setItem("msgcsatagentIDList", $('#msgcsatagentIDList').val());
-        localStorage.setItem("msgConRange", document.getElementById("msgConRange").value.replace(/\s+/g, ''));
-        localStorage.setItem("msgcsatRange", document.getElementById("msgcsatRange").value.replace(/\s+/g, ''));
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    if (restart) {
-        window.location.href = "/";
-    }
-    else {
-        $('#cancelButton').click();
-    }
-    return;
-}
-
-/**
- * @desc gets the api settings from the browser local storage and updates the settings on the page
- * @return undefined
- */
-function getStorageVales() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKeyM") != null) {
-            $('#consumerKey').val(localStorage.getItem("consumerKeyM"));
-        }
-        if (localStorage.getItem("accountNumM") != null) {
-            $('#accountNum').val(localStorage.getItem("accountNumM"));
-        }
-        if (localStorage.getItem("consumerSecretM") != null) {
-            $('#consumerSecret').val(localStorage.getItem("consumerSecretM"));
-        }
-        if (localStorage.getItem("accessTokenM") != null) {
-            $('#accessToken').val(localStorage.getItem("accessTokenM"));
-        }
-        if (localStorage.getItem("accessTokenSecretM") != null) {
-            $('#accessTokenSecret').val(localStorage.getItem("accessTokenSecretM"));
-        }
-        if (localStorage.getItem("msgConRange") != null) {
-            $("#msgConRange").val(localStorage.getItem("msgConRange"));
-        }
-        if (localStorage.getItem("msgConRange") != null) {
-            $("#msgcsatRange").val(localStorage.getItem("msgcsatRange"));
-        }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
-
-/**
- * @desc detects any changes drop down menus and then enables/disables the corresponding skill id and agent select menus
- * @return undefined
- */
-function updateFormValues() {
     // check to see if the engagement agent id select menu item has changed
     $("#msgConAgentSelect").change(function() {
         if ($("#msgConAgentSelect").val() == 1 || $("#msgConAgentSelect").val() == 3) {
@@ -137,145 +50,117 @@ function updateFormValues() {
             $("#msgcsatskillIDList").prop("disabled", false);
         }
     });
-    return;
-}
 
-/**
- * @desc updates the selected agents from the select input menu that where saved in the browser storage
- * @return undefined
- */
-function updateFormAgentValues() {
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("msgConAgentSelect") != null) {
-            $('#msgConAgentSelect').val(localStorage.getItem("msgConAgentSelect"));
-        }
-        if (localStorage.getItem("msgConAgentSelect") == 2) {
-            $("#msgConagentIDList").prop("disabled", false);
-            var msgConagentIDListArray = localStorage.getItem("msgConagentIDList").split(",");
-            for (var i = 0; i < msgConagentIDListArray.length; i++) {
-                $("#msgConagentIDList option[value='" + msgConagentIDListArray[i] + "']").attr('selected', true);
+    $.ajax({
+        type: 'GET',
+        url: '/skillList',
+        success: function(data) {
+            skillList = data;
+            // Get all of the mutliple select options on the settings page for the skills
+            var selectmsgCon = document.getElementById("msgConskillIDList");
+            var selectmsgcsat = document.getElementById("msgcsatskillIDList");
+            // loop through all of the select boxes and add in all of the available skills that can be selected
+            for (var skill in skillList) {
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectmsgCon.appendChild(el);
             }
-        }
-        if (localStorage.getItem("msgcsatAgentSelect") != null) {
-            $('#msgcsatAgentSelect').val(localStorage.getItem("msgcsatAgentSelect"));
-        }
-        if (localStorage.getItem("msgcsatAgentSelect") == 2) {
-            $("#msgcsatagentIDList").prop("disabled", false);
-            var msgcsatagentIDListArray = localStorage.getItem("msgcsatagentIDList").split(",");
-            for (var i = 0; i < msgcsatagentIDListArray.length; i++) {
-                $("#msgcsatagentIDList option[value='" + msgcsatagentIDListArray[i] + "']").attr('selected', true);
+            for (var skill in skillList) {
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectmsgcsat.appendChild(el);
             }
+                $.ajax({
+                    type: 'GET',
+                    url: '/agentList',
+                    success: function(data) {
+                        agentList = data;
+                        // Get all of the mutliple select options on the settings page for the agents
+                        var selectAgents = document.getElementById("msgConagentIDList");
+                        var selectAgentsmsgcsat = document.getElementById("msgcsatagentIDList");
+                        // loop through all of the select boxes and add in all of the available agents that can be selected
+                        for (var agent in agentList) {
+                            var optTxt = agentList[agent].fullName;
+                            var opt = agent;
+                            var el = document.createElement("option");
+                            el.textContent = optTxt;
+                            el.value = opt;
+                            selectAgents.appendChild(el);
+                        }
+                        for (var agent in agentList) {
+                            var optTxt = agentList[agent].fullName;
+                            var opt = agent;
+                            var el = document.createElement("option");
+                            el.textContent = optTxt;
+                            el.value = opt;
+                            selectAgentsmsgcsat.appendChild(el);
+                        }
+                        // get the settings that are saved and update the settings on the page accordingly
+                        $.post("/getOauthMsg", function(data) {
+                            //console.log(data);
+                            consumerKey = data.consumer_key;
+                            consumerSecret = data.consumer_secret;
+                            token = data.token;
+                            tokenSecret = data.token_secret;
+                            accountNum = data.accountNum;
+                            var tmsgcsatRange = data.msgcsatRange;
+                            var tmsgConRange = data.msgConRange;
+                            var tmsgConskillSelect = data.msgConskillSelect;
+                            var tmsgConskillIDList = data.msgConskillIDList;
+                            var tmsgcsatskillSelect = data.msgcsatskillSelect;
+                            var tmsgcsatskillIDList = data.msgcsatskillIDList;
+                            var tmsgConAgentSelect = data.msgConAgentSelect;
+                            var tmsgConagentIDList = data.msgConagentIDList;
+                            var tmsgcsatAgentSelect = data.msgcsatAgentSelect;
+                            var tmsgcsatagentIDList = data.msgcsatagentIDList;
+                            $('#accountNum').val(accountNum);
+                            $('#consumerKey').val(consumerKey);
+                            $('#consumerSecret').val(consumerSecret);
+                            $('#accessToken').val(token);
+                            $('#accessTokenSecret').val(tokenSecret);
+                            $('#msgConRange').val(tmsgConRange);
+                            $('#msgcsatRange').val(tmsgcsatRange);
+                            $("#msgConskillSelect").val(tmsgConskillSelect);
+                            if (tmsgConskillSelect == 2) {
+                                $("#msgConskillIDList").prop("disabled", false);
+                                var msgConskillIDListArray = tmsgConskillIDList.split(",");
+                                for (var i = 0; i < msgConskillIDListArray.length; i++) {
+                                    $("#msgConskillIDList option[value='" + msgConskillIDListArray[i] + "']").attr('selected', true);
+                                }
+                            }
+                            $("#msgcsatskillSelect").val(tmsgcsatskillSelect);
+                            if (tmsgcsatskillSelect == 2) {
+                                $("#msgcsatskillIDList").prop("disabled", false);
+                                var msgcsatskillIDListArray = tmsgcsatskillIDList.split(",");
+                                for (var i = 0; i < msgcsatskillIDListArray.length; i++) {
+                                    $("#msgcsatskillIDList option[value='" + msgcsatskillIDListArray[i] + "']").attr('selected', true);
+                                }
+                            }
+                            $("#msgConAgentSelect").val(tmsgConAgentSelect);
+                            if (tmsgConAgentSelect == 2) {
+                                $("#msgConagentIDList").prop("disabled", false);
+                                var msgConagentIDListArray = tmsgConagentIDList.split(",");
+                                for (var i = 0; i < msgConagentIDListArray.length; i++) {
+                                    $("#msgConagentIDList option[value='" + msgConagentIDListArray[i] + "']").attr('selected', true);
+                                }
+                            }
+                            $("#msgcsatAgentSelect").val(tmsgcsatAgentSelect);
+                            if (tmsgcsatAgentSelect == 2) {
+                                $("#msgcsatagentIDList").prop("disabled", false);
+                                var msgcsatagentIDListArray = tmsgcsatagentIDList.split(",");
+                                for (var i = 0; i < msgcsatagentIDListArray.length; i++) {
+                                    $("#msgcsatagentIDList option[value='" + msgcsatagentIDListArray[i] + "']").attr('selected', true);
+                                }
+                            }
+                        });
+                    }
+                });
         }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
-
-/**
- * @desc updates the selected skills from the select input menu that where saved in the browser storage
- * @return undefined
- */
-function updateFormSkillValues() {
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("msgConskillSelect") != null) {
-            $("#msgConskillSelect").val(localStorage.getItem("msgConskillSelect"));
-        }
-        if (localStorage.getItem("msgConskillSelect") == 2) {
-            $("#msgConskillIDList").prop("disabled", false);
-            var msgConskillIDListArray = localStorage.getItem("msgConskillIDList").split(",");
-            for (var i = 0; i < msgConskillIDListArray.length; i++) {
-                $("#msgConskillIDList option[value='" + msgConskillIDListArray[i] + "']").attr('selected', true);
-            }
-        }
-        if (localStorage.getItem("msgcsatskillSelect") != null) {
-            $("#msgcsatskillSelect").val(localStorage.getItem("msgcsatskillSelect"));
-        }
-        if (localStorage.getItem("msgcsatskillSelect") == 2) {
-            $("#msgcsatskillIDList").prop("disabled", false);
-            var msgcsatskillIDListArray = localStorage.getItem("msgcsatskillIDList").split(",");
-            for (var i = 0; i < msgcsatskillIDListArray.length; i++) {
-                $("#msgcsatskillIDList option[value='" + msgcsatskillIDListArray[i] + "']").attr('selected', true);
-            }
-        }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
-
-/**
- * @desc populates all of the agent and skill select boxes with the agent and skill names from the skillList and agentList variables
- * @return undefined
- */
-function populateMutilpleSelectBoxes() {
-    // Get all of the mutliple select options on the settings page for the skills
-    var selectmsgCon = document.getElementById("msgConskillIDList");
-    var selectmsgcsat = document.getElementById("msgcsatskillIDList");
-    // loop through all of the select boxes and add in all of the available skills that can be selected
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectmsgCon.appendChild(el);
-    }
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectmsgcsat.appendChild(el);
-    }
-    var selectAgents = document.getElementById("msgConagentIDList");
-    var selectAgentsmsgcsat = document.getElementById("msgcsatagentIDList");
-    // loop through all of the select boxes and add in all of the available agents that can be selected
-    for (var agent in agentList) {
-        var optTxt = agentList[agent].fullName;
-        var opt = agent;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectAgents.appendChild(el);
-    }
-    for (var agent in agentList) {
-        var optTxt = agentList[agent].fullName;
-        var opt = agent;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectAgentsmsgcsat.appendChild(el);
-    }
-    return;
-}
-
-/**
- * @desc checks to see if the api keys have changed that way we know if we need to restart the app
- * @return bool
- */
-function checkForChangedKeys() {
-    var restart = false;
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKeyM") != document.getElementById("consumerKey").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("accountNumM") != document.getElementById("accountNum").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("consumerSecretM") != document.getElementById("consumerSecret").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("accessTokenM") != document.getElementById("accessToken").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("accessTokenSecretM") != document.getElementById("accessTokenSecret").value) {
-            restart = true;
-        }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return restart;
-}
+    });
+});

@@ -21,15 +21,15 @@
     <link href="/css/main.css" rel="stylesheet">
     <!-- JQuery -->
     <script src="/js/jquery.min.js"></script>
-    <!-- load angular and angular route via CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-    <!-- Angular App JS -->
-    <script src="/js/angularScript.js"></script>
-    <!-- Add IntroJs styles -->
-    <link href="/css/introjs.css" rel="stylesheet">
-    <!-- Data Tables Buttons -->
-    <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet">
+<!-- load angular and angular route via CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+<!-- Angular App JS -->
+<script src="/js/angularScript.js"></script>
+<!-- Add IntroJs styles -->
+<link href="css/introjs.css" rel="stylesheet">
+<!-- Data Tables Buttons -->
+<link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body ng-controller="mainController" class="nav-sm">
@@ -89,82 +89,40 @@
                         </div>
                     </div>
                     <!-- /sidebar menu -->
+              </div>
+          </div>
+          <!-- page content -->
+          <!-- MAIN CONTENT AND INJECTED VIEWS -->
+          <div id="main">
 
-                </div>
-            </div>
-            <!-- page content -->
-            <!-- MAIN CONTENT AND INJECTED VIEWS -->
-            <div id="main">
+            <!-- angular templating -->
+            <!-- this is where content will be injected -->
+            <div ng-view></div>
 
-                <!-- angular templating -->
-                <!-- this is where content will be injected -->
-                <div ng-view></div>
-
-            </div>
-            <!-- /page content -->
         </div>
+        <!-- /page content -->
     </div>
-    <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <a class="close" href="" data-dismiss="modal" onclick="javascript:window.location='/settings'">&times;</a>
-        <h4 class="modal-title">Error</h4>
-      </div>
-      <div class="modal-body">
-        <p>There appears to be an issue with the API calls.</p>
-        <p>Please check your API keys and account number on the Settings Page. <br>If this is your first time running the dashboard, please go to the Settings Page to fill out your API information.</p>
-        <p>Error Details: <br><span id="errorDetails"></span></p>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-default" href="" data-dismiss="modal" onclick="javascript:window.location='/settings'">Close</a>
-      </div>
-    </div>
-  </div>
 </div>
-<div id="myModal2" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <a class="close" href="" data-dismiss="modal" onclick="javascript:window.location='/msgSettings'">&times;</a>
-        <h4 class="modal-title">Error</h4>
-      </div>
-      <div class="modal-body">
-        <p>There appears to be an issue with the API calls.</p>
-        <p>Please check your API keys and account number on the Settings Page. <br>If this is your first time running the dashboard, please go to the Settings Page to fill out your API information.</p>
-        <p>Error Details: <br><span id="errorDetails"></span></p>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-default" href="" data-dismiss="modal" onclick="javascript:window.location='/msgSettings'">Close</a>
-      </divmsgSettings    </div>
-  </div>
-</div>
-  <!-- End of Modal -->
-    <script>
-        //$('#myModal').modal({ show: false});
-    </script>
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- bootstrap progress js -->
-    <script src="/js/progressbar/bootstrap-progressbar.min.js"></script>
-    <script src="/js/nicescroll/jquery.nicescroll.min.js"></script>
-    <!-- icheck -->
-    <script src="/js/icheck/icheck.min.js"></script>
-    <!-- pace -->
-    <script src="/js/pace/pace.min.js"></script>
-    <!-- datatables -->
-    <script src="/js/datatables/js/jquery.dataTables.js"></script>
-    <!-- chartjs -->
-    <script src="/Chart.min.js"></script>
-    <!-- introjs -->
-    <script type="text/javascript" src="/js/intro.min.js"></script>
-    <script type="text/javascript" src="/js/introcode.js"></script>
-    <!-- Datatables buttons -->
-    <script type="text/javascript" src="/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="/js/dashboard/mainScript.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<!-- bootstrap progress js -->
+<script src="/js/progressbar/bootstrap-progressbar.min.js"></script>
+<script src="/js/nicescroll/jquery.nicescroll.min.js"></script>
+<!-- icheck -->
+<script src="/js/icheck/icheck.min.js"></script>
+<!-- pace -->
+<script src="/js/pace/pace.min.js"></script>
+<!-- datatables -->
+<script src="/js/datatables/js/jquery.dataTables.js"></script>
+<!-- chartjs -->
+<script src="/Chart.min.js"></script>
+<!-- introjs -->
+<script type="text/javascript" src="/js/intro.min.js"></script>
+<script type="text/javascript" src="/js/introcode.js"></script>
+<!-- Datatables buttons -->
+<script type="text/javascript" src="/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/js/dashboard/mainScript.js"></script>
 </body>
 </html>

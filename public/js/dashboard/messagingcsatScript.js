@@ -1,16 +1,3 @@
-// variables that are used for pulling the api information from the browser storage
-var consumerKey = 0;
-var accountNum = 0;
-var consumerSecret = 0;
-var accessToken = 0;
-var accessTokenSecret = 0;
-var msgcsatskillSelect = 1;
-var msgcsatskillIDList = null;
-var msgcsatagentIDList = null;
-var msgcsatAgentSelect = 1;
-var msgcsatRange = 1;
-getLocalStorageVariables();
-
 //variable for the list of agents
 var agentList = null;
 //variable for the list of skills
@@ -18,12 +5,24 @@ var skillList = null;
 
 $(document).ready(function() {
     setupTables();
-    setTimeout(function() {
-        var sel = 'div[role="main"]';
-        agentList = angular.element(sel).scope().listUsers();
-        skillList = angular.element(sel).scope().listSkills();
-        getData();
-    }, 100);
+    $.ajax({
+        type: 'GET',
+        url: '/agentList',
+        success: function(data) {
+            agentList = data;
+            // console.log(agentList);
+            $.ajax({
+                type: 'GET',
+                url: '/skillList',
+                success: function(data2) {
+                    skillList = data2;
+                    //console.log(skillList);
+                    //populate the table with the api info
+                    getData();
+                }
+            });
+        }
+    });
 });
 
 /**
@@ -34,40 +33,16 @@ function getData() {
     var oTable = $('#example').DataTable();
     $.ajax({
         type: 'GET',
-        url: '/messagingCSAT?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgcsatskillIDList + '&skS=' + msgcsatskillSelect + '&agent=' + msgcsatagentIDList + '&agS' + msgcsatAgentSelect + '&range=' + msgcsatRange,
+        url: '/messagingCSAT',
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
+                //console.log(data);
                 updateMessagingCSATData(data);
             } else {
-                //window.location.href = "/error";
-                $('#myModal2').modal('show');
-                $('#errorDetails').html(JSON.stringify(data.Error));
+                window.location.href = "/error";
             }
         }
     });
-}
-
-/**
- * @desc gets the api settings from the browser local storage
- * @return undefined
- */
-function getLocalStorageVariables() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        consumerKey = localStorage.getItem("consumerKeyM");
-        accountNum = localStorage.getItem("accountNumM");
-        consumerSecret = localStorage.getItem("consumerSecretM");
-        accessToken = localStorage.getItem("accessTokenM");
-        accessTokenSecret = localStorage.getItem("accessTokenSecretM");
-        msgcsatskillSelect = localStorage.getItem("msgcsatskillSelect");
-        msgcsatskillIDList = localStorage.getItem("msgcsatskillIDList");
-        msgcsatagentIDList = localStorage.getItem("msgcsatagentIDList");
-        msgcsatAgentSelect = localStorage.getItem("msgcsatAgentSelect");
-        msgcsatRange = localStorage.getItem("msgcsatRange");
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
 }
 
 /**

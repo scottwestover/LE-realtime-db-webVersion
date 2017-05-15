@@ -1,5 +1,5 @@
 {
-  "name": "LiveEngage-Real-Time-Dashboard",
+  "name": "node-js-getting-started",
   "version": "0.1.5",
   "description": "A sample Real Time Dashboard that uses the Real Time Operational API.",
   "main": "index.js",
@@ -7,8 +7,10 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "csv": "^1.1.1",
     "ejs": "2.3.3",
     "express": "4.13.3",
+    "json2csv": "^3.4.1",
     "request": "^2.69.0"
   },
   "engines": {
@@ -16,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/scottwestover/LE-realtime-db-webVersion"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
     "node",

@@ -1,29 +1,31 @@
-// variables that are used for pulling the api information from the browser storage
-var consumerKey = 0;
-var accountNum = 0;
-var consumerSecret = 0;
-var accessToken = 0;
-var accessTokenSecret = 0;
-var msgConskillSelect = 1;
-var msgConskillIDList = null;
-var msgConagentIDList = null;
-var msgConAgentSelect = 1;
-var msgConRange = 1;
-getLocalStorageVariables();
-
 //variable for the list of agents
 var agentList = null;
 //variable for the list of skills
 var skillList = null;
 
 $(document).ready(function() {
+    if (window.location.href.includes("click=true")) {
+        showMessagingMenu();
+    }
     setupTables();
-    setTimeout(function() {
-        var sel = 'div[role="main"]';
-        agentList = angular.element(sel).scope().listUsers();
-        skillList = angular.element(sel).scope().listSkills();
-        getData();
-    }, 100);
+    $.ajax({
+        type: 'GET',
+        url: '/agentList',
+        success: function(data) {
+            agentList = data;
+            // console.log(agentList);
+            $.ajax({
+                type: 'GET',
+                url: '/skillList',
+                success: function(data2) {
+                    skillList = data2;
+                    //console.log(skillList);
+                    //populate the table with the api info
+                    getData();
+                }
+            });
+        }
+    });
 });
 
 /**
@@ -34,40 +36,15 @@ function getData() {
     var oTable = $('#example').DataTable();
     $.ajax({
         type: 'GET',
-        url: '/messagingConversation?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + msgConskillIDList + '&skS=' + msgConskillSelect + '&agent=' + msgConagentIDList + '&agS=' + msgConAgentSelect + '&range=' + msgConRange,
+        url: '/messagingConversation',
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateMessagingConData(data);
             } else {
-                //window.location.href = "/error";
-                $('#myModal2').modal('show');
-                $('#errorDetails').html(JSON.stringify(data.Error));
+                window.location.href = "/error";
             }
         }
     });
-}
-
-/**
- * @desc gets the api settings from the browser local storage
- * @return undefined
- */
-function getLocalStorageVariables() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        consumerKey = localStorage.getItem("consumerKeyM");
-        accountNum = localStorage.getItem("accountNumM");
-        consumerSecret = localStorage.getItem("consumerSecretM");
-        accessToken = localStorage.getItem("accessTokenM");
-        accessTokenSecret = localStorage.getItem("accessTokenSecretM");
-        msgConskillSelect = localStorage.getItem("msgConskillSelect");
-        msgConskillIDList = localStorage.getItem("msgConskillIDList");
-        msgConagentIDList = localStorage.getItem("msgConagentIDList");
-        msgConAgentSelect = localStorage.getItem("msgConAgentSelect");
-        msgConRange = localStorage.getItem("msgConRange");
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
 }
 
 /**
@@ -210,7 +187,7 @@ function updateMessagingConData(data) {
                 totalHandlingTime_resolvedConversations_byConsumer = data.agentsMetrics.metricsPerAgent[agent].totalHandlingTime_resolvedConversations_byConsumer;
                 totalHandlingTime_resolvedConversations_bySystem = data.agentsMetrics.metricsPerAgent[agent].totalHandlingTime_resolvedConversations_bySystem;
                 totalResolvedConversations = data.agentsMetrics.metricsPerAgent[agent].totalResolvedConversations;
-
+                
                 avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
                 avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
                 avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
@@ -237,7 +214,7 @@ function updateMessagingConData(data) {
             totalHandlingTime_resolvedConversations_byConsumer = data.agentsMetrics.metricsTotals.totalHandlingTime_resolvedConversations_byConsumer;
             totalHandlingTime_resolvedConversations_bySystem = data.agentsMetrics.metricsTotals.totalHandlingTime_resolvedConversations_bySystem;
             totalResolvedConversations = data.agentsMetrics.metricsTotals.totalResolvedConversations;
-
+            
             avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
             avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
             avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);
@@ -282,7 +259,7 @@ function updateMessagingConData(data) {
                         totalHandlingTime_resolvedConversations_byConsumer = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalHandlingTime_resolvedConversations_byConsumer;
                         totalHandlingTime_resolvedConversations_bySystem = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalHandlingTime_resolvedConversations_bySystem;
                         totalResolvedConversations = data.skillsMetricsPerAgent.metricsPerSkill[skill].metricsPerAgent[agent].totalResolvedConversations;
-
+                        
                         avgTime_resolvedConversations = secondsToHms(avgTime_resolvedConversations/1000);
                         avgTime_resolvedConversations_byCCP = secondsToHms(avgTime_resolvedConversations_byCCP/1000);
                         avgTime_resolvedConversations_byConsumer = secondsToHms(avgTime_resolvedConversations_byConsumer/1000);

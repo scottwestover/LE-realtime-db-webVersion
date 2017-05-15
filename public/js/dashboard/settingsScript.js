@@ -1,122 +1,61 @@
-// variables for the agent and skill lists
+// variables for the oauth settings from the saved settings
+var consumerKey;
+var consumerSecret;
+var token;
+var tokenSecret;
+var accountNum;
 var skillList = null;
 var agentList = null;
+var groupList = null;
+var agentGroups = {};
 
 $(document).ready(function() {
-    setTimeout(function() {
-        var sel = 'div[role="main"]';
-        skillList = angular.element(sel).scope().listSkills();
-        agentList = angular.element(sel).scope().listUsers();
-        //console.log(skillList);
-        //console.log(agentList);
+    // check to see fi the agent group select menu has changed
+    $("#agentGroupSelect").change(function() {
+        $('#eaAgentSelect').val(2);
+        $('#slaskillSelect').val(2);
+        $('#CQskillSelect').val(2);
+        $('#easkillSelect').val(2);
+        $('#skillSelect').val(2);
+        $('#skillSelectAA').val(2);
 
-        populateMutilpleSelectBoxes();
-        updateFormAgentValues();
-        updateFormSkillValues();
-    }, 100);
+        $("#eaagentIDList").prop("disabled", false);
+        $("#eaagentIDList option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].agents.length; i++){
+            $("#eaagentIDList option[value='" + agentGroups[$("#agentGroupSelect").val()].agents[i]+ "']").attr('selected', true);
+        }
+        $("#slaskillIDList").prop("disabled", false);
+        $("#slaskillIDList option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].skills.length; i++){
+            $("#slaskillIDList option[value='" + agentGroups[$("#agentGroupSelect").val()].skills[i]+ "']").attr('selected', true);
+        }
+        $("#CQskillIDList").prop("disabled", false);
+        $("#CQskillIDList option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].skills.length; i++){
+            $("#CQskillIDList option[value='" + agentGroups[$("#agentGroupSelect").val()].skills[i]+ "']").attr('selected', true);
+        }
+        $("#easkillIDList").prop("disabled", false);
+        $("#easkillIDList option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].skills.length; i++){
+            $("#easkillIDList option[value='" + agentGroups[$("#agentGroupSelect").val()].skills[i]+ "']").attr('selected', true);
+        }
+        $("#skillIDList").prop("disabled", false);
+        $("#skillIDList option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].skills.length; i++){
+            $("#skillIDList option[value='" + agentGroups[$("#agentGroupSelect").val()].skills[i]+ "']").attr('selected', true);
+        }
+        $("#skillIDListAA").prop("disabled", false);
+        $("#skillIDListAA option:selected").prop("selected", false);
+        for(var i = 0; i < agentGroups[$("#agentGroupSelect").val()].skills.length; i++){
+            $("#skillIDListAA option[value='" + agentGroups[$("#agentGroupSelect").val()].skills[i]+ "']").attr('selected', true);
+        }
 
-    updateFormValues();
-    getStorageVales();
-});
-
-/**
- * @desc saves the api settings to the browser local storage
- * @return undefined
- */
-function storeValues() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        // Check if keys or account number has changed
-        var restart = checkForChangedKeys();
-        // Store
-        localStorage.setItem("consumerKey", document.getElementById("consumerKey").value.replace(/\s+/g, ''));
-        localStorage.setItem("consumerSecret", document.getElementById("consumerSecret").value.replace(/\s+/g, ''));
-        localStorage.setItem("accessToken", document.getElementById("accessToken").value.replace(/\s+/g, ''));
-        localStorage.setItem("accessTokenSecret", document.getElementById("accessTokenSecret").value.replace(/\s+/g, ''));
-        localStorage.setItem("accountNum", document.getElementById("accountNum").value.replace(/\s+/g, ''));
-        localStorage.setItem("skillSelect", document.getElementById("skillSelect").value);
-        localStorage.setItem("skillIDList", $('#skillIDList').val());
-        localStorage.setItem("easkillSelect", document.getElementById("easkillSelect").value);
-        localStorage.setItem("eaAgentSelect", document.getElementById("eaAgentSelect").value);
-        localStorage.setItem("easkillIDList", $('#easkillIDList').val());
-        localStorage.setItem("eaagentIDList", $('#eaagentIDList').val());
-        localStorage.setItem("sla", document.getElementById("sla").value);
-        localStorage.setItem("skillSelectAA", document.getElementById("skillSelectAA").value);
-        localStorage.setItem("skillIDListAA", $('#skillIDListAA').val());
-        localStorage.setItem("CQskillSelect", document.getElementById("CQskillSelect").value);
-        localStorage.setItem("CQskillIDList", $('#CQskillIDList').val());
-        localStorage.setItem("agentActivityRange", document.getElementById("agentActivityRange").value.replace(/\s+/g, ''));
-        localStorage.setItem("queueHealthRange", document.getElementById("queueHealthRange").value.replace(/\s+/g, ''));
-        localStorage.setItem("engagementActivityRange", document.getElementById("engagementActivityRange").value.replace(/\s+/g, ''));
-        localStorage.setItem("slaRange", document.getElementById("slaRange").value);
-        localStorage.setItem("slaskillSelect", document.getElementById("slaskillSelect").value);
-        localStorage.setItem("slaskillIDList", $('#slaskillIDList').val());
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    if (restart) {
-        window.location.href = "/";
-    }
-    else {
-        $('#cancelButton').click();
-    }
-    return;
-}
-
-/**
- * @desc gets the api settings from the browser local storage and updates the settings on the page
- * @return undefined
- */
-function getStorageVales() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKey") != null) {
-            $('#consumerKey').val(localStorage.getItem("consumerKey"));
-        }
-        if (localStorage.getItem("accountNum") != null) {
-            $('#accountNum').val(localStorage.getItem("accountNum"));
-        }
-        if (localStorage.getItem("consumerSecret") != null) {
-            $('#consumerSecret').val(localStorage.getItem("consumerSecret"));
-        }
-        if (localStorage.getItem("accessToken") != null) {
-            $('#accessToken').val(localStorage.getItem("accessToken"));
-        }
-        if (localStorage.getItem("accessTokenSecret") != null) {
-            $('#accessTokenSecret').val(localStorage.getItem("accessTokenSecret"));
-        }
-        if (localStorage.getItem("sla") != null) {
-            $('#sla').val(localStorage.getItem("sla"));
-        }
-        if (localStorage.getItem("agentActivityRange") != null) {
-            $("#agentActivityRange").val(localStorage.getItem("agentActivityRange"));
-        }
-        if (localStorage.getItem("queueHealthRange") != null) {
-            $("#queueHealthRange").val(localStorage.getItem("queueHealthRange"));
-        }
-        if (localStorage.getItem("engagementActivityRange") != null) {
-            $("#engagementActivityRange").val(localStorage.getItem("engagementActivityRange"));
-        }
-        if (localStorage.getItem("slaRange") != null) {
-            $("#slaRange").val(localStorage.getItem("slaRange"));
-        }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
-
-/**
- * @desc detects any changes drop down menus and then enables/disables the corresponding skill id and agent select menus
- * @return undefined
- */
-function updateFormValues() {
+    });
     // check to see if the engagement agent id select menu item has changed
     $("#eaAgentSelect").change(function() {
         if ($("#eaAgentSelect").val() == 1 || $("#eaAgentSelect").val() == 3) {
             // if they select all agents, disable the text area to input specific ids
             $("#eaagentIDList").prop("disabled", true);
-            $("#eaagentIDList option:selected").prop("selected", false);
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#eaagentIDList").prop("disabled", false);
@@ -127,10 +66,19 @@ function updateFormValues() {
         if ($("#easkillSelect").val() == 1 || $("#easkillSelect").val() == 3) {
             // if they select all agents, disable the text area to input specific ids
             $("#easkillIDList").prop("disabled", true);
-            $("#easkillIDList option:selected").prop("selected", false);
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#easkillIDList").prop("disabled", false);
+        }
+    });
+    // check to see if the agent id select menu item has changed
+    $("#agentSelect").change(function() {
+        if ($("#agentSelect").val() == 1) {
+            // if they select all agents, disable the text area to input specific ids
+            $("#agentIDList").prop("disabled", true);
+        } else {
+            // if they select individual agents, enable the text area to input specific ids
+            $("#agentIDList").prop("disabled", false);
         }
     });
     // check to see if the skill id select menu item has changed
@@ -138,7 +86,6 @@ function updateFormValues() {
         if ($("#CQskillSelect").val() == 1) {
             // if they select all skills, disable the text area to input specific ids
             $("#CQskillIDList").prop("disabled", true);
-            $("#CQskillIDList option:selected").prop("selected", false);
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#CQskillIDList").prop("disabled", false);
@@ -149,7 +96,6 @@ function updateFormValues() {
         if ($("#skillSelect").val() == 1) {
             // if they select all skills, disable the text area to input specific ids
             $("#skillIDList").prop("disabled", true);
-            $("#skillIDList option:selected").prop("selected", false);
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#skillIDList").prop("disabled", false);
@@ -160,13 +106,11 @@ function updateFormValues() {
         if ($("#skillSelectAA").val() == 1) {
             // if they select all skills, disable the text area to input specific ids
             $("#skillIDListAA").prop("disabled", true);
-            $("#skillIDListAA option:selected").prop("selected", false);
         } else {
             // if they select individual agents, enable the text area to input specific ids
             $("#skillIDListAA").prop("disabled", false);
         }
     });
-    // check to see if the skill id select menu item has changed for sla
     $("#slaskillSelect").change(function() {
         if ($("#slaskillSelect").val() == 1) {
             // if they select all skills, disable the text area to input specific ids
@@ -177,183 +121,212 @@ function updateFormValues() {
             $("#slaskillIDList").prop("disabled", false);
         }
     });
-    return;
-}
 
-/**
- * @desc updates the selected agents from the select input menu that where saved in the browser storage
- * @return undefined
- */
-function updateFormAgentValues() {
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("eaAgentSelect") != null) {
-            $('#eaAgentSelect').val(localStorage.getItem("eaAgentSelect"));
-        }
-        if (localStorage.getItem("eaAgentSelect") == 2) {
-            $("#eaagentIDList").prop("disabled", false);
-            var eaagentIDListArray = localStorage.getItem("eaagentIDList").split(",");
-            for (var i = 0; i < eaagentIDListArray.length; i++) {
-                $("#eaagentIDList option[value='" + eaagentIDListArray[i] + "']").attr('selected', true);
+    $.ajax({
+        type: 'GET',
+        url: '/agentGroupList',
+        success: function(data) {
+            groupList = data;
+            // Get all of the mutliple select options on the settings page for the skills
+            var select = document.getElementById("agentGroupSelect");
+            // loop through all of the select boxes and add in all of the available skills that can be selected
+            for(var group in groupList){
+                var optTxt = groupList[group];
+                var opt = group;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                select.appendChild(el);
             }
         }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
+    });
 
-/**
- * @desc updates the selected skills from the select input menu that where saved in the browser storage
- * @return undefined
- */
-function updateFormSkillValues() {
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("skillSelect") != null) {
-            $("#skillSelect").val(localStorage.getItem("skillSelect"));
-        }
-        if (localStorage.getItem("skillSelect") == 2) {
-            $("#skillIDList").prop("disabled", false);
-            var skillIDListArray = localStorage.getItem("skillIDList").split(",");
-            for (var i = 0; i < skillIDListArray.length; i++) {
-                $("#skillIDList option[value='" + skillIDListArray[i] + "']").attr('selected', true);
+    $.ajax({
+        type: 'GET',
+        url: '/skillList',
+        success: function(data) {
+            skillList = data;
+            // Get all of the mutliple select options on the settings page for the skills
+            var select = document.getElementById("skillIDListAA");
+            var selectQueueHealth = document.getElementById("skillIDList");
+            var selectEngagementActivity = document.getElementById("easkillIDList");
+            var selectCurrentQueueState = document.getElementById("CQskillIDList");
+            var selectSLA = document.getElementById("slaskillIDList");
+            // loop through all of the select boxes and add in all of the available skills that can be selected
+            for(var skill in skillList){
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectQueueHealth.appendChild(el);
             }
-        }
-        if (localStorage.getItem("CQskillSelect") != null) {
-            $("#CQskillSelect").val(localStorage.getItem("CQskillSelect"));
-        }
-        if (localStorage.getItem("CQskillSelect") == 2) {
-            $("#CQskillIDList").prop("disabled", false);
-            var CQskillIDListArray = localStorage.getItem("CQskillIDList").split(",");
-            for (var i = 0; i < CQskillIDListArray.length; i++) {
-                $("#CQskillIDList option[value='" + CQskillIDListArray[i] + "']").attr('selected', true);
+            for(var skill in skillList){
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                select.appendChild(el);
             }
-        }
-        if (localStorage.getItem("skillSelectAA") != null) {
-            $("#skillSelectAA").val(localStorage.getItem("skillSelectAA"));
-        }
-        if (localStorage.getItem("skillSelectAA") == 2) {
-            $("#skillIDListAA").prop("disabled", false);
-            var skillIDListAAArray = localStorage.getItem("skillIDListAA").split(",");
-            for (var i = 0; i < skillIDListAAArray.length; i++) {
-                $("#skillIDListAA option[value='" + skillIDListAAArray[i] + "']").attr('selected', true);
+            for(var skill in skillList){
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectEngagementActivity.appendChild(el);
             }
-        }
-        if (localStorage.getItem("easkillSelect") != null) {
-            $("#easkillSelect").val(localStorage.getItem("easkillSelect"));
-        }
-        if (localStorage.getItem("easkillSelect") == 2) {
-            $("#easkillIDList").prop("disabled", false);
-            var easkillIDListArray = localStorage.getItem("easkillIDList").split(",");
-            for (var i = 0; i < easkillIDListArray.length; i++) {
-                $("#easkillIDList option[value='" + easkillIDListArray[i] + "']").attr('selected', true);
+            for(var skill in skillList){
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectCurrentQueueState.appendChild(el);
             }
-        }
-        if (localStorage.getItem("slaskillSelect") != null) {
-            $("#slaskillSelect").val(localStorage.getItem("slaskillSelect"));
-        }
-        if (localStorage.getItem("slaskillSelect") == 2) {
-            $("#slaskillIDList").prop("disabled", false);
-            var slaskillIDListArray = localStorage.getItem("slaskillIDList").split(",");
-            for (var i = 0; i < slaskillIDListArray.length; i++) {
-                $("#slaskillIDList option[value='" + slaskillIDListArray[i] + "']").attr('selected', true);
+            for (var skill in skillList) {
+                var optTxt = skillList[skill];
+                var opt = skill;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = opt;
+                selectSLA.appendChild(el);
             }
+                $.ajax({
+                    type: 'GET',
+                    url: '/agentList',
+                    success: function(data) {
+                        agentList = data;
+                        loopData();
+                        // Get all of the mutliple select options on the settings page for the agents
+                        var selectAgents = document.getElementById("eaagentIDList");
+                        // loop through all of the select boxes and add in all of the available agents that can be selected
+                        for(var agent in agentList){
+                            var optTxt = agentList[agent].fullName;
+                            var opt = agent;
+                            var el = document.createElement("option");
+                            el.textContent = optTxt;
+                            el.value = opt;
+                            selectAgents.appendChild(el);
+                        }
+                        // get the settings that are saved and update the settings on the page accordingly
+                        $.post("/getOauth", function(data) {
+                            //console.log(data);
+                            consumerKey = data.consumer_key;
+                            consumerSecret = data.consumer_secret;
+                            token = data.token;
+                            tokenSecret = data.token_secret;
+                            accountNum = data.accountNum;
+                            var intervalCheck = data.intervalCheck;
+                            var agentSelect = data.agentSelect;
+                            var skillSelect = data.skillSelect;
+                            var CQskillSelect = data.CQskillSelect;
+                            var skillSelectAA = data.skillSelectAA;
+                            var skillIDListAA = data.skillIDListAA;
+                            var skillIDList = data.skillIDList;
+                            var eaAgentSelect = data.eaAgentSelect;
+                            var easkillSelect = data.easkillSelect;
+                            var easkillIDList = data.easkillIDList;
+                            var eaagentIDList = data.eaagentIDList;
+                            var CQskillIDList = data.CQskillIDList;
+                            var agentActivityRange = data.aarange;
+                            var queueHealthRange = data.qarange;
+                            var engagementActivityRange = data.earange;
+                            var slaRange = data.slaRange;
+                            var slaskillSelect = data.slaskillSelect;
+                            var slaskillIDList = data.slaskillIDList;
+                            var slatime = data.sla;
+                            $("#slaRange").val(slaRange);
+                            $("#engagementActivityRange").val(engagementActivityRange);
+                            $("#queueHealthRange").val(queueHealthRange);
+                            $("#agentActivityRange").val(agentActivityRange);
+                            $('#easkillSelect').val(easkillSelect);
+                            if (easkillSelect == 2) {
+                                $("#easkillIDList").prop("disabled", false);
+                                var easkillIDListArray = easkillIDList.split(",");
+                                for(var i = 0; i < easkillIDListArray.length; i++){
+                                    $("#easkillIDList option[value='" + easkillIDListArray[i]+ "']").attr('selected', true);
+                                }
+                            }
+                            $('#eaAgentSelect').val(eaAgentSelect);
+                            if (eaAgentSelect == 2) {
+                                $("#eaagentIDList").prop("disabled", false);
+                                var eaagentIDListArray = eaagentIDList.split(",");
+                                for(var i = 0; i < eaagentIDListArray.length; i++){
+                                    $("#eaagentIDList option[value='" + eaagentIDListArray[i]+ "']").attr('selected', true);
+                                }
+                            }
+                            $('#accountNum').val(accountNum);
+                            $('#consumerKey').val(consumerKey);
+                            $('#consumerSecret').val(consumerSecret);
+                            $('#accessToken').val(token);
+                            $('#accessTokenSecret').val(tokenSecret);
+                            $('#sla').val(slatime);
+                            $("#skillSelect").val(skillSelect);
+                            if (skillSelect == 2) {
+                                $("#skillIDList").prop("disabled", false);
+                                var skillIDListArray = skillIDList.split(",");
+                                for(var i = 0; i < skillIDListArray.length; i++){
+                                    $("#skillIDList option[value='" + skillIDListArray[i]+ "']").attr('selected', true);
+                                }
+                            }
+                            $("#CQskillSelect").val(CQskillSelect);
+                            if (CQskillSelect == 2) {
+                                $("#CQskillIDList").prop("disabled", false);
+                                var CQskillIDListArray = CQskillIDList.split(",");
+                                for(var i = 0; i < CQskillIDListArray.length; i++){
+                                    $("#CQskillIDList option[value='" + CQskillIDListArray[i]+ "']").attr('selected', true);
+                                }
+                            }
+                            $("#skillSelectAA").val(skillSelectAA);
+                            if (skillSelectAA == 2) {
+                                $("#skillIDListAA").prop("disabled", false);
+                                var skillIDListAAArray = skillIDListAA.split(",");
+                                for(var i = 0; i < skillIDListAAArray.length; i++){
+                                    $("#skillIDListAA option[value='" + skillIDListAAArray[i]+ "']").attr('selected', true);
+                                }
+                            }
+                            $("#agentSelect").val(agentSelect);
+                            if (agentSelect == 2) {
+                                $("#agentIDList").prop("disabled", false);
+                                $("#agentIDList").val(agentIDList);
+                            }
+                            $("#slaskillSelect").val(slaskillSelect);
+                            if (slaskillSelect == 2) {
+                                $("#slaskillIDList").prop("disabled", false);
+                                var slaskillIDListArray = slaskillIDList.split(",");
+                                for (var i = 0; i < slaskillIDListArray.length; i++) {
+                                    $("#slaskillIDList option[value='" + slaskillIDListArray[i] + "']").attr('selected', true);
+                                }
+                            }
+                        });
+                    }
+                });
         }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
-}
+    });
+});
 
-/**
- * @desc populates all of the agent and skill select boxes with the agent and skill names from the skillList and agentList variables
- * @return undefined
- */
-function populateMutilpleSelectBoxes() {
-    // Get all of the mutliple select options on the settings page for the skills
-    var select = document.getElementById("skillIDListAA");
-    var selectQueueHealth = document.getElementById("skillIDList");
-    var selectEngagementActivity = document.getElementById("easkillIDList");
-    var selectCurrentQueueState = document.getElementById("CQskillIDList");
-    var selectSLA = document.getElementById("slaskillIDList");
-    // loop through all of the select boxes and add in all of the available skills that can be selected
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectQueueHealth.appendChild(el);
-    }
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        select.appendChild(el);
-    }
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectEngagementActivity.appendChild(el);
-    }
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectCurrentQueueState.appendChild(el);
-    }
-    for (var skill in skillList) {
-        var optTxt = skillList[skill];
-        var opt = skill;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectSLA.appendChild(el);
-    }
-    var selectAgents = document.getElementById("eaagentIDList");
-    // loop through all of the select boxes and add in all of the available agents that can be selected
-    for (var agent in agentList) {
-        var optTxt = agentList[agent].fullName;
-        var opt = agent;
-        var el = document.createElement("option");
-        el.textContent = optTxt;
-        el.value = opt;
-        selectAgents.appendChild(el);
-    }
-    return;
-}
-
-/**
- * @desc checks to see if the api keys have changed that way we know if we need to restart the app
- * @return bool
- */
-function checkForChangedKeys() {
-    var restart = false;
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.getItem("consumerKey") != document.getElementById("consumerKey").value) {
-            restart = true;
+function loopData() {
+    for (group in groupList) {
+        agentGroups[group] = {
+            "id": group,
+            "name": groupList[group],
+            "agents": [],
+            "skills": []
         }
-        if (localStorage.getItem("accountNum") != document.getElementById("accountNum").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("consumerSecret") != document.getElementById("consumerSecret").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("accessToken") != document.getElementById("accessToken").value) {
-            restart = true;
-        }
-        if (localStorage.getItem("accessTokenSecret") != document.getElementById("accessTokenSecret").value) {
-            restart = true;
-        }
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
     }
-    return restart;
+    for (agent in agentList) {
+        if (agentList[agent].hasOwnProperty('memberOf')) {
+            if (agentGroups.hasOwnProperty(agentList[agent].memberOf.agentGroupId)) {
+                agentGroups[agentList[agent].memberOf.agentGroupId].agents.push(agent);
+                for (var i = 0; i < agentList[agent].skillIds.length; i++) {
+                    if (agentGroups[agentList[agent].memberOf.agentGroupId].skills.indexOf(agentList[agent].skillIds[i]) === -1) {
+                        agentGroups[agentList[agent].memberOf.agentGroupId].skills.push(agentList[agent].skillIds[i]);
+                    }
+                }
+            }
+        }
+    }
+    //console.log(agentGroups);
 }

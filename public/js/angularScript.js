@@ -11,30 +11,6 @@ var msgcsatInterval = null;
 var msgInterval = null;
 var msgDBInterval = null;
 
-dashboardApp.factory('users', function() {
-    var users = {};
-    var skills = {};
-    var agentGroups = {};
-    var usersService = {};
-
-    usersService.add = function(user,skill,group) {
-        users = user;
-        skills = skill;
-        agentGroups = group;
-    };
-    usersService.listUsers = function() {
-        return users;
-    };
-    usersService.listSkills = function() {
-        return skills;
-    };
-    usersService.listGroups = function() {
-        return agentGroups;
-    };
-
-    return usersService;
-});
-
 // configure our routes
 dashboardApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -50,7 +26,7 @@ dashboardApp.config(['$routeProvider', '$locationProvider', function ($routeProv
         })
         // route for the settings dashboard page
         .when('/settings', {
-            templateUrl: 'partials/settingsUpdate.html',
+            templateUrl: 'partials/settings.html',
             controller: 'mainController'
         })
         // route for the queue health dashboard page
@@ -88,11 +64,6 @@ dashboardApp.config(['$routeProvider', '$locationProvider', function ($routeProv
             templateUrl: 'partials/slaDashboard.html',
             controller: 'slaController'
         })
-        // route for the startups page
-        .when('/startups',{
-            templateUrl: 'partials/startup.html',
-            controller: 'startupController'
-        })
         // route for the messaging csat page
         .when('/msgcsatDashboard',{
             templateUrl: 'partials/messagingCSATDashboard.html',
@@ -120,31 +91,15 @@ dashboardApp.config(['$routeProvider', '$locationProvider', function ($routeProv
 
     $locationProvider.html5Mode(true);
     }]);
-    
-// controller for the startup dashboard
-dashboardApp.controller('startupController', function ($scope, users, $location) {
-    $scope.add = users.add;
-    $scope.changeURL = function(){
-            $location.url('/').replace(); 
-            $scope.$apply();
-    };
-});
 
 // controller for the settings dashboard
-dashboardApp.controller('mainController', function ($scope, users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
-});
+dashboardApp.controller('mainController', function ($scope) {});
 
 // controller for the settings dashboard for messaging
-dashboardApp.controller('msgMainController', function ($scope, users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
-});
+dashboardApp.controller('msgMainController', function ($scope) {});
 
 // controller for agent activity dashboard
-dashboardApp.controller('activityController', function ($scope, $interval, users) {
-    $scope.listUsers = users.listUsers;
+dashboardApp.controller('activityController', function ($scope, $interval) {
     activityInterval = $interval(function () {
         console.log("Agent Activity is running...");
         getData();
@@ -156,8 +111,7 @@ dashboardApp.controller('activityController', function ($scope, $interval, users
 }]);
 
 // controller for queue health dashboard
-dashboardApp.controller('queuehealthController', function ($scope, $interval,users) {
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('queuehealthController', function ($scope, $interval) {
     queueInterval = $interval(function () {
         console.log("Queue Health is running...");
         getData();
@@ -169,9 +123,7 @@ dashboardApp.controller('queuehealthController', function ($scope, $interval,use
 }]);
 
 // controller for engagement activity dashboard
-dashboardApp.controller('engagementActivityController', function ($scope, $interval, users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('engagementActivityController', function ($scope, $interval) {
     eaInterval = $interval(function () {
         console.log("Engagement Activity is running...");
         getData();
@@ -186,11 +138,8 @@ dashboardApp.controller('engagementActivityController', function ($scope, $inter
 dashboardApp.controller('glossaryController', function ($scope) {});
 
 // controller for the graphs dashboard
-dashboardApp.controller('graphsController', function ($scope, $interval, users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
-    $scope.listGroups = users.listGroups;
-    graphInterval = $interval(function () {
+dashboardApp.controller('graphsController', function ($scope, $interval) {
+   graphInterval = $interval(function () {
         console.log("Graphs is running...");
         getData();
     }, 10000);
@@ -201,12 +150,9 @@ dashboardApp.controller('graphsController', function ($scope, $interval, users) 
 }]);
 
 // controller for the msg graphs dashboard
-dashboardApp.controller('msgDBController', function ($scope, $interval, users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
-    $scope.listGroups = users.listGroups;
-    msgDBInterval = $interval(function () {
-        console.log("Graphs is running...");
+dashboardApp.controller('msgDBController', function ($scope, $interval) {
+   msgDBInterval = $interval(function () {
+        console.log("Msg DB is running...");
         getData();
     }, 10000);
 }).run(['$rootScope', '$interval', function ($rootScope, $interval) {
@@ -216,21 +162,19 @@ dashboardApp.controller('msgDBController', function ($scope, $interval, users) {
 }]);
 
 // controller for the recognition dashboard
-dashboardApp.controller('recController', function ($scope, $interval, users) {
+dashboardApp.controller('recController', function ($scope, $interval) {
    recInterval = $interval(function () {
         console.log("Recognition is running...");
         getData();
     }, 10000);
-       $scope.listUsers = users.listUsers;
-}).run(['$rootScope', '$interval', function ($rootScope, $interval, users) {
+}).run(['$rootScope', '$interval', function ($rootScope, $interval) {
     $rootScope.$on('$routeChangeStart', function () {
         $interval.cancel(recInterval);
     });
 }]);
 
 // controller for the current queue dashboard
-dashboardApp.controller('curQueController', function ($scope, $interval,users) {
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('curQueController', function ($scope, $interval) {
    curQueInterval = $interval(function () {
         console.log("Current Queue is running...");
         getData();
@@ -242,8 +186,7 @@ dashboardApp.controller('curQueController', function ($scope, $interval,users) {
 }]);
 
 // controller for the sla dashboard
-dashboardApp.controller('slaController', function ($scope, $interval,users) {
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('slaController', function ($scope, $interval) {
    slaInterval = $interval(function () {
         console.log("sla is running...");
         getData();
@@ -255,9 +198,7 @@ dashboardApp.controller('slaController', function ($scope, $interval,users) {
 }]);
 
 // controller for the message csat dashboard
-dashboardApp.controller('msgcsatController', function ($scope, $interval,users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('msgcsatController', function ($scope, $interval) {
     msgcsatInterval = $interval(function () {
         console.log("msg csat is running...");
         getData();
@@ -269,9 +210,7 @@ dashboardApp.controller('msgcsatController', function ($scope, $interval,users) 
 }]);
 
 // controller for the message conversation dashboard
-dashboardApp.controller('msgconController', function ($scope, $interval,users) {
-    $scope.listUsers = users.listUsers;
-    $scope.listSkills = users.listSkills;
+dashboardApp.controller('msgconController', function ($scope, $interval) {
     msgcsatInterval = $interval(function () {
         console.log("msg con is running...");
         getData();
@@ -287,8 +226,5 @@ var myVar = setInterval(myTimer, 1000);
 
 function myTimer() {
     var d = new Date();
-    var currentURL = window.location.href;
-    if(currentURL != "http://localhost:5000/startups"){
-        document.getElementById("time").innerHTML = d.toLocaleTimeString();
-    }
+    document.getElementById("time").innerHTML = d.toLocaleTimeString();
 }

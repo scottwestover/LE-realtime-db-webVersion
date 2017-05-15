@@ -6,7 +6,8 @@
             <div class="x_title">
                <h2>Queue Health</h2>
                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
                   <li>
                      <div id="time"></div>
                   </li>
@@ -28,7 +29,8 @@
                         <th title="The number of visitors that were connected to an agent.">Connected</th>
                      </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                  </tbody>
                </table>
             </div>
          </div>
@@ -38,7 +40,8 @@
             <div class="x_title">
                <h2>Engagement Activity - Agent Level</h2>
                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
                </ul>
                <div class="clearfix"></div>
             </div>
@@ -54,7 +57,8 @@
                         <th title="The number of chats connected to an agent in the current interval/time frame.">Connected Engagements</th>
                      </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                  </tbody>
                </table>
             </div>
          </div>
@@ -158,7 +162,7 @@
    </div>
    <!-- /top tiles -->
    <!-- graphs -->
-   <div class="row">
+      <div class="row">
       <div class="col-md-8 col-sm-6 col-xs-12">
          <div class="x_panel">
             <div class="x_title">
@@ -302,8 +306,10 @@
                   <li>
                      <h2><i class="fa fa-info-circle" data-toggle="tooltip" title="This table will show key metrics for the agents for the time frame you selected in the Agent Activity and Engagement Activity API." data-placement="bottom"></i></h2>
                   </li>
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
                </ul>
                <div class="clearfix"></div>
             </div>
@@ -323,7 +329,8 @@
                         <th title="The total amount of time the agent spent chatting divided by the total amount of time the agent was logged in.">Agent Utilization</th>
                      </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                  </tbody>
                </table>
             </div>
          </div>
@@ -338,8 +345,10 @@
                   <li>
                      <h2><i class="fa fa-info-circle" data-toggle="tooltip" title="This table shows the average time to answer for the past 24 hours for the skills you selected for the Queue Health API." data-placement="bottom"></i></h2>
                   </li>
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
                </ul>
                <div class="clearfix"></div>
             </div>
@@ -357,8 +366,10 @@
                   <li>
                      <h2><i id="infoTip" class="fa fa-info-circle" data-toggle="tooltip" title="The average time to answer/abandon for each skill for all of the skills and the timeframe you selected in the Queue Health API settings." data-placement="bottom"></i></h2>
                   </li>
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
                </ul>
                <div class="clearfix"></div>
             </div>
@@ -372,24 +383,6 @@
    <!-- end of graphs -->
 </div>
 <script>
-   var consumerKey = 0;
-   var accountNum = 0;
-   var consumerSecret = 0;
-   var accessToken = 0;
-   var accessTokenSecret = 0;
-   var queueHealthRange = 0;
-   var skillIDList = null;
-   var sla = null;
-   var easkillSelect = 1;
-   var easkillIDList = null;
-   var eaagentIDList = null;
-   var eaAgentSelect = 1;
-   var engagementActivityRange = 1;
-   var agentActivityRange = null;
-   var skillIDListAA = null;
-   var slaskillIDList = null;
-   var slaRange = null;
-   getLocalStorageVariables();
    //variable for the total number of chats an agent took each hour
    var agentsChats24hr = {};
    //variable for the agents and their average handling time
@@ -451,8 +444,8 @@
                });
            },
            aLengthMenu: [
-               [10, 25, 50, 100, -1],
-               [10, 25, 50, 100, "All"]
+           [10, 25, 50, 100, -1],
+           [10, 25, 50, 100, "All"]
            ]
        });
        //setup the skill status table
@@ -464,20 +457,8 @@
                });
            },
            aLengthMenu: [
-               [10, 25, 50, 100, -1],
-               [10, 25, 50, 100, "All"]
-           ]
-       });
-       $('#slaTable').DataTable({
-           "initComplete": function(settings) {
-               /* Apply the tooltips */
-               $('#slaTable thead th[title]').tooltip({
-                   "container": 'body'
-               });
-           },
-           aLengthMenu: [
-               [10, 25, 50, 100, -1],
-               [10, 25, 50, 100, "All"]
+           [10, 25, 50, 100, -1],
+           [10, 25, 50, 100, "All"]
            ]
        });
        //setup the agent status table
@@ -489,8 +470,8 @@
                });
            },
            aLengthMenu: [
-               [10, 25, 50, 100, -1],
-               [10, 25, 50, 100, "All"]
+           [10, 25, 50, 100, -1],
+           [10, 25, 50, 100, "All"]
            ]
        });
        //setup table
@@ -504,14 +485,28 @@
            "aoColumnDefs": [{
                "sClass": "breakAll",
                "aTargets": [2]
-           }, {
+           },
+           {
                "aTargets": [0],
                "visible": false
-           }],
+           }
+           ],
            dom: 'Blfrtip',
            buttons: [
-               'copy', 'csv', 'excel', 'print'
+           'copy', 'csv', 'excel', 'print'
            ],
+           aLengthMenu: [
+           [10, 25, 50, 100, -1],
+           [10, 25, 50, 100, "All"]
+           ]
+       });
+       $('#slaTable').DataTable({
+           "initComplete": function(settings) {
+               /* Apply the tooltips */
+               $('#slaTable thead th[title]').tooltip({
+                   "container": 'body'
+               });
+           },
            aLengthMenu: [
                [10, 25, 50, 100, -1],
                [10, 25, 50, 100, "All"]
@@ -527,13 +522,33 @@
        //hide the online/offline status tabs
        $('#skillStatus').hide();
        $('#skillStatus2').hide();
-       setTimeout(function() {
-            var sel = 'div[role="main"]';
-            agentList = angular.element(sel).scope().listUsers();
-            skillList = angular.element(sel).scope().listSkills();
-            agentGroupList = angular.element(sel).scope().listGroups();
-            getData();
-        }, 100);
+       //get the agent list from the csv
+       $.ajax({
+           type: 'GET',
+           url: '/agentList',
+           success: function(data) {
+               agentList = data;
+               //console.log(agentList);
+               $.ajax({
+                   type: 'GET',
+                   url: '/skillList',
+                   success: function(data2) {
+                       skillList = data2;
+                        //console.logt(skillList);
+                        $.ajax({
+                           type: 'GET',
+                           url: '/agentGroupList',
+                           success: function(data3) {
+                               agentGroupList = data3;
+                               //console.log(agentGroupList);
+                               //populate the table with the api info
+                               getData();
+                           }
+                       });
+                    }
+                });
+           }
+       });
    });
    //populates the data table by calling the Real Time API
    function getData() {
@@ -542,18 +557,18 @@
        var operatorTable = $('#operator').DataTable();
        var queTable = $('#queHealthTable').DataTable();
        var slaTable = $('#slaTable').DataTable();
-       //get the current queue health
+       //get the current queue healt
        $.ajax({
            type: 'GET',
-           url: '/queueHealth?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&qaR=' + queueHealthRange + '&skillList=' + skillIDList,
+           url: '/queueHealth',
            success: function(data) {
-               if (data.Fail != "undefined" && data.Fail != "404") {
+               if(data.Fail != "undefined" && data.Fail != "404"){
                    oTable
-                       .clear()
-                       .draw();
+                   .clear()
+                   .draw();
                    queTable
-                       .clear()
-                       .draw();
+                   .clear()
+                   .draw();
                    // metric totals for all skills that were included in the call
                    var skillID = "All";
                    var avgTimeToAbandon = data.metricsTotals.avgTimeToAbandon;
@@ -569,21 +584,21 @@
                    abandoned = data.metricsTotals.abandonedEng;
                    var connectedEng = data.metricsTotals.connectedEng;
                    connected = data.metricsTotals.connectedEng;
-                   abanRate = (abandonmentRate * 100).toFixed(0) + "%";
+                   abanRate = (abandonmentRate * 100).toFixed(0)+"%";
                    var currentAvailableSlots = data.metricsTotals.currentAvailableSlots;
                    var currentQueueSize = data.metricsTotals.currentQueueSize;
                    var status = "";
-                   if (currentQueueSize == -1) {
-                       currentQueueSize = 0;
-                       currentAvailableSlots = 0;
-                   }
-                   if (skillListForAvaialbility.hasOwnProperty(skillID)) {
-                       status = skillListForAvaialbility[skillID];
-                   }
+                   if(currentQueueSize == -1){
+                               currentQueueSize = 0;
+                               currentAvailableSlots = 0;
+                    }
+                    if (skillListForAvaialbility.hasOwnProperty(skillID)) {
+                                status = skillListForAvaialbility[skillID];
+                    }
                    oTable.row.add([skillID, avgTimeToAnswer, totalTimeToAnswer, avgTimeToAbandon, totalTimeToAbandon, abandonmentRate, enteredQEng, abandonedEng, connectedEng]).draw();
                    queTable.row.add([skillID, status, currentAvailableSlots, currentQueueSize, avgTimeToAnswer, enteredQEng, abandonedEng, abanRate]).draw();
                    $('#totalInQueue').html(currentQueueSize);
-                   $('#totalAvailableSlots').html(currentAvailableSlots);
+                    $('#totalAvailableSlots').html(currentAvailableSlots);
                    // metric totals for each skill group
                    if (data.hasOwnProperty('skillsMetrics')) {
                        for (var skill in data.skillsMetrics) {
@@ -598,8 +613,8 @@
                                }
                            }
                            if (skillListForAvaialbility.hasOwnProperty(skillID)) {
-                               status = skillListForAvaialbility[skillID];
-                           }
+                                status = skillListForAvaialbility[skillID];
+                            }
                            avgTimeToAbandon = data.skillsMetrics[skill].avgTimeToAbandon;
                            totalTimeToAnswer = data.skillsMetrics[skill].totalTimeToAnswer;
                            totalTimeToAbandon = data.skillsMetrics[skill].totalTimeToAbandon;
@@ -613,7 +628,7 @@
                            var tempAbanRate = (abandonmentRate * 100).toFixed(0)+"%";
                            currentQueueSize = data.skillsMetrics[skill].currentQueueSize;
                            currentAvailableSlots = data.skillsMetrics[skill].currentAvailableSlots;
-                           if (currentQueueSize == -1) {
+                           if(currentQueueSize == -1){
                                currentQueueSize = 0;
                                currentAvailableSlots = 0;
                            }
@@ -630,21 +645,20 @@
                    $('#abanRate').html(abanRate);
                    $('#avgTime').html(secondsToHms(avgTimeAns));
                    populateSkillTable();
-               } else {
-                   //window.location.href = "/error";
-                   $('#myModal').modal('show');
-                   $('#errorDetails').html(JSON.stringify(data.Error));
+               }
+               else {
+                   window.location.href = "/error";
                }
            }
        });
        $.ajax({
            type: 'GET',
-           url: '/engagementActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + easkillIDList + '&skS=' + easkillSelect + '&agent=' + eaagentIDList + '&agS' + eaAgentSelect + '&range=' + engagementActivityRange,
+           url: '/engagementActivity',
            success: function(data) {
-               if (data.Fail != "undefined" && data.Fail != "404") {
+               if(data.Fail != "undefined" && data.Fail != "404"){
                    oTable2
-                       .clear()
-                       .draw();
+                   .clear()
+                   .draw();
                    // data that is available 
                    var agentId;
                    var totalInteractiveChats;
@@ -665,8 +679,8 @@
                            totalNonInteractiveChats = data.agentsMetrics.metricsPerAgent[agent].totalNonInteractiveChats;
                            totalHandlingTime = data.agentsMetrics.metricsPerAgent[agent].totalHandlingTime;
                            //calculate the average handling time
-                           var averageHandlingTimeEA = (totalHandlingTime / totalInteractiveChats).toFixed(2);
-                           if (isNaN(averageHandlingTimeEA)) {
+                           var averageHandlingTimeEA = (totalHandlingTime/totalInteractiveChats).toFixed(2);
+                           if(isNaN(averageHandlingTimeEA)){
                                averageHandlingTimeEA = 0;
                            }
                            agentAverageHandlingTime[agent] = averageHandlingTimeEA;
@@ -687,31 +701,31 @@
                        oTable2.row.add([agentId, totalInteractiveChats, totalNonInteractiveChats, totalHandlingTime, nonInteractiveTotalHandlingTime, connectedEngagements]).draw();
                    }
                    $('#intChat').html(interactiveChats);
-               } else {
-                   //window.location.href = "/error";
-                   $('#myModal').modal('show');
-                   $('#errorDetails').html(JSON.stringify(data.Error));
+               }
+               else {
+                   window.location.href = "/error";
                }
            }
        });
        //Code for the 24 hour avg time to answer graph
        $.ajax({
            type: 'GET',
-           url: '/queueHealth2?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skillList=' + skillIDList,
+           url: '/queueHealth2',
            success: function(data) {
-               if (data.Fail != "undefined" && data.Fail != "404") {
+               if(data.Fail != "undefined" && data.Fail != "404"){
                    var skillarr = {};
                    var timestamps = [];
                    if (data.hasOwnProperty('skillsMetrics')) {
                        for (var skill in data.skillsMetrics) {
                            skillarr[skill] = [];
                            var tempcolor = getRandomColor();
-                           if (skill == -1) {
+                           if(skill == -1){
                                skillarr[skill].name = "Unassigned";
-                           } else {
+                           }
+                           else {
                                skillarr[skill].name = skillList[skill];
                            }
-                           if (colorList[skill] == undefined) {
+                           if(colorList[skill] == undefined){
                                colorList[skill] = tempcolor;
                            }
                        }
@@ -723,91 +737,90 @@
                            timestamp = timestamp.split(' ')[0];
                            timestamps.push(timestamp);
                            if (data.metricsByIntervals[interval].metricsData.hasOwnProperty('skillsMetrics')) {
-                               for (var key in skillarr) {
+                               for(var key in skillarr){
                                    var x = data.metricsByIntervals[interval].metricsData.skillsMetrics[key];
-                                   if (x == undefined) {
+                                   if(x == undefined){
                                        x = null;
-                                   } else {
-                                       x = data.metricsByIntervals[interval].metricsData.skillsMetrics[key].avgTimeToAnswer
                                    }
-                                   skillarr[key].push(x);
-                               }
-                           }
-                       }
-                   }
-                   myLineChart24hr.destroy();
-                   var datasets = [];
-                   for (var key in skillarr) {
-                       var tempset = {
-                           label: skillarr[key].name,
-                           fillColor: colorList[key],
-                           strokeColor: colorList[key],
-                           highlightFill: colorList[key],
-                           highlightStroke: colorList[key],
-                           data: skillarr[key]
-                       };
-                       datasets.push(tempset);
-                   }
-                   var data24hr = {
-                       labels: timestamps,
-                       datasets: datasets,
+                                   else {
+                                      x = data.metricsByIntervals[interval].metricsData.skillsMetrics[key].avgTimeToAnswer
+                                  }
+                                  skillarr[key].push(x);
+                              }
+                          }
+                      }
+                  }
+                  myLineChart24hr.destroy();
+                  var datasets = [];
+                  for(var key in skillarr){
+                   var tempset = {
+                       label: skillarr[key].name,
+                       fillColor: colorList[key],
+                       strokeColor: colorList[key],
+                       highlightFill: colorList[key],
+                       highlightStroke: colorList[key],
+                       data: skillarr[key]
                    };
-                   if (showData2 == false) {
-                       $('#lineChart24hr').show();
-                       showData2 = true;
-                   }
-                   myLineChart24hr = new Chart(ctx2).Bar(data24hr, {
-                       responsive: true,
-                       animation: false
-                   });
-                   //if this is the first data pull, then show the graphs
-                   document.getElementById('js-legend24hr').innerHTML = myLineChart24hr.generateLegend();
-               } else {
-                   //window.location.href = "/error";
-                   $('#myModal').modal('show');
-                   $('#errorDetails').html(JSON.stringify(data.Error));
+                   datasets.push(tempset);
                }
+               var data24hr = {
+                   labels: timestamps,
+                   datasets: datasets,
+               };
+               if (showData2 == false) {
+                   $('#lineChart24hr').show();
+                   showData2 = true;
+               }
+               myLineChart24hr = new Chart(ctx2).Bar(data24hr, {
+                   responsive: true,
+                   animation: false
+               });
+               //if this is the first data pull, then show the graphs
+               document.getElementById('js-legend24hr').innerHTML = myLineChart24hr.generateLegend();
            }
-       });
+           else {
+               window.location.href = "/error";
+           }
+       }
+   });
        //code for the 24 hour chat per
        $.ajax({
            type: 'GET',
-           url: '/engagementActivity2?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret,
+           url: '/engagementActivity2',
            success: function(data) {
                if (data.hasOwnProperty('metricsByIntervals')) {
                    for (var interval in data.metricsByIntervals) {
                        if (data.metricsByIntervals[interval].hasOwnProperty('metricsData')) {
                            if (data.metricsByIntervals[interval].metricsData.hasOwnProperty('agentsMetrics')) {
                                if (data.metricsByIntervals[interval].metricsData.agentsMetrics.hasOwnProperty('metricsPerAgent')) {
-                                   for (var agent in data.metricsByIntervals[interval].metricsData.agentsMetrics.metricsPerAgent) {
-                                       if (agentsChats24hr.hasOwnProperty(agent)) {
+                                   for(var agent in data.metricsByIntervals[interval].metricsData.agentsMetrics.metricsPerAgent) {
+                                       if(agentsChats24hr.hasOwnProperty(agent)){
                                            agentsChats24hr[agent].chats.push(data.metricsByIntervals[interval].metricsData.agentsMetrics.metricsPerAgent[agent].totalInteractiveChats);
-                                       } else {
-                                           agentsChats24hr[agent] = {
-                                               "chats": [data.metricsByIntervals[interval].metricsData.agentsMetrics.metricsPerAgent[agent].totalInteractiveChats]
-                                           };
                                        }
-                                   }
-                               }
-                           }
-                       }
-                   }
-               }
-           }
-       });
+                                       else{
+                                          agentsChats24hr[agent] = {"chats":[data.metricsByIntervals[interval].metricsData.agentsMetrics.metricsPerAgent[agent].totalInteractiveChats]};
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      });
        $.ajax({
            type: 'GET',
-           url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA,
+           url: '/agentActivity',
            success: function(data) {
                //empyt out skill list for status object
                skillListForAvaialbility = {};
                var settingsTime = parseInt(data.settingsTime);
-               if (data.Fail != "undefined" && data.Fail != "404") {
+               if(data.Fail != "undefined" && data.Fail != "404"){
                    //console.log(data);
                    var skillChoices = data.skillChoice;
                    operatorTable
-                       .clear()
-                       .draw();
+                   .clear()
+                   .draw();
                    //totals for the number of agents online and their states
                    var numOnline = 0;
                    var numAway = 0;
@@ -840,97 +853,30 @@
                                maxchat = agentList[agent].maxChats;
                            }
                            // add in check to see if the user is a member of an agent group
-                           if (agentList[agent].hasOwnProperty("memberOf")) {
+                           if(agentList[agent].hasOwnProperty("memberOf")){
                                groups = agentGroupList[agentList[agent].memberOf.agentGroupId];
-                           } else {
+                           }
+                           else {
                                groups = "";
                            }
-                           //add the agents average handling time for interactive chats
-                           if (agentAverageHandlingTime.hasOwnProperty(agent)) {
-                               averageHandlingTime = secondsToHms(agentAverageHandlingTime[agent]);
-                               averageHandlingTimeAll += parseInt(agentAverageHandlingTime[agent]);
-                               averageHandlingTimeCount++;
+                       //add the agents average handling time for interactive chats
+                       if(agentAverageHandlingTime.hasOwnProperty(agent)){
+                           averageHandlingTime = secondsToHms(agentAverageHandlingTime[agent]);
+                           averageHandlingTimeAll += parseInt(agentAverageHandlingTime[agent]);
+                           averageHandlingTimeCount++;
+                       }
+                       //add the agents average number of chats per hour based on the past 24 hours
+                       if(agentsChats24hr.hasOwnProperty(agent)){
+                           var avgch = 0;
+                           for(var ch = 0; ch < agentsChats24hr[agent].chats.length; ch++){
+                               avgch += agentsChats24hr[agent].chats[ch];
                            }
-                           //add the agents average number of chats per hour based on the past 24 hours
-                           if (agentsChats24hr.hasOwnProperty(agent)) {
-                               var avgch = 0;
-                               for (var ch = 0; ch < agentsChats24hr[agent].chats.length; ch++) {
-                                   avgch += agentsChats24hr[agent].chats[ch];
-                               }
-                               averageChatsPerHour = (avgch / agentsChats24hr[agent].chats.length).toFixed(2);
-                           }
-                           if (skillChoices !== "null") {
-                               var tempSkillChoices = skillChoices.split(",").map(Number);
-                               var found = findOne(agentList[agent].skillIds, tempSkillChoices);
-                               if (found === true) {
-                                   var loggedInTotal = data.agentsMetrics.metricsPerAgent[agent][3].value.total;
-                                   var loggedInChatting = data.agentsMetrics.metricsPerAgent[agent][3].value.chatting;
-                                   var loggedInChattingCon = secondsToHms(loggedInChatting);
-                                   // for agent utilization, calculate the amount of time chatting divided by the amount of time logged in.
-                                   var utilization = (Math.round(loggedInChatting / loggedInTotal * 100)) + "%";
-                                   averageUtilizationAll += Math.round(loggedInChatting / loggedInTotal);
-                                   averageUtilizationCount++;
-                                   //determine which state the agent is currently in
-                                   var onlineTotal = data.agentsMetrics.metricsPerAgent[agent][0].value.total;
-                                   var backSoonTotal = data.agentsMetrics.metricsPerAgent[agent][1].value.total;
-                                   var awayTotal = data.agentsMetrics.metricsPerAgent[agent][2].value.total;
-                                   if ((onlineTotal == loggedInTotal || backSoonTotal == loggedInTotal || awayTotal == loggedInTotal) && loggedInTotal == settingsTime * 60) {
-                                       if (onlineTotal == loggedInTotal) {
-                                           state = "Online";
-                                           numOnline++;
-                                       } else if (backSoonTotal == loggedInTotal) {
-                                           state = "Back Soon";
-                                           numBackSoon++;
-                                       } else {
-                                           state = "Away";
-                                           numAway++;
-                                       }
-                                   } else {
-                                       if (oldAgentData.hasOwnProperty(agent)) {
-                                           if (onlineTotal > oldAgentData[agent][0].value.total) {
-                                               state = "Online";
-                                               numOnline++;
-                                           } else if (backSoonTotal > oldAgentData[agent][1].value.total) {
-                                               state = "Back Soon";
-                                               numBackSoon++;
-                                           } else if (awayTotal > oldAgentData[agent][2].value.total) {
-                                               state = "Away";
-                                               numAway++;
-                                           } else {
-                                               state = "Logged Out";
-                                           }
-                                           if (loggedInTotal < oldAgentData[agent][3].value.total || agentData == oldAgentData) {
-                                               if (state == "Online") {
-                                                   numOnline--;
-                                               } else if (state == "Away") {
-                                                   numAway--;
-                                               } else if (state == "Logged Out") {} else {
-                                                   numBackSoon--;
-                                               }
-                                               state = "Logged Out";
-                                           }
-                                       } else {
-                                           state = "Checking";
-                                       }
-                                   }
-                                   if (state != "Checking" && state != "Logged Out") {
-                                       numLoggedIn++;
-                                   }
-                                   // loop through the skills and asign them to the correct state if the agent is online or offline
-                                   for (var n = 0; n < skills.length; n++) {
-                                       if (skills[n] !== "NA" && skills[n] !== "None") {
-                                           if (state == "Online") {
-                                               skillListForAvaialbility[skills[n]] = "<font color='green'>Online</font>";
-                                           } else {
-                                               if (!skillListForAvaialbility.hasOwnProperty(skills[n])) {
-                                                   skillListForAvaialbility[skills[n]] = "<font color='red'>Offline</font>";
-                                               }
-                                           }
-                                       }
-                                   }
-                                   operatorTable.row.add([agentID, agentNickName, skills, groups, maxchat, state, loggedInChattingCon, averageHandlingTime, averageChatsPerHour, utilization]).draw();
-                               }
-                           } else {
+                           averageChatsPerHour = (avgch / agentsChats24hr[agent].chats.length).toFixed(2);
+                       }
+                       if(skillChoices !== "undefined"){
+                           var tempSkillChoices = skillChoices.split(",").map(Number);
+                           var found = findOne(agentList[agent].skillIds, tempSkillChoices);
+                           if(found === true){
                                var loggedInTotal = data.agentsMetrics.metricsPerAgent[agent][3].value.total;
                                var loggedInChatting = data.agentsMetrics.metricsPerAgent[agent][3].value.chatting;
                                var loggedInChattingCon = secondsToHms(loggedInChatting);
@@ -942,7 +888,7 @@
                                var onlineTotal = data.agentsMetrics.metricsPerAgent[agent][0].value.total;
                                var backSoonTotal = data.agentsMetrics.metricsPerAgent[agent][1].value.total;
                                var awayTotal = data.agentsMetrics.metricsPerAgent[agent][2].value.total;
-                               if ((onlineTotal == loggedInTotal || backSoonTotal == loggedInTotal || awayTotal == loggedInTotal) && loggedInTotal == settingsTime * 60) {
+                               if ((onlineTotal == loggedInTotal || backSoonTotal == loggedInTotal || awayTotal == loggedInTotal) && loggedInTotal == settingsTime*60) {
                                    if (onlineTotal == loggedInTotal) {
                                        state = "Online";
                                        numOnline++;
@@ -952,8 +898,9 @@
                                    } else {
                                        state = "Away";
                                        numAway++;
-                                   }
-                               } else {
+                                   } 
+                               }
+                               else{
                                    if (oldAgentData.hasOwnProperty(agent)) {
                                        if (onlineTotal > oldAgentData[agent][0].value.total) {
                                            state = "Online";
@@ -968,16 +915,95 @@
                                            state = "Logged Out";
                                        }
                                        if (loggedInTotal < oldAgentData[agent][3].value.total || agentData == oldAgentData) {
-                                           if (state == "Online") {
-                                               numOnline--;
-                                           } else if (state == "Away") {
-                                               numAway--;
-                                           } else if (state == "Logged Out") {} else {
-                                               numBackSoon--;
+                                          if(state == "Online"){
+                                           numOnline--;
+                                          }
+                                          else if (state == "Away"){
+                                           numAway--;
+                                          }
+                                          else if (state == "Logged Out"){}
+                                          else {
+                                           numBackSoon--;
+                                          }
+                                          state = "Logged Out";
+                                        }
+                               }
+                               else {
+                                   state = "Checking";
+                               }
+                           }
+                           if (state != "Checking" && state != "Logged Out") {
+                               numLoggedIn++;
+                           }
+                               // loop through the skills and asign them to the correct state if the agent is online or offline
+                               for(var n = 0; n < skills.length; n++){
+                                   if(skills[n] !== "NA" && skills[n] !== "None"){
+                                       if (state == "Online"){
+                                           skillListForAvaialbility[skills[n]] = "<font color='green'>Online</font>";
+                                       }
+                                       else {
+                                           if(!skillListForAvaialbility.hasOwnProperty(skills[n])) {
+                                               skillListForAvaialbility[skills[n]] = "<font color='red'>Offline</font>";
                                            }
+                                       }
+                                   }
+                               }
+                               operatorTable.row.add([agentID,agentNickName, skills, groups, maxchat, state, loggedInChattingCon, averageHandlingTime, averageChatsPerHour ,utilization]).draw();
+                           }
+                       }
+                       else {
+                           var loggedInTotal = data.agentsMetrics.metricsPerAgent[agent][3].value.total;
+                           var loggedInChatting = data.agentsMetrics.metricsPerAgent[agent][3].value.chatting;
+                           var loggedInChattingCon = secondsToHms(loggedInChatting);
+                               // for agent utilization, calculate the amount of time chatting divided by the amount of time logged in.
+                               var utilization = (Math.round(loggedInChatting / loggedInTotal * 100)) + "%";
+                               averageUtilizationAll += Math.round(loggedInChatting / loggedInTotal);
+                               averageUtilizationCount++;
+                               //determine which state the agent is currently in
+                               var onlineTotal = data.agentsMetrics.metricsPerAgent[agent][0].value.total;
+                               var backSoonTotal = data.agentsMetrics.metricsPerAgent[agent][1].value.total;
+                               var awayTotal = data.agentsMetrics.metricsPerAgent[agent][2].value.total;
+                               if ((onlineTotal == loggedInTotal || backSoonTotal == loggedInTotal || awayTotal == loggedInTotal) && loggedInTotal == settingsTime*60) {
+                                   if (onlineTotal == loggedInTotal) {
+                                       state = "Online";
+                                       numOnline++;
+                                   } else if (backSoonTotal == loggedInTotal) {
+                                       state = "Back Soon";
+                                       numBackSoon++;
+                                   } else {
+                                       state = "Away";
+                                       numAway++;
+                                   } 
+                               }
+                               else{
+                                   if (oldAgentData.hasOwnProperty(agent)) {
+                                       if (onlineTotal > oldAgentData[agent][0].value.total) {
+                                           state = "Online";
+                                           numOnline++;
+                                       } else if (backSoonTotal > oldAgentData[agent][1].value.total) {
+                                           state = "Back Soon";
+                                           numBackSoon++;
+                                       } else if (awayTotal > oldAgentData[agent][2].value.total) {
+                                           state = "Away";
+                                           numAway++;
+                                       } else {
                                            state = "Logged Out";
                                        }
-                                   } else {
+                                       if (loggedInTotal < oldAgentData[agent][3].value.total || agentData == oldAgentData) {
+                                          if(state == "Online"){
+                                           numOnline--;
+                                          }
+                                          else if (state == "Away"){
+                                           numAway--;
+                                          }
+                                          else if (state == "Logged Out"){}
+                                          else {
+                                               numBackSoon--;
+                                           }
+                                          state = "Logged Out";
+                                       }
+                                   }
+                                   else {
                                        state = "Checking";
                                    }
                                }
@@ -985,20 +1011,21 @@
                                    numLoggedIn++;
                                }
                                // loop through the skills and asign them to the correct state if the agent is online or offline
-                               for (var n = 0; n < skills.length; n++) {
-                                   if (skills[n] !== "NA" && skills[n] !== "None") {
-                                       if (state == "Online") {
+                               for(var n = 0; n < skills.length; n++){
+                                   if(skills[n] !== "NA" && skills[n] !== "None"){
+                                       if (state == "Online"){
                                            skillListForAvaialbility[skills[n]] = "<font color='green'>Online</font>";
-                                       } else {
-                                           if (!skillListForAvaialbility.hasOwnProperty(skills[n])) {
+                                       }
+                                       else {
+                                           if(!skillListForAvaialbility.hasOwnProperty(skills[n])) {
                                                skillListForAvaialbility[skills[n]] = "<font color='red'>Offline</font>";
                                            }
                                        }
                                    }
                                }
-                               operatorTable.row.add([agentID, agentNickName, skills, groups, maxchat, state, loggedInChattingCon, averageHandlingTime, averageChatsPerHour, utilization]).draw();
-                           }
+                               operatorTable.row.add([agentID, agentNickName, skills, groups, maxchat, state, loggedInChattingCon, averageHandlingTime, averageChatsPerHour ,utilization]).draw();
                        }
+                   }
                    }
                    //update the dashboard
                    oldAgentData = agentData;
@@ -1007,54 +1034,53 @@
                    $('#nlogged').html(numLoggedIn);
                    $('#naway').html(numAway);
                    $('#nback').html(numBackSoon);
-                   if (numOnline > 0) {
+                   if(numOnline > 0){
                        $('#skillStatus').show();
                        $('#skillStatus2').hide();
                        skillListForAvaialbility["All"] = "<font color='green'>Online</font>";
-                   } else {
+                   }
+                   else{
                        $('#skillStatus2').show();
                        $('#skillStatus').hide();
                        skillListForAvaialbility["All"] = "<font color='red'>Offline</font>";
                    }
                    //update the average handling time
                    //console.log(secondsToHms(averageHandlingTimeAll/averageHandlingTimeCount));
-                   if (isNaN(averageHandlingTimeAll / averageHandlingTimeCount)) {
-                       $('#avgHandTime').html('');
-                   } else {
-                       $('#avgHandTime').html(secondsToHms(averageHandlingTimeAll / averageHandlingTimeCount));
-                   }
-                   //update the average utilization rate
-                   if (isNaN(Math.round(averageUtilizationAll / averageUtilizationCount * 100))) {
-                       $('#avgAgentUtil').html("0%");
-                   } else {
-                       $('#avgAgentUtil').html(Math.round(averageUtilizationAll / averageUtilizationCount * 100) + "%");
-                   }
-               } else {
-                   //window.location.href = "/error";
-                   $('#myModal').modal('show');
-                   $('#errorDetails').html(JSON.stringify(data.Error));
+                   if(isNaN(averageHandlingTimeAll/averageHandlingTimeCount)){
+                               $('#avgHandTime').html('');
+                    }
+                    else{
+                        $('#avgHandTime').html(secondsToHms(averageHandlingTimeAll/averageHandlingTimeCount));
+                    }
+                    //update the average utilization rate
+                    if(isNaN(Math.round(averageUtilizationAll/averageUtilizationCount * 100))){
+                               $('#avgAgentUtil').html("0%");
+                     }
+                     else{
+                        $('#avgAgentUtil').html(Math.round(averageUtilizationAll/averageUtilizationCount * 100) +"%");
+                     }
+               }
+               else {
+                   window.location.href = "/error";
                }
            }
        });
-      //get the sla data
+//get the sla data
       $.ajax({
         type: 'GET',
-        url: '/sla?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + slaskillIDList  + '&range=' + slaRange,
+        url: '/sla',
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateSLAData(data);
             } else {
-                //window.location.href = "/error";
-                $('#myModal').modal('show');
-                $('#errorDetails').html(JSON.stringify(data.Error));
+                window.location.href = "/error";
             }
         }
       });
-
    }
    
    function updateLineGraph() {
-       var oTable = $('#example').DataTable();
+   var oTable = $('#example').DataTable();
        //destroy the graphs and populate them with the new data
        myLineChart.destroy();
        // data sets for the graphs
@@ -1091,58 +1117,27 @@
                animation: false
            });
        }
-   }
-   
+   };
    function getRandomColor() {
-       var length = 6;
-       var chars = '0123456789ABCDEF';
-       var hex = '#';
-       while (length--) {
-           hex += chars[(Math.random() * 16) | 0];
-       }
-       return hex;
+     var length = 6;
+     var chars = '0123456789ABCDEF';
+     var hex = '#';
+     while(length--) hex += chars[(Math.random() * 16) | 0];
+     return hex;
    }
-   
    function populateSkillTable() {
-       $('#skillStatusTable').DataTable().clear().draw();
-       for (var skill in skillListForAvaialbility) {
-           $('#skillStatusTable').DataTable().row.add([skill, skillListForAvaialbility[skill]]).draw();
-       }
+   $('#skillStatusTable').DataTable().clear().draw();
+   for (var skill in skillListForAvaialbility) {
+       $('#skillStatusTable').DataTable().row.add([skill,skillListForAvaialbility[skill]]).draw();
    }
-   
+   }
    function findOne(haystack, arr) {
-       return arr.some(function(v) {
-           return haystack.indexOf(v) >= 0;
-       });
-    }
-   
-    function getLocalStorageVariables() {
-        // Check browser support
-        if (typeof(Storage) !== "undefined") {
-            consumerKey = localStorage.getItem("consumerKey");
-            accountNum = localStorage.getItem("accountNum");
-            consumerSecret = localStorage.getItem("consumerSecret");
-            accessToken = localStorage.getItem("accessToken");
-            accessTokenSecret = localStorage.getItem("accessTokenSecret");
-            queueHealthRange = localStorage.getItem("queueHealthRange");
-            skillIDList = localStorage.getItem("skillIDList");
-            sla = localStorage.getItem("sla");
-            easkillSelect = localStorage.getItem("easkillSelect");
-            easkillIDList = localStorage.getItem("easkillIDList");
-            eaagentIDList = localStorage.getItem("eaagentIDList");
-            eaAgentSelect = localStorage.getItem("eaAgentSelect");
-            engagementActivityRange = localStorage.getItem("engagementActivityRange");
-            agentActivityRange = localStorage.getItem("agentActivityRange");
-            skillIDListAA = localStorage.getItem("skillIDListAA");
-            slaskillIDList = localStorage.getItem("slaskillIDList");
-            slaRange = localStorage.getItem("slaRange");
-        } else {
-            console.log("Sorry, your browser does not support Web Storage...");
-        }
-        return;
-    }
+   return arr.some(function (v) {
+       return haystack.indexOf(v) >= 0;
+   });
+   };
 
-/**
+   /**
 * @desc updates the data table and the sla dashboard with the data from the sla api
 * @param data - JSON Object that is returned from the sla API
 * @return undefined

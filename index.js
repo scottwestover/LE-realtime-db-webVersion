@@ -23,11 +23,16 @@ app.set('view engine', 'html');
 app.get('/', routes.startupPage);
 app.get('/partials/:name', routes.partials);
 app.get('/agentActivity', routes.agentActivity);
+app.get('/saveSettings', routes.saveSettings);
+app.post('/getOauth', routes.getOauth);
 app.get('/queueHealth', routes.queueHealth);
 app.get('/queueHealth2', routes.queueHealth2);
 app.get('/engagementActivity', routes.engagementActivity);
 app.get('/engagementActivity2', routes.engagementActivity2);
 app.get('/currentQueueState', routes.currentQueueState);
+app.get('/skillList', routes.skillList);
+app.get('/agentList', routes.agentList);
+app.get('/agentGroupList', routes.agentGroupList);
 app.get('/startup', routes.startup);
 app.get('/startupStatus', routes.startupStatus);
 app.get('/startupPage', routes.startupPage);
@@ -37,8 +42,15 @@ app.get('/sla', routes.sla);
 // serve messaging views
 app.get('/messagingConversation', routes.messagingConversation);
 app.get('/messagingCSAT', routes.messagingCSAT);
+app.get('/saveSettingsMsg', routes.saveSettingsMsg);
+app.post('/getOauthMsg', routes.getOauthMsg);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
+
+/*
+app.use('/*', function(req, res){
+  res.sendFile(__dirname + '/views/pages/main.html');
+});*/
 
 /**************
  * Start Server

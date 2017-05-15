@@ -1,224 +1,231 @@
-<div class="right_col" role="main">
-   <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-         <div class="x_panel">
-            <div class="x_title">
-               <h2>Glossary</h2>
-               <ul class="nav navbar-right panel_toolbox">
-                  <li>
-                     <div id="time"></div>
-                  </li>
-               </ul>
-               <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-               <div id="togglable-tabs">
-                  <ul id="myTab" class="nav nav-tabs bar_tabs">
-                     <li role="presentation" id="aa-tab" class="active"><a>Agent Activity</a>
-                     </li>
-                     <li role="presentation" id="qh-tab" class=""><a>Queue Health</a>
-                     </li>
-                     <li role="presentation" id="ea-tab" class=""><a>Engagement Activity</a>
-                     </li>
-                     <li role="presentation" id="cq-tab" class=""><a>Current Queue State</a>
-                     </li>
-                     <li role="presentation" id="sla-tab" class=""><a>SLA</a>
-                     </li>
-                  </ul>
-               </div>
-               <div id="AAglossary">
-                  <table class="table table-striped">
-                     <thead>
-                        <tr>
-                           <th>Name</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>Agent ID</td>
-                           <td>The id of the agent in the response.</td>
-                        </tr>
-                        <tr>
-                           <td>Total</td>
-                           <td>The total time the agent was in this state (seconds).</td>
-                        </tr>
-                        <tr>
-                           <td>Chatting</td>
-                           <td>The total time the agent was chatting in this state (seconds).</td>
-                        </tr>
-                        <tr>
-                           <td>Not Chatting</td>
-                           <td>The total time the agent was not chatting in this state (seconds).</td>
-                        </tr>
-                        <tr>
-                           <td>Chatting At Max Concurrency</td>
-                           <td>The amount of time the agent was chatting concurrently with the maximum allowed chats in this state (seconds).</td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-               <div id="QHglossary">
-                  <table class="table table-striped">
-                     <thead>
-                        <tr>
-                           <th>Name</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>Skill ID</td>
-                           <td>The id of the skill in the response.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Time To Answer</td>
-                           <td>The total time, in seconds, that the visitors spent in the queue before being connected to an agent.</td>
-                        </tr>
-                        <tr>
-                           <td>Entered Queue</td>
-                           <td>The number of visitors that entered the queue.</td>
-                        </tr>
-                        <tr>
-                           <td>Average Time To Answer</td>
-                           <td>The average time, in seconds, that a visitor spent in the queue before being connected to an agent. Calculation: totalTimeToAnswer / connectedEng.</td>
-                        </tr>
-                        <tr>
-                           <td>Abandonment Rate</td>
-                           <td>The number of visitors that abandoned the queue out of the total visitors that started an engagement. Calculation: abandonedEng / (abandonedEng + connectedEng).</td>
-                        </tr>
-                        <tr>
-                           <td>Abandoned Engagements</td>
-                           <td>The number of visitors that abandoned the queue before being connected to an agent.</td>
-                        </tr>
-                        <tr>
-                           <td>Connected Engagements</td>
-                           <td>The number of visitors that were connected to an agent.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Time To Abandon</td>
-                           <td>Total time visitors spend in queue before abandon.</td>
-                        </tr>
-                        <tr>
-                           <td>Average Time To Abandon</td>
-                           <td>The average time visitors spend in queue before abandon. Calculation: totalTimeToAbandon / abandonedEng.</td>
-                        </tr>
-                        <tr>
-                           <td>Max Queue Size</td>
-                           <td>The maximum queue size within the given time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Min Queue Size</td>
-                           <td>The minimum queue size within the given time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Average Queue Size</td>
-                           <td>The average queue size within the given time frame (rounded). Calculated as queueSizeSum / queueSizeCount.</td>
-                        </tr>
-                        <tr>
-                           <td>Current Queue Size</td>
-                           <td>The current queue size.</td>
-                        </tr>
-                        <tr>
-                           <td>Queue Size Sum</td>
-                           <td>Sum of all queue sizes received.</td>
-                        </tr>
-                        <tr>
-                           <td>Queue Size Count</td>
-                           <td>Total number of queue size measures made.</td>
-                        </tr>
-                        <tr>
-                           <td>Current Available Slots</td>
-                           <td>The current available slots.</td>
-                        </tr>
-                        <tr>
-                           <td>Max Available Slots</td>
-                           <td>The maximum available slots within the given time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Min Available Slots</td>
-                           <td>The minimum available slots within the given time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Average Available Slots</td>
-                           <td>The average available slots within the given time frame (rounded). Calculated as availableSlotsSum / availableSlotsCount.</td>
-                        </tr>
-                        <tr>
-                           <td>Available Sum</td>
-                           <td>Sum of all available slots received.</td>
-                        </tr>
-                        <tr>
-                           <td>Available Count</td>
-                           <td>Total number of available slots measures made.</td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-               <div id="EAglossary">
-                  <table class="table table-striped">
-                     <thead>
-                        <tr>
-                           <th>Name</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>Skill ID</td>
-                           <td>The id of the skill in the response.</td>
-                        </tr>
-                        <tr>
-                           <td>Agent ID</td>
-                           <td>The id of the agent in the response.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Interactive Chats</td>
-                           <td>The number of interactive chats that took place in the current interval/time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Non-Interactive Chats</td>
-                           <td>The number of non-interactive chats that took place in the current interval/time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Handling Time</td>
-                           <td> The total time in seconds that was spent handing the interactive chats in the current interval/time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Total Non-Interactive Handling Time</td>
-                           <td>The total time in seconds that was spent handing the non-interactive chats in the current interval/time frame.</td>
-                        </tr>
-                        <tr>
-                           <td>Connected Engagements</td>
-                           <td>The number of chats connected to an agent in the current interval/time frame.</td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-               <div id="CQglossary">
-                  <table class="table table-striped">
-                     <thead>
-                        <tr>
-                           <th>Name</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>Skill ID</td>
-                           <td>The id of the skill in the response.</td>
-                        </tr>
-                        <tr>
-                           <td>Current Avaialble Slots</td>
-                           <td>The current queue number of available slots.</td>
-                        </tr>
-                        <tr>
-                           <td>Current Queue Size</td>
-                           <td>The current queue size.</td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-               <div id="SLAglossary">
+ <div class="right_col" role="main">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Glossary</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li>
+              <div id="time"></div>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div id="togglable-tabs">
+            <ul id="myTab" class="nav nav-tabs bar_tabs">
+              <li role="presentation" id="aa-tab" class="active"><a>Agent Activity</a>
+              </li>
+              <li role="presentation" id="qh-tab" class=""><a>Queue Health</a>
+              </li>
+              <li role="presentation" id="ea-tab" class=""><a>Engagement Activity</a>
+              </li>
+              <li role="presentation" id="cq-tab" class=""><a>Current Queue State</a>
+              </li>
+              <li role="presentation" id="sla-tab" class=""><a>SLA</a>
+              </li>
+            </ul>
+          </div>
+          <div id="AAglossary">
+           <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Agent ID</td>
+                <td>The id of the agent in the response.</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>The total time the agent was in this state (seconds).</td>
+              </tr>
+              <tr>
+                <td>Chatting</td>
+                <td>The total time the agent was chatting in this state (seconds).</td>
+              </tr>
+              <tr>
+                <td>Not Chatting</td>
+                <td>The total time the agent was not chatting in this state (seconds).</td>
+              </tr>
+              <tr>
+                <td>Chatting At Max Concurrency</td>
+                <td>The amount of time the agent was chatting concurrently with the maximum allowed chats in this state (seconds).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="QHglossary">
+         <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill ID</td>
+              <td>The id of the skill in the response.</td>
+            </tr>
+            <tr>
+              <td>Total Time To Answer</td>
+              <td>The total time, in seconds, that the visitors spent in the queue before being connected to an agent.</td>
+            </tr>
+            <tr>
+              <td>Entered Queue</td>
+              <td>The number of visitors that entered the queue.</td>
+            </tr>
+            <tr>
+              <td>Average Time To Answer</td>
+              <td>The average time, in seconds, that a visitor spent in the queue before being connected to an agent. Calculation: totalTimeToAnswer / connectedEng.</td>
+            </tr>
+            <tr>
+              <td>Abandonment Rate</td>
+              <td>The number of visitors that abandoned the queue out of the total visitors that started an engagement. Calculation: abandonedEng / (abandonedEng + connectedEng).</td>
+            </tr>
+            <tr>
+              <td>Abandoned Engagements</td>
+              <td>The number of visitors that abandoned the queue before being connected to an agent.</td>
+            </tr>
+
+            <tr>
+              <td>Connected Engagements</td>
+              <td>The number of visitors that were connected to an agent.</td>
+            </tr>
+
+            <tr>
+              <td>Total Time To Abandon</td>
+              <td>Total time visitors spend in queue before abandon.</td>
+            </tr>
+
+            <tr>
+              <td>Average Time To Abandon</td>
+              <td>The average time visitors spend in queue before abandon. Calculation: totalTimeToAbandon / abandonedEng.</td>
+            </tr>
+            <tr>
+              <td>Max Queue Size</td>
+              <td>The maximum queue size within the given time frame.</td>
+            </tr>
+
+            <tr>
+              <td>Min Queue Size</td>
+              <td>The minimum queue size within the given time frame.</td>
+            </tr>
+
+            <tr>
+              <td>Average Queue Size</td>
+              <td>The average queue size within the given time frame (rounded). Calculated as queueSizeSum / queueSizeCount.</td>
+            </tr>
+
+            <tr>
+              <td>Current Queue Size</td>
+              <td>The current queue size.</td>
+            </tr>
+            <tr>
+              <td>Queue Size Sum</td>
+              <td>Sum of all queue sizes received.</td>
+            </tr>
+            <tr>
+              <td>Queue Size Count</td>
+              <td>Total number of queue size measures made.</td>
+            </tr>
+            <tr>
+              <td>Current Available Slots</td>
+              <td>The current available slots.</td>
+            </tr>
+            <tr>
+              <td>Max Available Slots</td>
+              <td>The maximum available slots within the given time frame.</td>
+            </tr>
+            <tr>
+              <td>Min Available Slots</td>
+              <td>The minimum available slots within the given time frame.</td>
+            </tr>
+            <tr>
+              <td>Average Available Slots</td>
+              <td>The average available slots within the given time frame (rounded). Calculated as availableSlotsSum / availableSlotsCount.</td>
+            </tr>
+            <tr>
+              <td>Available Sum</td>
+              <td>Sum of all available slots received.</td>
+            </tr>
+            <tr>
+              <td>Available Count</td>
+              <td>Total number of available slots measures made.</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div id="EAglossary"> 
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill ID</td>
+              <td>The id of the skill in the response.</td>
+            </tr>
+            <tr>
+              <td>Agent ID</td>
+              <td>The id of the agent in the response.</td>
+            </tr>
+            <tr>
+              <td>Total Interactive Chats</td>
+              <td>The number of interactive chats that took place in the current interval/time frame.</td>
+            </tr>
+            <tr>
+              <td>Total Non-Interactive Chats</td>
+              <td>The number of non-interactive chats that took place in the current interval/time frame.</td>
+            </tr>
+            <tr>
+              <td>Total Handling Time</td>
+              <td> The total time in seconds that was spent handing the interactive chats in the current interval/time frame.</td>
+            </tr>
+            <tr>
+              <td>Total Non-Interactive Handling Time</td>
+              <td>The total time in seconds that was spent handing the non-interactive chats in the current interval/time frame.</td>
+            </tr>
+            <tr>
+              <td>Connected Engagements</td>
+              <td>The number of chats connected to an agent in the current interval/time frame.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="CQglossary"> 
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill ID</td>
+              <td>The id of the skill in the response.</td>
+            </tr>
+            <tr>
+              <td>Current Avaialble Slots</td>
+              <td>The current queue number of available slots.</td>
+            </tr>
+            <tr>
+              <td>Current Queue Size</td>
+              <td>The current queue size.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="SLAglossary">
                   <table class="table table-striped">
                      <thead>
                         <tr>
@@ -246,10 +253,10 @@
                      </tbody>
                   </table>
                </div>
-            </div>
-         </div>
-      </div>
-   </div>
+    </div>
+  </div>
 </div>
+</div>
+</div>  
 <script src="/js/dashboard/glossaryScript.js"></script>
 <script src="/js/custom.js"></script>

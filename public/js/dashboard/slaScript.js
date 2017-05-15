@@ -1,23 +1,6 @@
-// variables that are used for pulling the api information from the browser storage
-var consumerKey = 0;
-var accountNum = 0;
-var consumerSecret = 0;
-var accessToken = 0;
-var accessTokenSecret = 0;
-var slaskillIDList = null;
-var slaRange = null;
-getLocalStorageVariables();
-
-//variable for the list of skills
-var skillList = null;
-
 $(document).ready(function() {
     setupTables();
-    setTimeout(function() {
-        var sel = 'div[role="main"]';
-        skillList = angular.element(sel).scope().listSkills();
-        getData();
-    }, 100);
+    getData();
 });
 
 /**
@@ -28,37 +11,15 @@ function getData() {
     var oTable = $('#example').DataTable();
     $.ajax({
         type: 'GET',
-        url: '/sla?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + slaskillIDList + '&range=' + slaRange,
+        url: '/sla',
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateSLAData(data);
             } else {
-                //window.location.href = "/error";
-                $('#myModal').modal('show');
-                $('#errorDetails').html(JSON.stringify(data.Error));
+                window.location.href = "/error";
             }
         }
     });
-}
-
-/**
- * @desc gets the api settings from the browser local storage
- * @return undefined
- */
-function getLocalStorageVariables() {
-    // Check browser support
-    if (typeof(Storage) !== "undefined") {
-        consumerKey = localStorage.getItem("consumerKey");
-        accountNum = localStorage.getItem("accountNum");
-        consumerSecret = localStorage.getItem("consumerSecret");
-        accessToken = localStorage.getItem("accessToken");
-        accessTokenSecret = localStorage.getItem("accessTokenSecret");
-        slaskillIDList = localStorage.getItem("slaskillIDList");
-        slaRange = localStorage.getItem("slaRange");
-    } else {
-        console.log("Sorry, your browser does not support Web Storage...");
-    }
-    return;
 }
 
 /**

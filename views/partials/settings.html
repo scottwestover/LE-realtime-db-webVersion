@@ -1,5 +1,5 @@
 <div class="right_col" role="main">
-    <form class="form-horizontal" role="form" onsubmit="storeValues()">
+    <form class="form-horizontal" role="form" method="GET" action="/saveSettings">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel" id="step1">
@@ -22,13 +22,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="consumerKey">App Key:</label>
+                            <label class="control-label col-sm-2" for="consumerKey">Consumer Key:</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="consumerKey" id="consumerKey" placeholder="Enter consumer key" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="consumerSecret">Secret:</label>
+                            <label class="control-label col-sm-2" for="consumerSecret">Consumer Secret:</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" name="consumerSecret" id="consumerSecret" placeholder="Enter consumer secret" required>
                             </div>
@@ -53,6 +53,30 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel" id="step2">
                     <div class="x_title">
+                        <h2>Agent Group Settings</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="agentGroupSelect">Select Agent Group:  <i class="fa fa-info-circle" data-toggle="tooltip" title="The agent group that is selected in this drop down will automatically choose the corresponding agents and skills from the drop down menus below." data-placement="bottom"></i></label>
+                                <select class="form-control" id="agentGroupSelect" name="agentGroupSelect">
+                                <option>Select One</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" id="step2">
+                    <div class="x_title">
                         <h2>Agent Activity API Settings</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -65,6 +89,32 @@
                             <label for="agentActivityRange">Time Fame (enter a value from 1 to 1440):</label>
                             <input type="text" class="form-control" id="agentActivityRange" name="agentActivityRange" value="1">
                         </div>
+                        <!--<div class="row">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="0" name="intervalCheck" id="intervalCheck" disabled />Use Interval</label>
+                            </div>
+                            <p>Interval</p>
+                            <input type="text" id="range_2" value="" name="range2" />
+                        </div>-->
+                        <!--
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="agentSelect">Select Agent Option:</label>
+                                    <select class="form-control" id="agentSelect" name="agentSelect">
+                                        <option value="1">All</option>
+                                        <option value="2" disabled>Specific Agents</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="agentIDList">Enter Agent IDs (seperate with comma):</label>
+                                <textarea id="agentIDList" required="required" class="form-control" name="agentIDList" placeholder="1,2,3" disabled></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        -->
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
@@ -126,6 +176,9 @@
                         <h2>Engagement Activity API Settings</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <div id="time"></div>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -270,8 +323,8 @@
                     </div>
                     <div class="x_content">
                         <div class="row">
-                            <label for="sla">SLA for AVG time to answer:</label>
-                            <input type="text" class="form-control" id="sla" name="sla" value="15">
+                             <label for="sla">SLA for AVG time to answer:</label>
+  <input type="text" class="form-control" id="sla" name="sla" placeholder="15">
                         </div>
                     </div>
                 </div>
@@ -280,13 +333,12 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-7" id="step11">
-                    <a id="cancelButton" href="/graphsDashboard" class="btn btn-default">Cancel</a>
+                    <a href="/graphsDashboard" class="btn btn-default">Cancel</a>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
-<script src='/js/dashboard/settingsScript.js'></script>
+<script src="/js/dashboard/settingsScript.js"></script>
 <script src="/js/custom.js"></script>
