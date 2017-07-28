@@ -43,6 +43,7 @@ exports.agentActivity = function (req, res) {
             token: req.query.tok,
             token_secret: req.query.tSec
         };
+    // XXX check req.query for the presence of new param. If it is there, use that instead of other range and construct URL with the calculated timeframe based on offset of start and current. NOTE do this for all  methods.
         // url for agent activity
         var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
         request.get({
