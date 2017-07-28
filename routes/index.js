@@ -45,7 +45,18 @@ exports.agentActivity = function (req, res) {
         };
     // XXX check req.query for the presence of new param. If it is there, use that instead of other range and construct URL with the calculated timeframe based on offset of start and current. NOTE do this for all  methods.
         // url for agent activity
-        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
+        var url = "";
+        if (req.query.dayStart == null) {
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
+        } else {
+            var currentHours = new Date().getHours();
+            var currentMinutes = new Date().getMinutes();
+            var hourDiff = currentHours - Number(dayStart.split(":")[0]);
+            var minuteDiff = currentMinutes - Number(dayStart.split(":")[1]);
+            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + totalMinuteTimeframe + '&agentIds=all&v=1';
+        }
+        
         request.get({
             url: url,
             oauth: oauth,

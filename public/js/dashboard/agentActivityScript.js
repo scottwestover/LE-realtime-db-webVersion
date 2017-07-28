@@ -6,6 +6,7 @@ var accessToken = 0;
 var accessTokenSecret = 0;
 var agentActivityRange = null;
 var skillIDListAA = null;
+var workDayStart = null;
 getLocalStorageVariables();
 
 // variable for the list of agents
@@ -26,8 +27,8 @@ $(document).ready(function() {
  */
 function getData() {
     $.ajax({
-        type: 'GET', // XXX - Add new localstorage time-of-day-start variable to the end of this url. The param will get passed to server code index.js NOTE will have to do this for all pages in app
-        url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA,
+        type: 'GET', //The param will get passed to server code index.js NOTE will have to do this for all pages in app
+        url: '/agentActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&range=' + agentActivityRange + '&skill=' + skillIDListAA + '&dayStart=' + workDayStart,
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateAgentActivityData(data);
@@ -54,6 +55,7 @@ function getLocalStorageVariables() {
         accessTokenSecret = localStorage.getItem("accessTokenSecret");
         agentActivityRange = localStorage.getItem("agentActivityRange");
         skillIDListAA = localStorage.getItem("skillIDListAA");
+        workDayStart = localStorage.getItem("workDayStart");
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
