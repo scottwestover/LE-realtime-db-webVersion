@@ -22,7 +22,6 @@ $(document).ready(function() {
 /**
  * @desc saves the api settings to the browser local storage
  * @return undefined
- * XXX - link new value to element ID in html of settings page
  */
 function storeValues() {
     // Check browser support
@@ -52,6 +51,7 @@ function storeValues() {
         localStorage.setItem("slaRange", document.getElementById("slaRange").value);
         localStorage.setItem("slaskillSelect", document.getElementById("slaskillSelect").value);
         localStorage.setItem("slaskillIDList", $('#slaskillIDList').val());
+        localStorage.setItem("workDayStart", document.getElementById("workDayStart").value);
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
@@ -67,7 +67,6 @@ function storeValues() {
 /**
  * @desc gets the api settings from the browser local storage and updates the settings on the page
  * @return undefined
- * XXX - Add new value to this get logic and to other check for update logic
  */
 function getStorageVales() {
     // Check browser support
@@ -101,6 +100,9 @@ function getStorageVales() {
         }
         if (localStorage.getItem("slaRange") != null) {
             $("#slaRange").val(localStorage.getItem("slaRange"));
+        }
+        if (localStorage.getItem("workDayStart") != null) {
+            $("#workDayStart").val(localStorage.getItem("workDayStart"));
         }
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
@@ -352,6 +354,9 @@ function checkForChangedKeys() {
             restart = true;
         }
         if (localStorage.getItem("accessTokenSecret") != document.getElementById("accessTokenSecret").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("workDayStart") != document.getElementById("workDayStart").value) {
             restart = true;
         }
     } else {
