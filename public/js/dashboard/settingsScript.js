@@ -22,6 +22,7 @@ $(document).ready(function() {
 /**
  * @desc saves the api settings to the browser local storage
  * @return undefined
+ * XXX - link new value to element ID in html of settings page
  */
 function storeValues() {
     // Check browser support
@@ -66,6 +67,7 @@ function storeValues() {
 /**
  * @desc gets the api settings from the browser local storage and updates the settings on the page
  * @return undefined
+ * XXX - Add new value to this get logic and to other check for update logic
  */
 function getStorageVales() {
     // Check browser support
