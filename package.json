@@ -1,6 +1,6 @@
 {
   "name": "LiveEngage-Real-Time-Dashboard",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "A sample Real Time Dashboard that uses the Real Time Operational API.",
   "main": "index.js",
   "scripts": {
