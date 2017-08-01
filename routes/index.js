@@ -210,6 +210,7 @@ exports.engagementActivity = function (req, res) {
         }
 
         // url for engagement activity
+        var url = "";
         if (req.query.dayStart) {
             var totalMinuteTimeframe = getTimeframeFromDayStart(req.query.dayStart);
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + totalMinuteTimeframe + '&v=1' + params;
@@ -352,7 +353,16 @@ exports.sla = function (req, res) {
         }
 
         // url for queue health
-        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/sla?timeframe=' + req.query.range + '&v=1&skillIds=' + skillList;
+        var url = "";
+        if (req.query.dayStart) {
+            var totalMinuteTimeframe = getTimeframeFromDayStart(req.query.dayStart);
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/sla?timeframe=' + totalMinuteTimeframe + '&v=1&skillIds=' + skillList;
+        } else {
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/sla?timeframe=' + req.query.range + '&v=1&skillIds=' + skillList;
+        }
+
+        console.log(url);
+        
         request.get({
             url: url,
             oauth: oauth,

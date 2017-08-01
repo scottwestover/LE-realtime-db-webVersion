@@ -6,6 +6,7 @@ var accessToken = 0;
 var accessTokenSecret = 0;
 var slaskillIDList = null;
 var slaRange = null;
+var workDayStart = null;
 getLocalStorageVariables();
 
 //variable for the list of skills
@@ -28,7 +29,7 @@ function getData() {
     var oTable = $('#example').DataTable();
     $.ajax({
         type: 'GET',
-        url: '/sla?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + slaskillIDList + '&range=' + slaRange,
+        url: '/sla?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + slaskillIDList + '&range=' + slaRange + '&dayStart=' + workDayStart,
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateSLAData(data);
@@ -55,6 +56,7 @@ function getLocalStorageVariables() {
         accessTokenSecret = localStorage.getItem("accessTokenSecret");
         slaskillIDList = localStorage.getItem("slaskillIDList");
         slaRange = localStorage.getItem("slaRange");
+        workDayStart = localStorage.getItem("workDayStart");
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
