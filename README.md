@@ -25,7 +25,9 @@ In order to run the app locally, you will need to have Node.js installed. Once t
 Your app should be running on localhost:5000.
 
 ## Updates
-
+* V1.1.0 - 1 August 2017
+  * Add the ability to choose the time the work day starts and have data aggregate throughout the whole day
+    * Not yet implemented for messaging related method calls
 * V1.0.0 - 17 September 2016
  * Fixed
    * Bug where the previously selected agents and skills would not populate on the settings page.
