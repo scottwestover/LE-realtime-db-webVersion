@@ -43,19 +43,20 @@ exports.agentActivity = function (req, res) {
             token: req.query.tok,
             token_secret: req.query.tSec
         };
-    // XXX check req.query for the presence of new param. If it is there, use that instead of other range and construct URL with the calculated timeframe based on offset of start and current. NOTE do this for all  methods.
         // url for agent activity
         var url = "";
-        if (req.query.dayStart == null) {
-            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
-        } else {
+        if (req.query.dayStart) {
             var currentHours = new Date().getHours();
             var currentMinutes = new Date().getMinutes();
-            var hourDiff = currentHours - Number(dayStart.split(":")[0]);
-            var minuteDiff = currentMinutes - Number(dayStart.split(":")[1]);
+            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
+            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
             var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + totalMinuteTimeframe + '&agentIds=all&v=1';
+        } else {
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
         }
+
+        console.log(url);
         
         request.get({
             url: url,
@@ -66,8 +67,8 @@ exports.agentActivity = function (req, res) {
             }
         }, function (e, r, b) {
             if (!e && r.statusCode == 200) {
-                b["settingsTime"] = req.query.range;
-                b["skillChoice"] = req.query.skill;
+                //b["settingsTime"] = req.query.range;
+                //b["skillChoice"] = req.query.skill;
                 res.json(b);
             } else {
                 res.json({
@@ -124,7 +125,20 @@ exports.queueHealth = function (req, res) {
             skillList = "all";
         }
         // url for queue health
-        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/queuehealth?timeframe=' + req.query.qaR + '&v=1&skillIds=' + skillList;
+        var url = "";
+        if (req.query.dayStart) {
+            var currentHours = new Date().getHours();
+            var currentMinutes = new Date().getMinutes();
+            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
+            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
+            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/queuehealth?timeframe=' + totalMinuteTimeframe + '&v=1&skillIds=' + skillList;
+        } else {
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/queuehealth?timeframe=' + req.query.qaR + '&v=1&skillIds=' + skillList;
+        }
+
+        console.log(url);
+
         request.get({
             url: url,
             oauth: oauth,
@@ -203,8 +217,20 @@ exports.engagementActivity = function (req, res) {
             params += "&agentIds=" + agentList;
         }
 
-        // url for queue health
-        var url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + req.query.range + '&v=1' + params;
+        // url for engagement activity
+        if (req.query.dayStart) {
+            var currentHours = new Date().getHours();
+            var currentMinutes = new Date().getMinutes();
+            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
+            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
+            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + totalMinuteTimeframe + '&v=1' + params;
+        } else {
+            url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + req.query.range + '&v=1' + params;
+        }
+        
+        console.log(url);
+        
         request.get({
             url: url,
             oauth: oauth,

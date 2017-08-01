@@ -9,6 +9,7 @@ var easkillIDList = null;
 var eaagentIDList = null;
 var eaAgentSelect = 1;
 var engagementActivityRange = 1;
+var workDayStart = null;
 getLocalStorageVariables();
 
 //variable for the list of agents
@@ -33,7 +34,7 @@ $(document).ready(function() {
 function getData() {
     $.ajax({
         type: 'GET',
-        url: '/engagementActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + easkillIDList + '&skS=' + easkillSelect + '&agent=' + eaagentIDList + '&agS' + eaAgentSelect + '&range=' + engagementActivityRange,
+        url: '/engagementActivity?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&skill=' + easkillIDList + '&skS=' + easkillSelect + '&agent=' + eaagentIDList + '&agS' + eaAgentSelect + '&range=' + engagementActivityRange + '&dayStart=' + workDayStart,
         success: function(data) {
             if (data.Fail != "undefined" && data.Fail != "404") {
                 updateEngagementActivityData(data);
@@ -63,6 +64,7 @@ function getLocalStorageVariables() {
         eaagentIDList = localStorage.getItem("eaagentIDList");
         eaAgentSelect = localStorage.getItem("eaAgentSelect");
         engagementActivityRange = localStorage.getItem("engagementActivityRange");
+        workDayStart = localStorage.getItem("workDayStart");
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
