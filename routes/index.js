@@ -46,11 +46,7 @@ exports.agentActivity = function (req, res) {
         // url for agent activity
         var url = "";
         if (req.query.dayStart) {
-            var currentHours = new Date().getHours();
-            var currentMinutes = new Date().getMinutes();
-            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
-            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
-            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            var totalMinuteTimeframe = getTimeframeFromDayStart(req.query.dayStart);
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + totalMinuteTimeframe + '&agentIds=all&v=1';
         } else {
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/agentactivity?timeframe=' + req.query.range + '&agentIds=all&v=1';
@@ -127,11 +123,7 @@ exports.queueHealth = function (req, res) {
         // url for queue health
         var url = "";
         if (req.query.dayStart) {
-            var currentHours = new Date().getHours();
-            var currentMinutes = new Date().getMinutes();
-            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
-            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
-            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            var totalMinuteTimeframe = getTimeframeFromDayStart(req.query.dayStart);
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/queuehealth?timeframe=' + totalMinuteTimeframe + '&v=1&skillIds=' + skillList;
         } else {
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum + '/queuehealth?timeframe=' + req.query.qaR + '&v=1&skillIds=' + skillList;
@@ -219,11 +211,7 @@ exports.engagementActivity = function (req, res) {
 
         // url for engagement activity
         if (req.query.dayStart) {
-            var currentHours = new Date().getHours();
-            var currentMinutes = new Date().getMinutes();
-            var hourDiff = currentHours - Number(req.query.dayStart.split(":")[0]);
-            var minuteDiff = currentMinutes - Number(req.query.dayStart.split(":")[1]);
-            var totalMinuteTimeframe = (hourDiff * 60) + minuteDiff;
+            var totalMinuteTimeframe = getTimeframeFromDayStart(req.query.dayStart);
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + totalMinuteTimeframe + '&v=1' + params;
         } else {
             url = 'https://' + rtBaseURL + '/operations/api/account/' + req.query.accNum  + '/engactivity?timeframe=' + req.query.range + '&v=1' + params;
@@ -601,4 +589,20 @@ function getAgentGroups(oauth, res, temp) {
             getSkillInfo(oauth, res, temp);
         }
     });
+}
+
+function getTimeframeFromDayStart(dayStart) {
+    var currentHours = new Date().getHours();
+    var currentMinutes = new Date().getMinutes();
+    var dayStartHours = Number(dayStart.split(":")[0]);
+    var dayStartMinutes = Number(dayStart.split(":")[1]);
+    if (currentHours >= dayStartHours) {
+        var hourDiff = currentHours - dayStartHours;
+        var minuteDiff = currentMinutes - dayStartMinutes;
+        return (hourDiff * 60) + minuteDiff;
+    } else {
+        var hourDiff = (currentHours + 24) - dayStartHours;
+        var minuteDiff = currentMinutes - dayStartMinutes;
+        return (hourDiff * 60) + minuteDiff;
+    }
 }
