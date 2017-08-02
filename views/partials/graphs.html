@@ -860,7 +860,7 @@
                                }
                                averageChatsPerHour = (avgch / agentsChats24hr[agent].chats.length).toFixed(2);
                            }
-                           if (skillChoices !== "null") {
+                           if (skillChoices) {
                                var tempSkillChoices = skillChoices.split(",").map(Number);
                                var found = findOne(agentList[agent].skillIds, tempSkillChoices);
                                if (found === true) {
