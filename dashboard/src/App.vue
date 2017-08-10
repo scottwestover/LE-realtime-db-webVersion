@@ -1,60 +1,63 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div id="app" class="container-fluid">
+    <NavBar></NavBar>
+    <ChatDashboard class="main-container"></ChatDashboard>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import NavBar from './components/NavBar.vue';
+  import ChatDashboard from './components/chat/dashboard/ChatDashboard.vue';
+
+  export default {
+    name: 'app',
+    components: {
+      NavBar,
+      ChatDashboard
     }
   }
-}
 </script>
 
+<style scoped>
+  #app {
+    background: #333;
+    background: -webkit-linear-gradient(left top, #024, #402);
+    background: -moz-linear-gradient(bottom right, #024, #402);
+    background: linear-gradient(to bottom right, #024, #402);
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .main-container {
+    padding-left: 95px;
+  }
+
+  .container-fluid {
+    padding: 0px;
+  }
+</style>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  html, body, #app {
+    height: 100%;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
 
-h1, h2 {
-  font-weight: normal;
-}
+  .card {
+    cursor: pointer;
+    box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.25);
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  .card-non-interactive {
+    box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.25);
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  .card:hover {
+    border-radius: 4px;
+    box-shadow: 0 0 5px 0 #fd6721;
+    transition: .5s;
+  }
 </style>
