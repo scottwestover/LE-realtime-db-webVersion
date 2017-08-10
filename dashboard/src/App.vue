@@ -14,7 +14,10 @@
     components: {
       NavBar,
       ChatDashboard
-    }
+    },
+    created() {
+      this.$store.dispatch('initData')
+  }
   }
 </script>
 

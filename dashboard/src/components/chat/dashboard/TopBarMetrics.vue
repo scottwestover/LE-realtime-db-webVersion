@@ -6,7 +6,7 @@
         <div class="card-non-interactive">
           <div class="card-content">
             <p class="card-title">Total Chat <br>Requests</p>
-            <p class="card-metric">2</p>
+            <p class="card-metric">{{dataInt}}</p>
           </div>
         </div>
       </div>
@@ -108,7 +108,12 @@
 
 <script>
   export default {
-    name: 'TopBarMetrics'
+    name: 'TopBarMetrics',    
+    computed: {
+        dataInt() {
+            return this.$store.getters.dataInt;
+        }
+    }
   }
 </script>
 
