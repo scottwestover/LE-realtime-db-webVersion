@@ -51,6 +51,7 @@ function storeValues() {
         localStorage.setItem("slaRange", document.getElementById("slaRange").value);
         localStorage.setItem("slaskillSelect", document.getElementById("slaskillSelect").value);
         localStorage.setItem("slaskillIDList", $('#slaskillIDList').val());
+        localStorage.setItem("workDayStart", document.getElementById("workDayStart").value);
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
@@ -99,6 +100,9 @@ function getStorageVales() {
         }
         if (localStorage.getItem("slaRange") != null) {
             $("#slaRange").val(localStorage.getItem("slaRange"));
+        }
+        if (localStorage.getItem("workDayStart") != null) {
+            $("#workDayStart").val(localStorage.getItem("workDayStart"));
         }
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
@@ -350,6 +354,9 @@ function checkForChangedKeys() {
             restart = true;
         }
         if (localStorage.getItem("accessTokenSecret") != document.getElementById("accessTokenSecret").value) {
+            restart = true;
+        }
+        if (localStorage.getItem("workDayStart") != document.getElementById("workDayStart").value) {
             restart = true;
         }
     } else {

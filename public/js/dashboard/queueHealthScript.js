@@ -7,6 +7,7 @@ var accessTokenSecret = 0;
 var queueHealthRange = 0;
 var skillIDList = null;
 var sla = null;
+var workDayStart = null;
 getLocalStorageVariables();
 
 //variable for the list of skills
@@ -28,7 +29,7 @@ $(document).ready(function() {
 function getData() {
     $.ajax({
         type: 'GET',
-        url: '/queueHealth?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&qaR=' + queueHealthRange + '&skillList=' + skillIDList,
+        url: '/queueHealth?cKey=' + consumerKey + '&accNum=' + accountNum + '&cSec=' + consumerSecret + '&tok=' + accessToken + '&tSec=' + accessTokenSecret + '&qaR=' + queueHealthRange + '&skillList=' + skillIDList + '&dayStart=' + workDayStart,
         success: function(data) {
             //console.log(data);
             if (data.Fail != "undefined" && data.Fail != "404") {
@@ -57,6 +58,7 @@ function getLocalStorageVariables() {
         queueHealthRange = localStorage.getItem("queueHealthRange");
         skillIDList = localStorage.getItem("skillIDList");
         sla = localStorage.getItem("sla");
+        workDayStart = localStorage.getItem("workDayStart");
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
